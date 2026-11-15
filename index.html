@@ -155,6 +155,7 @@ main{padding-top:var(--head)}
 .ln.hit.on{background:#f0c45c;box-shadow:0 0 14px rgba(240,196,92,.55)}
 .list{flex:0 0 min(380px,38%);background:var(--card);border-radius:22px;padding:18px 18px 12px;display:flex;flex-direction:column;gap:6px;opacity:0;min-width:0}
 .list .g{margin:6px 4px 0;font-size:12px;font-weight:600;color:var(--sub)}
+.list .g .ai{margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(240,196,92,.18);color:#f0c45c;font-size:11px}
 .list .it{padding:8px 10px;border-radius:12px;font:14px/1.5 var(--serif);letter-spacing:0;color:#ece3d4;opacity:0}
 .list .it.cur{background:#2d221a}
 .list mark{background:none;color:#f0c45c;font-weight:600}
@@ -194,6 +195,38 @@ main{padding-top:var(--head)}
 .only .in-view .e-line b{animation:run 3.2s 2.2s linear infinite}
 .only .in-view .e-flow i{animation:lit 3.2s calc(2.2s + var(--i) * .9s) infinite}
 .only .in-view .e-stats span{animation:pop .45s 1.8s both}
+/* ① 의 세 장: 4초마다 넘어간다 */
+.eli{min-height:360px}
+.e5{position:absolute;inset:24px 24px 24px 46px;opacity:0}
+.only .in-view .e5{animation:e5cyc 12s infinite}
+.only .in-view .e5.f2{animation-delay:4s}.only .in-view .e5.f3{animation-delay:8s}
+@keyframes e5cyc{0%{opacity:0}4%,30%{opacity:1}34%,100%{opacity:0}}
+html.still .only .e5.f1{opacity:1}html.still .only .e5.f2,html.still .only .e5.f3{display:none}
+.ly3{position:relative;height:250px;perspective:900px}
+.ly3 span{position:absolute;left:0;right:0;bottom:calc(var(--i) * 52px + 20px);height:60px;display:grid;grid-template-columns:55% 1fr;align-items:center}
+.ly3 i{grid-area:1/1;justify-self:center;width:130px;height:130px;border:2px solid #2856c9;border-radius:14px;transform:rotateX(62deg) rotateZ(-45deg);
+  background:linear-gradient(135deg,#f6dfa8,#fbf2dc);box-shadow:0 12px 0 -5px rgba(40,86,201,.25)}
+.ly3 em{grid-area:1/1;justify-self:center;font-style:normal;font-size:30px;position:relative;z-index:2}
+.ly3 b{grid-area:1/2;font-weight:400;font-size:26px;color:#2856c9;padding-left:8px;border-left:2px dashed rgba(40,86,201,.4)}
+.only .in-view .e5.f1 .ly3 span{animation:drop 12s calc(var(--i) * .25s) infinite}
+@keyframes drop{0%{opacity:0;transform:translateY(-40px)}5%,100%{opacity:1;transform:none}}
+.cyc{position:relative;width:260px;height:260px;margin:0 auto}
+.cyc .ring{position:absolute;inset:40px;border:3px dashed rgba(40,86,201,.5);border-radius:50%}
+.cyc .orb{position:absolute;inset:40px;animation:spin 3s linear infinite}
+.cyc .orb i{position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#e9a23b}
+.cyc .mid{position:absolute;inset:0;display:grid;place-items:center;font-weight:400;font-size:30px;color:#2f9e78}
+.cyc .st{position:absolute;left:50%;top:50%;width:90px;margin:-30px 0 0 -45px;display:flex;flex-direction:column;align-items:center;font-size:30px;
+  transform:rotate(calc(var(--i) * 90deg)) translateY(-112px) rotate(calc(var(--i) * -90deg))}
+.cyc .st small{font-size:20px;color:#2856c9}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gau{position:relative;width:240px;margin:20px auto 0;text-align:center}
+.gau svg{width:100%;fill:none;stroke:rgba(47,158,120,.45);stroke-width:14;stroke-linecap:round}
+.gau .nd{position:absolute;left:50%;bottom:calc(9% + 40px);width:4px;height:95px;margin-left:-2px;background:#2856c9;border-radius:2px;transform-origin:50% 100%;transform:rotate(-25deg)}
+.gau .hb{position:absolute;left:50%;bottom:calc(9% + 33px);width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#2856c9}
+.gau p{margin:6px 0 0;font-size:32px}.gau s{opacity:.5}.gau b{font-weight:400;color:#2f9e78;font-size:42px}
+.only .in-view .e5.f3 .nd{animation:needle 12s 8s infinite}
+@keyframes needle{0%,3%{transform:rotate(40deg)}12%,100%{transform:rotate(-25deg)}}
+
 /* ② 그림·표를 다시 그린다 */
 .fig{display:grid;grid-template-columns:.9fr 40px 1.2fr;gap:10px;align-items:center;font:13px/1.35 var(--sans)}
 .fig table{border-collapse:collapse;font:12px/1.3 var(--serif);color:#5a5244}
@@ -395,13 +428,17 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
       <p class="rise">읽기만 하지 않습니다. 이해가 될 때까지, 다시 그려 줍니다.</p></div>
 
     <div class="feat">
-      <div class="txt rise"><span class="k">쉽게 말하면</span><h3>표지 다음 한 쪽,<br>다섯 살도 아는 요약.</h3>
-        <p>올리자마자 비유 한 줄, 전과 후, 어떻게 돌아가는지, 숫자 몇 개를 공책에 필기하듯 그려 둡니다. 글은 최소로, 그림이 말하게.</p></div>
-      <div class="demo eli hand" aria-label="쉽게 말하면 쪽의 예">
-        <p class="e-t">한꺼번에 보는 번역기</p>
-        <div class="e-ba"><span class="o">🐌<small>차례차례</small></span><svg viewBox="0 0 60 24" aria-hidden="true"><path d="M3 13c14-5 30-5 50-1M45 5l9 7-9 7"/></svg><span class="n">👀<small>한꺼번에</small></span></div>
-        <div class="e-flow"><span class="e-line"><b></b></span><span style="--i:0"><i>📝</i>문장</span><span style="--i:1"><i>👀</i>살펴보기</span><span style="--i:2"><i>🧠</i>고르기</span><span style="--i:3"><i>🌍</i>번역</span></div>
-        <div class="e-stats"><span><b>28.4</b>번역 점수</span><span><b>3.5</b>일 훈련</span></div>
+      <div class="txt rise"><span class="k">쉽게 말하면</span><h3>표지 다음 한 쪽,<br>논문마다 다른 그림으로.</h3>
+        <p>모델 구조는 3D 로 쌓은 층, 냉동 사이클은 점이 도는 고리, 성능 향상은 바늘이 움직이는 계기판. 논문 속 사진도 중요한 곳만 다시 그려 동그라미를 칩니다. 글은 최소로, 그림이 말하게.</p></div>
+      <div class="demo eli hand" aria-label="쉽게 말하면 쪽의 예 — 논문마다 다른 그림">
+        <div class="e5 f1"><p class="e-t">한꺼번에 보는 번역기</p>
+          <div class="ly3"><span style="--i:0"><i></i><em>🔤</em><b>단어 넣기</b></span><span style="--i:1"><i></i><em>👀</em><b>셀프 어텐션</b></span><span style="--i:2"><i></i><em>🧮</em><b>피드포워드</b></span><span style="--i:3"><i></i><em>🗣️</em><b>번역 말하기</b></span></div></div>
+        <div class="e5 f2"><p class="e-t">돌고 도는 냉매</p>
+          <div class="cyc"><span class="ring"></span><span class="orb"><i></i></span><b class="mid">냉매</b>
+            <span class="st" style="--i:0">🫀<small>압축기</small></span><span class="st" style="--i:1">🔥<small>응축기</small></span><span class="st" style="--i:2">🌀<small>팽창</small></span><span class="st" style="--i:3">❄️<small>증발기</small></span></div></div>
+        <div class="e5 f3"><p class="e-t">냉각판이 전기를 아껴요</p>
+          <div class="gau"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M15 100a85 85 0 0 1 170 0"/></svg><i class="nd"></i><i class="hb"></i>
+            <p><s>1.6</s> → <b>1.2</b> PUE 👍</p></div></div>
       </div>
     </div>
 
@@ -447,7 +484,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 <!-- 장면 3 — 주제로 모아 읽기 -->
 <section class="scene auto" id="topic" data-scene="topic" data-dur="5" aria-label="주제로 모아 읽기">
   <div class="stage">
-    <div class="t-head"><h2>주제로 모아 읽기.</h2><div class="query"><span>⌕ 셀프 어텐션</span><span class="n" id="t-n">0곳</span></div></div>
+    <div class="t-head"><h2>뜻으로 모아 읽기.</h2><div class="query"><span>⌕ 셀프 어텐션</span><span class="n" id="t-n">0곳</span></div></div>
     <div class="t-body">
       <div class="minis" id="minis">
         <div class="mini"><h4>배경</h4><i class="ln"></i><i class="ln m"></i><i class="ln hit"></i><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><i class="ln s"></i></div>
@@ -462,6 +499,8 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
         <div class="it">The encoder contains <mark>self-attention</mark> layers…</div>
         <p class="g">4. 왜 셀프 어텐션인가</p>
         <div class="it">As side benefit, <mark>self-attention</mark> could yield more interpretable models.</div>
+        <p class="g">5. 학습 <span class="ai">AI · 말은 달라도 같은 이야기</span></p>
+        <div class="it">The Transformer allows for significantly more parallelization…</div>
         <p class="g">7. 결론</p>
         <div class="it">We are excited about the future of <mark>attention</mark>-based models…</div>
       </div>
@@ -482,7 +521,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
       <div class="cell wide rise"><span class="k">질문</span><h3>논문에게 묻고,<br>근거 문장에 핀.</h3>
         <div class="vis bub"><span>셀프 어텐션을 그림으로 설명해 줘</span><span>쿼리 · 키 · 값의 흐름을 개략도로 그렸어요. 근거는 p.4 의 식 (1) 입니다.</span></div></div>
       <div class="cell rise"><span class="k">낱말 · 문장</span><h3>누르면 낱말,<br>끌면 문장.</h3><p>낱말 카드와 단어장. 끌어 고르면 핵심 문장 · 형광펜 · 메모.</p></div>
-      <div class="cell rise"><span class="k">서재</span><h3>책장이 열리는<br>서재.</h3><p>읽던 문장에서 이어 읽습니다. 다른 기기에서도.</p></div>
+      <div class="cell rise"><span class="k">서재 · 책갈피</span><h3>책장이 열리는<br>서재.</h3><p>읽던 문장에서 이어 읽습니다. 🔖 책갈피를 꽂고, 목차·기록으로 다녀와도 ↩ 한 번에 돌아옵니다.</p></div>
       <div class="cell rise"><span class="k">어디서나</span><h3>PC · 태블릿 ·<br>아이폰.</h3><p>태블릿은 PC와 서재를 주고받습니다. 펜 필기도.</p></div>
     </div>
   </div>
