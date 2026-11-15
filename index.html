@@ -30,7 +30,7 @@ body{margin:0;background:var(--black);color:var(--text);font:17px/1.47 var(--san
   -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere;overflow-x:clip}
 a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:6px}
-h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.035em}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
 .gold{background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
 .pillbtn{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:980px;background:var(--blue);color:var(--on-brass);
   font-size:17px;font-weight:600;text-decoration:none;transition:background .2s}
@@ -56,8 +56,9 @@ main{padding-top:var(--head)}
    선반의 논문 한 권을 꺼내 → 표지가 열리면 e북 (번역 · 주제 · 기호) */
 #s-book{height:400vh}
 #s-book .stage{background:radial-gradient(ellipse at 50% 40%,#2a1d14 0%,#120d0a 70%)}
+.film{position:absolute;inset:0;z-index:3;width:100%;height:100%;object-fit:cover;transform-origin:60% 44%;background:#0e0a08}
 .sky{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;
-  background:radial-gradient(ellipse at 50% 42%,#1b2b46 0%,#0e1a2b 55%,#070d16 100%);transform-origin:50% 45%}
+  background:radial-gradient(ellipse at 50% 45%,rgba(9,14,24,.45) 0%,rgba(9,14,24,.62) 60%,rgba(7,10,18,.82) 100%);transform-origin:50% 45%}
 .sky img{width:min(440px,70vw);height:auto;clip-path:inset(0 100% 0 0);opacity:.15;filter:drop-shadow(0 0 28px rgba(236,230,216,.14));
   animation:draw 1.6s cubic-bezier(.6,.05,.25,1) .25s forwards}
 @keyframes draw{55%{opacity:1}to{clip-path:inset(0 0 0 0);opacity:1}}
@@ -96,7 +97,7 @@ main{padding-top:var(--head)}
 .door::after{content:"";position:absolute;top:48%;width:8px;height:34px;border-radius:4px;background:linear-gradient(#f0d58c,#a87c30)}
 .door.l{left:0;transform-origin:0 50%}.door.l::after{right:16px}
 .door.r{right:0;transform-origin:100% 50%}.door.r::after{left:16px}
-.caps{position:absolute;inset:5vh 20px auto;height:150px;text-align:center;z-index:2;pointer-events:none}
+.caps{position:absolute;inset:5vh 20px auto;height:150px;text-align:center;z-index:5;pointer-events:none;text-shadow:0 2px 18px rgba(0,0,0,.7)}
 .cap{position:absolute;inset:0;opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s}
 .cap.on{opacity:1;transform:none}
 .cap h2{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:800}
@@ -144,6 +145,7 @@ main{padding-top:var(--head)}
 #topic .stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:24px}
 .t-head{text-align:center}
 .t-head h2{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:800}
+.t-sub{margin:12px auto 0;max-width:560px;color:var(--sub);font-size:clamp(16px,1.6vw,19px);font-weight:500}
 .query{margin-top:18px;display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:980px;background:var(--card);font-size:17px;font-weight:600}
 .query .n{color:#f0c45c;font-variant-numeric:tabular-nums;min-width:2.6em}
 .t-body{width:min(1024px,100%);display:flex;gap:20px;align-items:flex-start}
@@ -272,7 +274,7 @@ html.still .only *{animation:none!important;opacity:1!important;clip-path:none!i
 
 /* 기능 — 밝은 회색 위 벤토 */
 .bento-sec{background:var(--gray-bg);color:var(--text-dark)}
-.bento-sec .in{max-width:1024px;margin:0 auto;padding:120px 22px}
+.bento-sec > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
 .bento-sec h2{font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800;text-align:center}
 .bento-sec .lead{margin:14px auto 0;max-width:620px;text-align:center;font-size:21px;color:#75685a;font-weight:500}
 .bento{margin-top:56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
@@ -339,6 +341,8 @@ footer{background:var(--gray-bg);color:#75685a;font-size:12px}
 footer .motion{border:0;background:none;padding:0;font:inherit;color:#9a7b3c;cursor:pointer}footer .motion:hover{text-decoration:underline}
 footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px solid #ddd2bf}
 
+/* 태블릿: 그림·표 실연은 표 → 막대를 위아래로 (옆에 나란히면 글이 잘렸다) */
+@media (max-width:1000px){.fig{grid-template-columns:1fr}.fig .arw{transform:rotate(90deg)}}
 /* 휴대폰 */
 @media (max-width:760px){
   header nav{display:none}
@@ -353,7 +357,8 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   .feat{grid-template-columns:1fr;gap:26px;margin-bottom:80px}.feat:nth-child(odd) .txt{order:0}
   .demo{padding:18px}.eli{padding-left:40px}
   .fig{grid-template-columns:1fr}.fig .arw{transform:rotate(90deg)}
-  .sky .skip{right:50%;transform:translateX(50%);bottom:64px}
+  .sky .hint{display:none}
+  .sky .skip{right:50%;transform:translateX(50%);bottom:28px}
 }
 /* 움직임 줄이기: 걸어 두지 않고 끝 모습으로 */
 html.still .scene{height:auto!important}
@@ -374,6 +379,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 <section class="scene" id="s-book" data-scene="book" aria-label="Cresco 로 읽는 모습">
   <div class="stage">
     <!-- 앱을 켜면 처음 보는 밤하늘과 로고 -->
+    <video class="film" id="film" src="opening.mp4" muted playsinline autoplay preload="auto" aria-hidden="true"></video>
     <div class="sky" id="sky">
       <img src="cresco-ivory.svg" alt="Cresco">
       <h1>영어 논문을, 책처럼.</h1>
@@ -484,7 +490,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 <!-- 장면 3 — 주제로 모아 읽기 -->
 <section class="scene auto" id="topic" data-scene="topic" data-dur="5" aria-label="주제로 모아 읽기">
   <div class="stage">
-    <div class="t-head"><h2>뜻으로 모아 읽기.</h2><div class="query"><span>⌕ 셀프 어텐션</span><span class="n" id="t-n">0곳</span></div></div>
+    <div class="t-head"><h2>뜻으로 모아 읽기.</h2><p class="t-sub">그 말이 없어도 같은 이야기를 하는 문단까지 모아, 그 부분만 이어 읽습니다.</p><div class="query"><span>⌕ 셀프 어텐션</span><span class="n" id="t-n">0곳</span></div></div>
     <div class="t-body">
       <div class="minis" id="minis">
         <div class="mini"><h4>배경</h4><i class="ln"></i><i class="ln m"></i><i class="ln hit"></i><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><i class="ln s"></i></div>
@@ -591,14 +597,15 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   const st1 = $('#s-book .stage'), box = $('#bookbox'), book = $('#book'), cover = $('#cover'), page = $('#page'), sky = $('#sky');
   const cbox = $('#casebox'), doorL = $('#door-l'), doorR = $('#door-r'), pick = $('#pick'), others = $$('#casebox .cv:not(.pick)');
   const kos = $$('#page .ko'), hl = $('#page .hl'), pill = $('#pill'), pillN = $('#pill-n'), card = $('#card'), caps = $$('.cap');
+  const film = $('#film');
+  cbox.style.display = 'none';                           // 그린 책장 대신 영상이 그 몫을 한다
+  if (still) { film.removeAttribute('autoplay'); film.addEventListener('loadedmetadata', () => { film.currentTime = Math.max(0, film.duration - .1); }); }
   let fit = 1, cs = 1, pk = {x: 0, y: 0, w: 1, h: 1};
   const fitBook = () => {          // PC 는 펼친 두 쪽(760), 휴대폰은 본문 한 쪽(380) 이 들어가게. 책장은 문구 아래 남은 자리에.
     const W = st1.clientWidth, H = st1.clientHeight, span = phone() ? 380 : 760;
     fit = clamp(Math.min((H - (phone() ? 150 : 210)) / 540, (W - 32) / span), .4, 1.15);
     cs = clamp(Math.min((H - (phone() ? 170 : 220)) / 640, (W - 32) / 560), .35, 1.05);
-    cbox.style.transform = 'none';                       // 꺼낼 책의 자리를 책장 안에서 잰다
-    const c = cbox.getBoundingClientRect(), r = pick.getBoundingClientRect();
-    pk = {x: r.left - c.left, y: r.top - c.top, w: r.width, h: r.height};
+
   };
   const scene1 = p => {
     const W = st1.clientWidth, H = st1.clientHeight, dy = phone() ? 60 : 75;
@@ -607,25 +614,18 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     sky.style.opacity = 1 - z0;
     sky.style.transform = `scale(${1 + .7 * z0})`;
     sky.style.pointerEvents = p < .02 ? 'auto' : 'none';
-    // 책장: 문이 바깥으로 열리고, 꺼낼 책이 빛나고, 그 책으로 다가간다 (거리는 로그 비율로)
-    const d = ease(seg(p, .06, .18));
-    doorL.style.transform = `rotateY(${-110 * d}deg)`;
-    doorR.style.transform = `rotateY(${110 * d}deg)`;
-    cbox.classList.toggle('hot', p > .17);
-    const z = ease(seg(p, .19, .3));
-    const k = cs * Math.pow((540 * fit / pk.h) / cs, z);
-    const bx = W / 2 - 280 * cs + (pk.x + pk.w / 2) * cs, by = H / 2 + 50 - 320 * cs + (pk.y + pk.h / 2) * cs;   // 처음 자리의 책 가운데
-    const cx = bx + (W / 2 - bx) * z, cy = by + (H / 2 + dy - by) * z;
-    cbox.style.transform = `translate(${cx - (pk.x + pk.w / 2) * k}px, ${cy - (pk.y + pk.h / 2) * k}px) scale(${k})`;
-    cbox.style.opacity = 1 - seg(p, .29, .32);
-    others.forEach(o => { o.style.opacity = 1 - .7 * z; });
+    // 영상: 손이 꺼낸 남색 책으로 카메라가 다가가고(크게), 그 책이 e북 표지로 바뀐다
+    const z = ease(seg(p, .06, .3));
+    film.style.transform = `scale(${1 + 2.4 * z})`;
+    film.style.opacity = 1 - seg(p, .27, .32);
     // 꺼낸 책 = e북: 같은 자리에서 이어받아 표지가 열린다
-    box.style.opacity = seg(p, .285, .3);
+    box.style.opacity = seg(p, .27, .3);
     const open = ease(seg(p, .33, .45));
     box.style.width = (phone() ? 380 : 760) + 'px';
     box.style.transform = `translate(-50%,-50%) translateY(${dy}px) scale(${fit})`;
     book.style.transform = `translateX(${phone() ? 0 : 190 + 190 * open}px)`;     // 펼치면 두 쪽이 가운데에
     cover.style.transform = `rotateY(${-178 * open}deg)`;
+    cover.style.opacity = phone() ? 1 - seg(p, .42, .47) : 1;      // 휴대폰은 한 쪽만 — 넘어간 표지가 왼쪽에 비치지 않게
     kos.forEach((k2, i) => {
       const t = seg(p, .48 + i * .045, .52 + i * .045);
       k2.style.opacity = t;
@@ -639,7 +639,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     const c = seg(p, .84, .9);
     card.style.opacity = c;
     card.style.transform = `translateY(${(1 - c) * 12}px) scale(${.96 + .04 * c})`;
-    const at = p < .07 ? -1 : p < .2 ? 0 : p < .46 ? -1 : p < .62 ? 1 : p < .8 ? 2 : 3;   // 책으로 다가가는 동안은 글을 비운다
+    const at = p < .07 ? -1 : p < .22 ? 0 : p < .46 ? -1 : p < .62 ? 1 : p < .8 ? 2 : 3;   // 책으로 다가가는 동안은 글을 비운다
     caps.forEach(x => x.classList.toggle('on', +x.dataset.cap === at));
   };
 
