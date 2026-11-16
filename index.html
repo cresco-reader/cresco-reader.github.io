@@ -6,6 +6,18 @@
 <title>Cresco 논문 읽기</title>
 <meta name="description" content="영어 논문을, 책처럼. 문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서, 인용 번호는 눌러서.">
 <link rel="icon" href="cresco-ivory.svg">
+<!-- 링크 미리보기 (카톡·텔레그램·슬랙) — 그림은 절대 주소여야 한다 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cresco">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://cresco-reader.github.io/">
+<meta property="og:title" content="Cresco — 영어 논문을, 책처럼">
+<meta property="og:description" content="문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서. 이미 쓰는 Claude·ChatGPT 구독으로. 무료 베타.">
+<meta property="og:image" content="https://cresco-reader.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="월넛 서재 위 Cresco 로고와 '영어 논문을, 책처럼.'">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Nanum+Pen+Script&display=swap">
@@ -54,7 +66,9 @@ main{padding-top:var(--head)}
 
 /* 장면 1 — 앱을 켤 때와 같은 길: 밤하늘에 로고가 그려지고 → 걷히며 월넛 책장이 다가와 문이 열리고 →
    선반의 논문 한 권을 꺼내 → 표지가 열리면 e북 (번역 · 주제 · 기호) */
-#s-book{height:400vh}
+#s-book{height:auto}
+#s-book .stage{transition:opacity .6s}
+#s-book .stage.fade{opacity:0}
 #s-book .stage{background:radial-gradient(ellipse at 50% 40%,#2a1d14 0%,#120d0a 70%)}
 .film{position:absolute;inset:0;z-index:3;width:100%;height:100%;object-fit:cover;transform-origin:60% 44%;background:#0e0a08}
 .sky{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;
@@ -68,10 +82,7 @@ main{padding-top:var(--head)}
 .sky .skip{position:absolute;right:22px;bottom:22px;padding:6px 14px;border-radius:980px;border:1px solid #3a4a66;color:#b9c3d6;font-size:13px;
   opacity:0;animation:up .9s ease 2.4s forwards}
 .sky .skip:hover{text-decoration:none;background:rgba(255,255,255,.06)}
-.sky .hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:12px;color:#8d98ad;letter-spacing:.08em;opacity:0;animation:up .9s ease 2.4s forwards}
-.sky .hint::after{content:"";display:block;width:1px;height:30px;margin:8px auto 0;background:linear-gradient(#8d98ad,transparent);animation:drip 1.6s infinite}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes drip{from{transform:scaleY(0);transform-origin:top}to{transform:scaleY(1);transform-origin:top}}
 /* 월넛 책장: 선반마다 분류 이름표(황동), 표지를 앞으로 세운 논문들, 바깥으로 열리는 두 문 — 앱의 3D 서재 그대로 */
 .casebox{position:absolute;left:0;top:0;width:560px;height:640px;transform-origin:0 0;perspective:1800px}
 .case{position:absolute;inset:0;border-radius:10px;padding:26px 24px 30px;display:flex;flex-direction:column;gap:14px;
@@ -139,158 +150,26 @@ main{padding-top:var(--head)}
 .cover .back p{margin:0 0 10px;font:600 11px var(--sans);letter-spacing:.12em;color:#8a8070;text-transform:uppercase}
 .cover .back span{padding:14px 16px;border-radius:12px;background:rgba(233,180,90,.18);font:500 14.5px/1.65 var(--sans)}
 
-/* 장면 3 — 흩어진 자리가 켜지고 한곳으로 */
-#topic,#how{height:auto}
+/* 저절로 도는 장면(쓰는 법) */
+#how{height:auto}
 .auto .stage{position:relative;top:0;height:auto;min-height:min(820px,100svh);padding-top:90px!important;padding-bottom:90px!important}
-#topic .stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:24px}
-.t-head{text-align:center}
-.t-head h2{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:800}
-.t-sub{margin:12px auto 0;max-width:560px;color:var(--sub);font-size:clamp(16px,1.6vw,19px);font-weight:500}
-.query{margin-top:18px;display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:980px;background:var(--card);font-size:17px;font-weight:600}
-.query .n{color:#f0c45c;font-variant-numeric:tabular-nums;min-width:2.6em}
-.t-body{width:min(1024px,100%);display:flex;gap:20px;align-items:flex-start}
-.minis{flex:1 1 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;transition:opacity .4s}
-.mini{background:var(--card);border-radius:18px;padding:16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.mini h4{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--sub)}
-.ln{height:7px;border-radius:4px;background:#33281f;transition:background .35s,box-shadow .35s}
-.ln.s{width:68%}.ln.m{width:86%}
-.ln.hit.on{background:#f0c45c;box-shadow:0 0 14px rgba(240,196,92,.55)}
-.list{flex:0 0 min(380px,38%);background:var(--card);border-radius:22px;padding:18px 18px 12px;display:flex;flex-direction:column;gap:6px;opacity:0;min-width:0}
-.list .g{margin:6px 4px 0;font-size:12px;font-weight:600;color:var(--sub)}
-.list .g .ai{margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(240,196,92,.18);color:#f0c45c;font-size:11px}
-.list .it{padding:8px 10px;border-radius:12px;font:14px/1.5 var(--serif);letter-spacing:0;color:#ece3d4;opacity:0}
-.list .it.cur{background:#2d221a}
-.list mark{background:none;color:#f0c45c;font-weight:600}
 
 /* Cresco만의 것 — 줄마다 글(왼쪽) · 저절로 도는 작은 실연(오른쪽) */
-.only > .in{max-width:1024px;margin:0 auto;padding:110px 22px 40px}
-.only .top{text-align:center;margin-bottom:70px}
+.only > .in{max-width:1024px;margin:0 auto;padding:110px 22px}
+.only .top{text-align:center;margin-bottom:48px}
 .only .top h2{font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800}
 .only .top p{margin:14px auto 0;max-width:620px;font-size:21px;color:var(--sub);font-weight:500}
-.feat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:center;margin:0 0 110px}
-.feat:nth-child(odd) .txt{order:2}
-.feat .k{font-size:14px;font-weight:600;color:#e0b860}
-.feat h3{margin-top:8px;font-size:clamp(30px,3.6vw,44px);line-height:1.1;font-weight:800}
-.feat .txt p{margin:14px 0 0;color:var(--sub);font-size:18px}
-.demo{position:relative;border-radius:22px;padding:24px;background:var(--paper);color:var(--ink);box-shadow:0 40px 80px rgba(0,0,0,.45);overflow:hidden;min-height:300px}
-.hand{font-family:'Nanum Pen Script',cursive;letter-spacing:0}
-/* ① 쉽게 말하면 — 공책 한 쪽 */
-.eli{background:repeating-linear-gradient(transparent 0 33px,rgba(108,142,191,.22) 33px 34px),
-  linear-gradient(90deg,transparent 30px,rgba(224,102,102,.45) 30px 32px,transparent 32px),#fffdf4;padding-left:46px}
-.eli .e-t{margin:0 0 10px;font-size:30px;line-height:1.1;color:#2856c9;text-decoration:underline wavy rgba(233,162,59,.7) 2px;text-underline-offset:6px}
-.e-ba{display:grid;grid-template-columns:1fr 54px 1fr;align-items:center;gap:6px;margin-bottom:16px}
-.e-ba span{display:flex;flex-direction:column;align-items:center;padding:10px 6px 6px;border:2px solid currentColor;border-radius:14px 18px 12px 16px;font-size:44px;line-height:1}
-.e-ba small{margin-top:4px;font-size:22px}
-.e-ba .o{color:#8b8f99}.e-ba .o{filter:grayscale(.6)}.e-ba .n{color:#2856c9;background:rgba(255,216,77,.18)}
-.e-ba svg{width:100%;fill:none;stroke:#e9a23b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.e-flow{position:relative;display:flex;justify-content:space-between;margin-bottom:14px}
-.e-line{position:absolute;left:26px;right:26px;top:24px;border-top:2px dashed rgba(40,86,201,.5)}
-.e-line b{position:absolute;top:-6px;left:0;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#e9a23b;opacity:0}
-.e-flow span{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:22px;color:#2856c9}
-.e-flow i{display:grid;place-items:center;width:48px;height:48px;border:2px solid #2856c9;border-radius:50% 46% 52% 48%;background:#fffdf4;font-style:normal;font-size:24px}
-.e-stats{display:flex;gap:10px}
-.e-stats span{flex:1;padding:6px;border-radius:12px;background:rgba(40,86,201,.08);text-align:center;font-size:20px;line-height:1.1}
-.e-stats b{display:block;font-weight:400;font-size:34px;color:#2856c9}
-.only .in-view .e-ba .o{animation:pop .5s .2s both}.only .in-view .e-ba path{stroke-dasharray:90;animation:draw2 .5s .6s both}
-.only .in-view .e-ba .n{animation:pop .5s 1s both}
-.only .in-view .e-flow span{animation:pop .4s calc(1.3s + var(--i) * .2s) both}
-.only .in-view .e-line b{animation:run 3.2s 2.2s linear infinite}
-.only .in-view .e-flow i{animation:lit 3.2s calc(2.2s + var(--i) * .9s) infinite}
-.only .in-view .e-stats span{animation:pop .45s 1.8s both}
-/* ① 의 세 장: 4초마다 넘어간다 */
-.eli{min-height:360px}
-.e5{position:absolute;inset:24px 24px 24px 46px;opacity:0}
-.only .in-view .e5{animation:e5cyc 12s infinite}
-.only .in-view .e5.f2{animation-delay:4s}.only .in-view .e5.f3{animation-delay:8s}
-@keyframes e5cyc{0%{opacity:0}4%,30%{opacity:1}34%,100%{opacity:0}}
-html.still .only .e5.f1{opacity:1}html.still .only .e5.f2,html.still .only .e5.f3{display:none}
-.ly3{position:relative;height:250px;perspective:900px}
-.ly3 span{position:absolute;left:0;right:0;bottom:calc(var(--i) * 52px + 20px);height:60px;display:grid;grid-template-columns:55% 1fr;align-items:center}
-.ly3 i{grid-area:1/1;justify-self:center;width:130px;height:130px;border:2px solid #2856c9;border-radius:14px;transform:rotateX(62deg) rotateZ(-45deg);
-  background:linear-gradient(135deg,#f6dfa8,#fbf2dc);box-shadow:0 12px 0 -5px rgba(40,86,201,.25)}
-.ly3 em{grid-area:1/1;justify-self:center;font-style:normal;font-size:30px;position:relative;z-index:2}
-.ly3 b{grid-area:1/2;font-weight:400;font-size:26px;color:#2856c9;padding-left:8px;border-left:2px dashed rgba(40,86,201,.4)}
-.only .in-view .e5.f1 .ly3 span{animation:drop 12s calc(var(--i) * .25s) infinite}
-@keyframes drop{0%{opacity:0;transform:translateY(-40px)}5%,100%{opacity:1;transform:none}}
-.cyc{position:relative;width:260px;height:260px;margin:0 auto}
-.cyc .ring{position:absolute;inset:40px;border:3px dashed rgba(40,86,201,.5);border-radius:50%}
-.cyc .orb{position:absolute;inset:40px;animation:spin 3s linear infinite}
-.cyc .orb i{position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#e9a23b}
-.cyc .mid{position:absolute;inset:0;display:grid;place-items:center;font-weight:400;font-size:30px;color:#2f9e78}
-.cyc .st{position:absolute;left:50%;top:50%;width:90px;margin:-30px 0 0 -45px;display:flex;flex-direction:column;align-items:center;font-size:30px;
-  transform:rotate(calc(var(--i) * 90deg)) translateY(-112px) rotate(calc(var(--i) * -90deg))}
-.cyc .st small{font-size:20px;color:#2856c9}
-@keyframes spin{to{transform:rotate(360deg)}}
-.gau{position:relative;width:240px;margin:20px auto 0;text-align:center}
-.gau svg{width:100%;fill:none;stroke:rgba(47,158,120,.45);stroke-width:14;stroke-linecap:round}
-.gau .nd{position:absolute;left:50%;bottom:calc(9% + 40px);width:4px;height:95px;margin-left:-2px;background:#2856c9;border-radius:2px;transform-origin:50% 100%;transform:rotate(-25deg)}
-.gau .hb{position:absolute;left:50%;bottom:calc(9% + 33px);width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#2856c9}
-.gau p{margin:6px 0 0;font-size:32px}.gau s{opacity:.5}.gau b{font-weight:400;color:#2f9e78;font-size:42px}
-.only .in-view .e5.f3 .nd{animation:needle 12s 8s infinite}
-@keyframes needle{0%,3%{transform:rotate(40deg)}12%,100%{transform:rotate(-25deg)}}
-
-/* ② 그림·표를 다시 그린다 */
-.fig{display:grid;grid-template-columns:.9fr 40px 1.2fr;gap:10px;align-items:center;font:13px/1.35 var(--sans)}
-.fig table{border-collapse:collapse;font:12px/1.3 var(--serif);color:#5a5244}
-.fig td{padding:2px 4px;border-bottom:1px solid #d9cfbd;white-space:nowrap}.fig td+td{text-align:right}
-.fig .arw{font-size:26px;color:#c48a22;text-align:center}
-.fx .h{margin:0 0 8px;font-weight:700;font-size:14px;color:var(--ink)}
-.fx .bar{display:grid;grid-template-columns:86px 1fr 34px;gap:6px;align-items:center;margin:3px 0;font-size:12px}
-.fx .tr{height:9px;border-radius:5px;background:rgba(27,34,56,.08);overflow:hidden}
-.fx .tr i{display:block;height:100%;width:var(--w);border-radius:5px;background:rgba(27,34,56,.3)}
-.fx .best .tr i{background:#e9a23b}.fx .best{font-weight:700}
-.fx .cmp{margin-top:10px;padding:8px 10px;border-left:3px solid #e9a23b;border-radius:0 10px 10px 0;background:rgba(233,162,59,.1);font-size:12.5px}
-.fx .cmp em{display:block;font-style:normal;color:#7a6d5c}
-.only .in-view .fx .tr i{animation:grow 1.2s calc(.3s + var(--i) * .12s) cubic-bezier(.2,.7,.2,1) both}
-.only .in-view .fx .cmp{animation:pop .5s 1.6s both}
-/* ③ 인용 번호 → 쉽게 요약 · 담기 */
-.cite p.src{margin:0;font:17px/1.65 var(--serif);letter-spacing:0}
-.cite .cr{text-decoration:underline dotted 1.5px #8a8070;text-underline-offset:3px;border-radius:3px}
-.only .in-view .cite .cr{animation:tap 6s .5s infinite}
-.cite .pop{margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff;box-shadow:0 12px 30px rgba(30,20,10,.16);font:13.5px/1.5 var(--sans);opacity:0}
-.cite .pop b{display:block;font:600 15px/1.35 var(--serif)}
-.cite .pop small{display:block;color:#86868b;font-size:12px;margin:2px 0 8px}
-.cite .pop .sv{display:inline-block;margin-top:10px;padding:5px 12px;border-radius:980px;border:1.5px solid #c9a050;color:#7a5b20;font-weight:600;font-size:12.5px}
-.only .in-view .cite .pop{animation:card 6s .9s infinite}
-.only .in-view .cite .sv{animation:saved 6s .9s infinite}
-/* ④ AI 답이 손글씨 필기로 */
-.note p.src{margin:0;font:17px/1.65 var(--serif);letter-spacing:0}
-.note .mk{background:linear-gradient(transparent 55%,rgba(240,196,92,.55) 55%)}
-.note .hw{margin:10px 0 0 18px;font-size:30px;line-height:1.15;color:#2856c9;clip-path:inset(0 100% 0 0)}
-.note .hw u{text-decoration:underline 2px rgba(40,86,201,.5);text-underline-offset:4px}
-.note .ask{display:inline-block;margin-bottom:14px;padding:8px 14px;border-radius:16px;background:#2a2019;color:#f4ede1;font:13.5px var(--sans)}
-.only .in-view .note .hw{animation:write 7s .8s infinite}
-.only .in-view .note .hw + .hw{animation-delay:2.2s}
-@keyframes pop{from{opacity:0;transform:scale(.6)}}
-@keyframes draw2{from{stroke-dashoffset:90}}
-@keyframes run{0%{left:0;opacity:0}5%{opacity:1}85%{left:100%;opacity:1}100%{left:100%;opacity:0}}
-@keyframes lit{0%,14%{transform:none;box-shadow:none}5%{transform:scale(1.18);box-shadow:0 0 0 6px rgba(233,162,59,.35)}}
-@keyframes grow{from{width:0}}
-@keyframes tap{0%,8%{background:transparent}12%,80%{background:rgba(240,196,92,.5)}90%,100%{background:transparent}}
-@keyframes card{0%,10%{opacity:0;transform:translateY(10px)}18%,82%{opacity:1;transform:none}92%,100%{opacity:0}}
-@keyframes saved{0%,48%{background:transparent;color:#7a5b20}52%,100%{background:#c9a050;color:#1a120c}}
-@keyframes write{0%{clip-path:inset(0 100% 0 0)}25%,85%{clip-path:inset(0 0 0 0)}95%,100%{clip-path:inset(0 0 0 0);opacity:0}}
-html.still .only *{animation:none!important;opacity:1!important;clip-path:none!important}
-
-/* 기능 — 밝은 회색 위 벤토 */
-.bento-sec{background:var(--gray-bg);color:var(--text-dark)}
-.bento-sec > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
-.bento-sec h2{font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800;text-align:center}
-.bento-sec .lead{margin:14px auto 0;max-width:620px;text-align:center;font-size:21px;color:#75685a;font-weight:500}
-.bento{margin-top:56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.cell{background:var(--white);box-shadow:0 1px 0 rgba(60,40,20,.06);border-radius:28px;padding:30px 28px;display:flex;flex-direction:column;gap:10px;min-height:280px;overflow:hidden}
-.cell.wide{grid-column:span 2}
-.cell .k{font-size:14px;font-weight:600;color:#9a7b3c}
-.cell h3{font-size:28px;line-height:1.14;font-weight:800}
-.cell p{margin:0;color:#75685a;font-size:16px}
-.cell .vis{margin-top:auto}
-.v-tr{font:16px/1.6 var(--serif);letter-spacing:0;color:var(--text-dark)}
-.v-tr small{display:block;margin:2px 0 10px;font:500 14px/1.5 var(--sans);color:var(--ink-ko)}
-.v-sym{font:italic 600 92px/1 var(--serif);letter-spacing:0;background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
-.v-big{font-size:84px;line-height:1;font-weight:800;letter-spacing:-.05em;background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
-.bub{display:flex;flex-direction:column;gap:8px;font-size:14px}
-.bub span{align-self:flex-end;max-width:82%;padding:9px 14px;border-radius:18px;background:#2a2019;color:#f4ede1}
-.bub span+span{align-self:flex-start;background:#efe7d9;color:var(--text-dark)}
+/* 기능 — 같은 녹화의 한 구간을 확대해 되풀이하는 영상 타일. 높이 = 1.2w 라 늘 4:3 */
+.clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.clip{margin:0}
+.clip .clipv{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#f3e9d7;box-shadow:0 30px 60px rgba(0,0,0,.45);cursor:zoom-in}
+.clip video{position:absolute;left:calc(var(--x) / var(--w) * -100%);top:calc(var(--y) / var(--w) * -83.333%);width:calc(100% / var(--w));height:auto}
+.clip figcaption{margin-top:12px;font-size:15px;color:var(--sub)}
+.clip figcaption b{display:block;margin-bottom:2px;font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
+/* 쓰는 법 아래 — 나머지 기능은 한 줄 칩 */
+.extras{margin:6px 0 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:760px}
+.extras b{font-size:13px;font-weight:700;color:#e0b860;margin-right:4px}
+.extras span{padding:5px 12px;border-radius:999px;background:#2a2019;color:#d9ccb6;font-size:13.5px}
 .rise{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
 .rise.in{opacity:1;transform:none}
 
@@ -337,31 +216,155 @@ html.still .only *{animation:none!important;opacity:1!important;clip-path:none!i
 .dlbtn b{display:block;font-size:17px;font-weight:700}
 .dlbtn small{display:block;margin-top:2px;font-size:12.5px;opacity:.75}
 .dl-note{margin-top:22px!important;font-size:14px!important}
+/* 첫 화면의 받기 단추 아래 — 베타 조건을 단추 곁에 (받고 나서 알게 되지 않게) */
+.sky .terms{margin:14px 0 0;font-size:13.5px;color:#a89a85;opacity:0;animation:up .9s ease 2.1s forwards}
+.sky .terms a{color:#cdb98f}
+
+/* 쓰임새 — 상황마다 어떤 기능을 차례로 쓰는지 (.path 의 화살표가 실제 순서) */
+.uses > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
+.uses h2{font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800;text-align:center}
+.uses .lead{margin:14px auto 0;max-width:620px;text-align:center;font-size:21px;color:var(--sub);font-weight:500}
+.player{margin-top:48px}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tab{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px;border:0;border-radius:18px;background:var(--card);
+  color:var(--text);font:inherit;text-align:left;cursor:pointer;transition:background .25s,box-shadow .25s}
+.tab:hover{background:#271d16}
+.tab .when{font-size:13px;font-weight:600;color:#e0b860}
+.tab b{font-size:17px;line-height:1.25;font-weight:800;letter-spacing:-.02em}
+.tab .prog{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue)}
+.tab[aria-selected="true"]{background:#2d221a;box-shadow:inset 0 0 0 1.5px rgba(201,160,80,.6)}
+.tab .more{display:none}
+/* 앱 창 모양의 액자 — 녹화가 '실제 화면'임이 보이게 */
+.win{margin-top:16px;border-radius:16px;overflow:hidden;background:#f3e9d7;border:1px solid #3a2d23;box-shadow:0 40px 80px rgba(0,0,0,.45)}
+.win .tb{height:30px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#1d1611;font-size:12px;color:#8d7f6c}
+.win .tb i{width:10px;height:10px;border-radius:50%;background:#3d3128}
+.win .tb span{flex:1;text-align:center;margin-right:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win video{display:block;width:100%;height:auto;aspect-ratio:16/10;background:#f3e9d7;cursor:zoom-in}
+.use-desc{margin-top:18px;display:flex;gap:16px 24px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.use-desc .d{flex:1 1 380px;margin:0;color:var(--sub);font-size:16px}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#ecdcc0}
+.path span{padding:4px 11px;border-radius:999px;background:#2d221a}
+.path i{font-style:normal;color:#8a7a66}
+
+/* AI 사서 — 정식판 기준 소개, 지금 베타는 작게 */
+.ai-sec{background:var(--gray-bg);color:var(--text-dark)}
+.ai-sec > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
+.ai-top{text-align:center}
+.ai-sec .eyebrow{display:block;font-size:14px;font-weight:700;color:#9a7b3c}
+.ai-sec h2{margin-top:10px;font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800}
+.ai-top p{margin:16px auto 0;max-width:660px;color:#75685a;font-size:19px;font-weight:500}
+.ai-sec .win{margin-top:44px;border-color:#d9ccb6;box-shadow:0 40px 80px rgba(60,40,20,.22)}
+.ai-pts{margin:22px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.ai-pts span{padding:6px 14px;border-radius:999px;background:var(--white);font-size:14.5px;font-weight:600;color:#4a3d31}
+.beta-note{margin:26px auto 0;text-align:center;font-size:13.5px;color:#8f8272}
+.beta-note a{color:#8a6420;text-decoration:underline}
+
+/* 내 데이터 — 무엇이 어디까지 가는지 세 칸 */
+.where{max-width:1000px;margin:56px auto 0;display:grid;grid-template-columns:minmax(0,1.15fr) 56px minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:stretch;text-align:left}
+.where .box{background:var(--white);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 0 rgba(60,40,20,.06)}
+.where .box h3{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.where .box p{margin:0!important;max-width:none!important;font-size:14.5px!important;line-height:1.5;color:#75685a}
+.where .box .tag{align-self:flex-start;margin-top:auto;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.where .home{box-shadow:inset 0 0 0 2px var(--blue)}
+.where .home .tag{background:var(--blue);color:var(--on-brass)}
+.where .ai .tag{background:rgba(47,93,168,.12);color:#2f5da8}
+.where .dev{background:transparent;box-shadow:inset 0 0 0 1.5px #d6c9b3}
+.where .dev .tag{background:#e9e0d0;color:#6e6152}
+.where .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#9a7b3c;font-size:12px;font-weight:600;text-align:center}
+.where .arrow b{font-size:26px;line-height:1}
+.fine{margin:20px auto 0!important;max-width:760px!important;font-size:13.5px!important;color:#8f8272!important}
+
+/* 자주 묻는 질문 */
+.faq{background:var(--gray-bg);color:var(--text-dark)}
+.faq > .in{max-width:780px;margin:0 auto;padding:120px 22px}
+.faq h2{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:800;text-align:center;margin-bottom:44px}
+.faq details{border-bottom:1px solid #ddd2bf}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:20px 2px;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:24px;line-height:1;font-weight:400;color:#9a7b3c;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 2px 20px;color:#6e6152;font-size:16px}
+.faq details p a{color:#8a6420;text-decoration:underline}
+
+/* 쓰는 법 — 단계 단추 (눌러서 그 단계로) · 멈춤 */
+.steps{margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.steps button{border:0;cursor:pointer;padding:6px 14px;border-radius:980px;background:#2d221a;color:#cdbfa9;font:600 13px var(--sans);transition:background .3s,color .3s}
+.steps button.on{background:var(--blue);color:var(--on-brass)}
+.steps .ctl{min-width:36px;background:transparent;box-shadow:inset 0 0 0 1px #4a3c31}
+
+/* 첫 화면 — 정식 출시 전이라는 표시 */
+.sky .pre{margin-top:clamp(14px,3vh,28px);padding:5px 14px;border-radius:980px;border:1px solid rgba(224,184,96,.45);color:#e6cd94;font-size:13px;
+  font-weight:600;letter-spacing:.01em;opacity:0;animation:up .9s ease 1.35s forwards}
+.sky .pre:hover{text-decoration:none;background:rgba(224,184,96,.1)}
+.sky .pre + h1{margin-top:14px}
+
+/* 정식 출시 · 요금제 — 계획(안). 표의 묶음 줄(.grp)이 기능의 갈래, Pro 칸은 옅게 칠한다 */
+.plans{background:var(--white);color:var(--text-dark)}
+.plans > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
+.plans .eyebrow{display:block;text-align:center;font-size:14px;font-weight:700;color:#9a7b3c}
+.plans h2{margin-top:10px;font-size:clamp(36px,5.4vw,64px);line-height:1.06;font-weight:800;text-align:center}
+.plans .lead{margin:16px auto 0;max-width:660px;text-align:center;font-size:19px;color:#75685a;font-weight:500}
+.soon{margin-top:52px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.soon > div{background:var(--gray-bg);border-radius:22px;padding:24px 22px}
+.soon .k{font-size:13px;font-weight:700;color:#9a7b3c}
+.soon h3{margin-top:6px;font-size:21px;line-height:1.25;font-weight:800}
+.soon p{margin:8px 0 0;color:#75685a;font-size:15px}
+.nowbeta{margin:64px auto 0;max-width:760px;padding:14px 18px;border-radius:14px;background:rgba(47,93,168,.07);color:#3b4f73;font-size:15px;text-align:center}
+.nowbeta b{color:#24385e}
+.cmp-wrap{margin-top:22px}
+table.cmp{width:100%;border-collapse:collapse;font-size:15px;table-layout:fixed}
+.cmp col.f{width:56%}
+.cmp th,.cmp td{padding:12px 10px;text-align:center;border-bottom:1px solid #e9e0d0;vertical-align:middle}
+.cmp td:nth-child(3),.cmp thead th:nth-child(3){background:rgba(201,160,80,.10)}
+.cmp thead th{vertical-align:bottom;padding:18px 10px;border-bottom:2px solid #d6c9b3}
+.cmp thead th:first-child{text-align:left;font-size:13px;font-weight:600;color:#9a8b78}
+.cmp thead b{display:block;font-size:22px;font-weight:800;letter-spacing:-.03em}
+.cmp thead small{display:block;margin-top:5px;font-size:12.5px;font-weight:500;color:#86786a;line-height:1.35}
+.cmp tbody th{text-align:left;font-weight:500;color:#3a2f26;line-height:1.4}
+.cmp .grp th{padding:28px 10px 8px;font-size:13px;font-weight:700;color:#9a7b3c;border-bottom:1.5px solid #d6c9b3}
+.cmp .grp th small{font-weight:500;color:#a8987f}
+.cmp .y{color:#3f7a4f;font-weight:800;font-size:17px}
+.cmp .n{color:#c9bba4}
+.cmp .t{font-size:13px;font-weight:600;color:#9a8b78}
+.cmp .s{font-size:13.5px;font-weight:600;color:#5b4f43}
+.cmp .price td,.cmp .price th{border-bottom:0;padding-top:22px}
+.cmp .price td{font-size:17px;font-weight:800}
+.plans .fine{text-align:center;margin-top:18px!important}
+
+footer a{color:#8a6420}
 footer{background:var(--gray-bg);color:#75685a;font-size:12px}
 footer .motion{border:0;background:none;padding:0;font:inherit;color:#9a7b3c;cursor:pointer}footer .motion:hover{text-decoration:underline}
 footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px solid #ddd2bf}
 
-/* 태블릿: 그림·표 실연은 표 → 막대를 위아래로 (옆에 나란히면 글이 잘렸다) */
-@media (max-width:1000px){.fig{grid-template-columns:1fr}.fig .arw{transform:rotate(90deg)}}
+@media (max-width:1000px){
+  .where{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)}.where .dev{grid-column:1 / -1}}
+@media (max-width:860px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.clips{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* 휴대폰 */
 @media (max-width:760px){
   header nav{display:none}
   header .in{justify-content:space-between}
   .sky .acts{font-size:16px}
   .caps{top:3vh;height:120px}
-  .bento{grid-template-columns:1fr}.cell.wide{grid-column:auto}.cell{min-height:0}
-  .t-body{flex-direction:column;align-items:stretch}
-  .minis{gap:6px}.mini{padding:10px 8px;gap:6px;border-radius:12px}.mini h4{font-size:10px}
-  .list{flex:0 0 auto}
   .statement{padding:110px 22px}
-  .feat{grid-template-columns:1fr;gap:26px;margin-bottom:80px}.feat:nth-child(odd) .txt{order:0}
-  .demo{padding:18px}.eli{padding-left:40px}
-  .fig{grid-template-columns:1fr}.fig .arw{transform:rotate(90deg)}
-  .sky .hint{display:none}
+  .only > .in{padding:90px 16px}
+  .clips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
+  .clip{flex:0 0 84%;scroll-snap-align:start}
   .sky .skip{right:50%;transform:translateX(50%);bottom:28px}
+  .uses > .in,.faq > .in,.ai-sec > .in{padding:90px 16px}
+  .tabs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+  .tab{flex:0 0 68%;scroll-snap-align:start;padding:13px 14px 15px}.tab b{font-size:15.5px}
+  .win{border-radius:12px}.win .tb{height:24px}
+  .where{grid-template-columns:1fr}.where .arrow{flex-direction:row;padding:2px 0}.where .arrow b{transform:rotate(90deg)}
+  .faq summary{font-size:17px}
+  .plans > .in{padding:90px 16px}.soon{grid-template-columns:1fr}
+  table.cmp{font-size:13px}.cmp col.f{width:50%}
+  .cmp th,.cmp td{padding:10px 4px}.cmp thead th{padding:14px 4px}
+  .cmp thead b{font-size:16px}.cmp thead small{font-size:11px}
+  .cmp .s{font-size:12px}.cmp .price td{font-size:14px}
 }
 /* 움직임 줄이기: 걸어 두지 않고 끝 모습으로 */
 html.still .scene{height:auto!important}
+html.still .sky *{animation:none!important;opacity:1!important;clip-path:none!important}
 html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow:visible}
 </style>
 </head>
@@ -369,24 +372,26 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 <header>
   <div class="in">
     <a href="#top" aria-label="Cresco 처음으로"><img src="cresco-ivory.svg" alt="Cresco"></a>
-    <nav aria-label="주 메뉴"><a href="#only">Cresco만의 것</a><a href="#topic">주제로 모아 읽기</a><a href="#bento">기능</a><a href="#how">쓰는 법</a></nav>
+    <nav aria-label="주 메뉴"><a href="#uses">쓰임새</a><a href="#only">기능</a><a href="#ai">사서</a><a href="#local">내 데이터</a><a href="#plans">요금제</a><a href="#faq">자주 묻는 질문</a></nav>
     <a class="cta" href="#beta">베타 받기</a>
   </div>
 </header>
 
 <main id="top">
 <!-- 장면 1 — 책 -->
-<section class="scene" id="s-book" data-scene="book" aria-label="Cresco 로 읽는 모습">
+<section class="scene timed" id="s-book" data-scene="book" aria-label="Cresco 로 읽는 모습">
   <div class="stage">
     <!-- 앱을 켜면 처음 보는 밤하늘과 로고 -->
     <video class="film" id="film" src="opening.mp4" muted playsinline autoplay preload="auto" aria-hidden="true"></video>
     <div class="sky" id="sky">
       <img src="cresco-ivory.svg" alt="Cresco">
+      <a class="pre" href="#plans">정식 출시 준비 중 · 지금은 무료 베타</a>
       <h1>영어 논문을, 책처럼.</h1>
       <p>논문이 책이 되는 서재. 문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서.</p>
-      <div class="acts"><a class="pillbtn" href="#beta">베타 받기</a><a class="more" href="#how">쓰는 법 보기</a></div>
-      <div class="hint">스크롤해서 서재로</div>
-      <a class="skip" href="#only">건너뛰기 ↓</a>
+      <!-- 받기 단추는 이 기기에 맞는 설치 파일을 바로 받는다 (아래 스크립트가 고른다; 모르면 #beta 로) -->
+      <div class="acts"><a class="pillbtn" id="hero-dl" href="#beta">베타 받기</a><a class="more" href="#how">쓰는 법 보기</a></div>
+      <p class="terms">무료 베타 · 60일 · 논문 3편까지 · <a href="#beta">다른 기기</a></p>
+      <a class="skip" href="#uses">아래로 ↓</a>
     </div>
     <!-- 월넛 책장 -->
     <div class="casebox" id="casebox" aria-hidden="true">
@@ -427,116 +432,72 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   </div>
 </section>
 
-<!-- Cresco만의 것 -->
+<!-- 쓰임새 — 상황을 고르면 실제 Cresco 화면(녹화)이 그 길을 보여 준다. 영상이 끝나면 다음 상황으로.
+     녹화: 견본 논문만 든 빈 서재 · 실제 앱 · 1280×800 (다시 찍기: build/site_rec/) -->
+<section class="uses" id="uses">
+  <div class="in">
+    <h2 class="rise">이럴 때, <span class="gold">이렇게.</span></h2>
+    <p class="lead rise">실제 Cresco 화면입니다.</p>
+    <div class="player rise">
+      <div class="tabs" role="tablist" aria-label="쓰임새">
+        <button type="button" class="tab" role="tab" aria-selected="true" data-v="use-first"><span class="when">처음 읽는 영어 논문</span><b>막힐 때만, 눈을 아래로.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span>쉽게 말하면</span><i>→</i><span>문장 아래 번역</span><i>→</i><span>낱말 카드</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-meeting"><span class="when">랩미팅 30분 전</span><b>결과만, 빠르게.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span>쉽게 말하면</span><i>→</i><span>그림 · 표 풀이</span><i>→</i><span>사서</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-talk"><span class="when">세미나 · 논문 소개 발표</span><b>설명할 수 있을 만큼.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span>수식 풀이</span><i>→</i><span>끌어 고르기</span><i>→</i><span>★ 핵심 문장</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-review"><span class="when">선행연구 · 학위논문 정리</span><b>흩어진 이야기를, 한 줄로.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span>주제로 모아 읽기</span><i>→</i><span>인용 [30]</span><i>→</i><span>☆ 내 참고문헌</span></span></span></button>
+      </div>
+      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
+        <video id="use-video" muted playsinline preload="none" poster="media/use-first.jpg" src="media/use-first.mp4" aria-label="실제 Cresco 화면 녹화"></video></div>
+      <div class="use-desc" id="use-desc" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Cresco만의 것 — 기능마다 같은 녹화의 한 구간을 확대해 되풀이한다(data-seg="시작,끝", data-crop="x,y,w" — 원본 비율, 높이 = 1.2w 라 4:3).
+     새 영상을 만들지 않고 쓰임새 녹화를 다시 쓴다. -->
 <section class="only" id="only">
   <div class="in">
-    <div class="top"><h2 class="rise">다른 번역기에는 <span class="gold">없는 것.</span></h2>
-      <p class="rise">읽기만 하지 않습니다. 이해가 될 때까지, 다시 그려 줍니다.</p></div>
-
-    <div class="feat">
-      <div class="txt rise"><span class="k">쉽게 말하면</span><h3>표지 다음 한 쪽,<br>논문마다 다른 그림으로.</h3>
-        <p>모델 구조는 3D 로 쌓은 층, 냉동 사이클은 점이 도는 고리, 성능 향상은 바늘이 움직이는 계기판. 논문 속 사진도 중요한 곳만 다시 그려 동그라미를 칩니다. 글은 최소로, 그림이 말하게.</p></div>
-      <div class="demo eli hand" aria-label="쉽게 말하면 쪽의 예 — 논문마다 다른 그림">
-        <div class="e5 f1"><p class="e-t">한꺼번에 보는 번역기</p>
-          <div class="ly3"><span style="--i:0"><i></i><em>🔤</em><b>단어 넣기</b></span><span style="--i:1"><i></i><em>👀</em><b>셀프 어텐션</b></span><span style="--i:2"><i></i><em>🧮</em><b>피드포워드</b></span><span style="--i:3"><i></i><em>🗣️</em><b>번역 말하기</b></span></div></div>
-        <div class="e5 f2"><p class="e-t">돌고 도는 냉매</p>
-          <div class="cyc"><span class="ring"></span><span class="orb"><i></i></span><b class="mid">냉매</b>
-            <span class="st" style="--i:0">🫀<small>압축기</small></span><span class="st" style="--i:1">🔥<small>응축기</small></span><span class="st" style="--i:2">🌀<small>팽창</small></span><span class="st" style="--i:3">❄️<small>증발기</small></span></div></div>
-        <div class="e5 f3"><p class="e-t">냉각판이 전기를 아껴요</p>
-          <div class="gau"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M15 100a85 85 0 0 1 170 0"/></svg><i class="nd"></i><i class="hb"></i>
-            <p><s>1.6</s> → <b>1.2</b> PUE 👍</p></div></div>
-      </div>
-    </div>
-
-    <div class="feat">
-      <div class="txt rise"><span class="k">그림 · 표 풀이</span><h3>표를 읽어 주지 않고,<br>다시 그려 줍니다.</h3>
-        <p>AI가 그림을 직접 보고, 핵심 지표를 막대로 다시 그린 뒤 무엇이 무엇보다 얼마나, 왜 나은지 짚어 줍니다. 그래프면 축과 곡선의 흐름부터.</p></div>
-      <div class="demo fig" aria-label="표를 다시 그린 예">
-        <table aria-hidden="true"><tr><td>ByteNet</td><td>23.75</td></tr><tr><td>GNMT + RL</td><td>24.6</td></tr><tr><td>ConvS2S</td><td>25.16</td></tr><tr><td>MoE</td><td>26.03</td></tr><tr><td>Transformer (big)</td><td>28.4</td></tr></table>
-        <div class="arw" aria-hidden="true">→</div>
-        <div class="fx"><p class="h">EN-DE BLEU · 높을수록 좋음</p>
-          <div class="bar" style="--i:0"><span>ByteNet</span><span class="tr"><i style="--w:84%"></i></span><span>23.8</span></div>
-          <div class="bar" style="--i:1"><span>GNMT + RL</span><span class="tr"><i style="--w:87%"></i></span><span>24.6</span></div>
-          <div class="bar" style="--i:2"><span>ConvS2S</span><span class="tr"><i style="--w:89%"></i></span><span>25.2</span></div>
-          <div class="bar best" style="--i:3"><span>Transformer</span><span class="tr"><i style="--w:100%"></i></span><span>28.4</span></div>
-          <div class="cmp"><b>Transformer › ConvS2S 앙상블</b><em>BLEU +2.0 · 학습 비용 약 1/3</em>재귀 없이 어텐션만 써서 한꺼번에 계산합니다.</div></div>
-      </div>
-    </div>
-
-    <div class="feat">
-      <div class="txt rise"><span class="k">인용 번호</span><h3>[35] 를 누르면,<br>그 논문이 한 줄로.</h3>
-        <p>참고문헌을 찾아 쉽게 요약하고, 여기서 왜 인용했는지도. ☆ 하나로 내 참고문헌에 담아 두면, 나중에 내 논문을 쓸 때 다시 찾지 않아도 됩니다.</p></div>
-      <div class="demo cite" aria-label="인용 번호를 누른 예">
-        <p class="src">Recurrent models have been firmly established as state of the art in language modeling and machine translation <span class="cr">[35, 2, 5]</span>.</p>
-        <div class="pop"><b>[35] Sequence to Sequence Learning with Neural Networks</b><small>Sutskever · 2014 · NeurIPS</small>
-          <span><b style="display:inline;font:600 13.5px var(--sans)">쉽게 말하면</b> 문장 전체를 한 번 읽고 다른 언어 문장을 통째로 만들어 내는 신경망.</span>
-          <br><span class="sv">☆ 내 참고문헌에 담기</span></div>
-      </div>
-    </div>
-
-    <div class="feat">
-      <div class="txt rise"><span class="k">손글씨 필기</span><h3>AI 답이,<br>그 문장 옆에 필기로.</h3>
-        <p>질문하면 답의 요점을 근거 문장 바로 아래에 수업 필기처럼 적어 둡니다. 다시 펼치면 그대로 있습니다.</p></div>
-      <div class="demo note" aria-label="손글씨 필기의 예">
-        <span class="ask">셀프 어텐션이 뭐야?</span>
-        <p class="src"><span class="mk">Self-attention is an attention mechanism relating different positions of a single sequence</span> in order to compute a representation of the sequence.</p>
-        <p class="hw hand">→ 한 문장 안에서 <u>단어끼리 서로 보기</u></p>
-        <p class="hw hand">RNN 처럼 차례 X → 한꺼번에 병렬 ✓</p>
-      </div>
+    <div class="top"><h2 class="rise">다른 번역기에는 <span class="gold">없는 것.</span></h2></div>
+    <div class="clips">
+      <figure class="clip rise"><div class="clipv" data-src="media/use-first.mp4" data-seg="0.3,4.1" data-crop=".52,.07,.44"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>쉽게 말하면</b>논문마다 다른 그림 한 쪽. 큰 그림부터.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-first.mp4" data-seg="9.5,18" data-crop=".01,.3,.5"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>문장 아래 번역</b>막히는 문장만 아래로. 낱말은 눌러서.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-meeting.mp4" data-seg="5.5,14" data-crop=".54,0,.45"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>그림 · 표 풀이</b>다시 그려서, 무엇이 얼마나 왜.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-talk.mp4" data-seg="2.6,12.4" data-crop=".065,0,.54"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>수식 풀이</b>기호마다 색, 계산 예까지.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-seg="6.5,13" data-crop=".17,.02,.66"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>뜻으로 모아 읽기</b>한 주제만 골라 이어 읽기.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-seg="21,25.6" data-crop=".01,.3,.5"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>인용 한 줄</b>[30] 을 누르면 그 논문이 한 줄로.</figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- 장면 3 — 주제로 모아 읽기 -->
-<section class="scene auto" id="topic" data-scene="topic" data-dur="5" aria-label="주제로 모아 읽기">
-  <div class="stage">
-    <div class="t-head"><h2>뜻으로 모아 읽기.</h2><p class="t-sub">그 말이 없어도 같은 이야기를 하는 문단까지 모아, 그 부분만 이어 읽습니다.</p><div class="query"><span>⌕ 셀프 어텐션</span><span class="n" id="t-n">0곳</span></div></div>
-    <div class="t-body">
-      <div class="minis" id="minis">
-        <div class="mini"><h4>배경</h4><i class="ln"></i><i class="ln m"></i><i class="ln hit"></i><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><i class="ln s"></i></div>
-        <div class="mini"><h4>모델</h4><i class="ln"></i><i class="ln hit"></i><i class="ln m"></i><i class="ln hit"></i><i class="ln"></i><i class="ln s"></i><i class="ln m"></i></div>
-        <div class="mini"><h4>왜 셀프 어텐션</h4><i class="ln m"></i><i class="ln"></i><i class="ln s"></i><i class="ln hit"></i><i class="ln m"></i><i class="ln hit"></i><i class="ln"></i></div>
-        <div class="mini"><h4>결론</h4><i class="ln"></i><i class="ln hit"></i><i class="ln m"></i><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><i class="ln s"></i></div>
-      </div>
-      <div class="list" id="list">
-        <p class="g">2. 배경</p>
-        <div class="it"><mark>Self-attention</mark>, sometimes called intra-attention, is an attention mechanism…</div>
-        <p class="g">3. 모델</p>
-        <div class="it">The encoder contains <mark>self-attention</mark> layers…</div>
-        <p class="g">4. 왜 셀프 어텐션인가</p>
-        <div class="it">As side benefit, <mark>self-attention</mark> could yield more interpretable models.</div>
-        <p class="g">5. 학습 <span class="ai">AI · 말은 달라도 같은 이야기</span></p>
-        <div class="it">The Transformer allows for significantly more parallelization…</div>
-        <p class="g">7. 결론</p>
-        <div class="it">We are excited about the future of <mark>attention</mark>-based models…</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 기능 -->
-<section class="bento-sec" id="bento">
+<!-- AI 사서 — 정식판 기준으로 소개한다(구독 없이도 Cresco AI). 지금 베타는 각자의 계정으로 — 작게 밝힌다 -->
+<section class="ai-sec" id="ai">
   <div class="in">
-    <h2 class="rise">그리고, 읽는 데 필요한 것.</h2>
-    <p class="lead rise">한국어로 넣어도, 영어로 넣어도. 이미 쓰는 AI 구독으로.</p>
-    <div class="bento">
-      <div class="cell wide rise"><span class="k">번역</span><h3>원문 바로 아래,<br>한 문장씩.</h3><p>문장마다 · 문단마다 · 누를 때만. 넓은 화면은 옆에 나란히.</p>
-        <div class="vis v-tr">The Transformer follows this overall architecture using stacked self-attention.<small>트랜스포머는 셀프 어텐션을 쌓아 이 전체 구조를 따른다.</small></div></div>
-      <div class="cell rise"><span class="k">기호</span><h3>기호가<br>말을 합니다.</h3><div class="vis v-sym">d<sub style="font-size:.5em">k</sub></div></div>
-      <div class="cell rise"><span class="k">번역은 한 번</span><div class="vis v-big">1회</div><p>논문 한 편에 한 번 번역해 저장합니다. 같은 문장을 다시 부르지 않습니다.</p></div>
-      <div class="cell wide rise"><span class="k">질문</span><h3>논문에게 묻고,<br>근거 문장에 핀.</h3>
-        <div class="vis bub"><span>셀프 어텐션을 그림으로 설명해 줘</span><span>쿼리 · 키 · 값의 흐름을 개략도로 그렸어요. 근거는 p.4 의 식 (1) 입니다.</span></div></div>
-      <div class="cell rise"><span class="k">낱말 · 문장</span><h3>누르면 낱말,<br>끌면 문장.</h3><p>낱말 카드와 단어장. 끌어 고르면 핵심 문장 · 형광펜 · 메모.</p></div>
-      <div class="cell rise"><span class="k">서재 · 책갈피</span><h3>책장이 열리는<br>서재.</h3><p>읽던 문장에서 이어 읽습니다. 🔖 책갈피를 꽂고, 목차·기록으로 다녀와도 ↩ 한 번에 돌아옵니다.</p></div>
-      <div class="cell rise"><span class="k">어디서나</span><h3>PC · 태블릿 ·<br>아이폰.</h3><p>태블릿은 PC와 서재를 주고받습니다. 펜 필기도.</p></div>
+    <div class="ai-top">
+      <span class="eyebrow rise">AI 사서</span>
+      <h2 class="rise">막히면, <span class="gold">사서에게.</span></h2>
+      <p class="rise">논문 안에서 답을 찾아 근거 쪽을 달고, 요점은 문장 곁에 손글씨로.</p>
     </div>
+    <div class="win rise"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — 사서</span></div>
+      <video id="ai-video" muted playsinline loop preload="none" poster="media/librarian.jpg" src="media/librarian.mp4" aria-label="사서에게 묻는 실제 Cresco 화면 녹화"></video></div>
+    <p class="ai-pts rise"><span>[p.6] 근거 쪽 고리</span><span>✍ 손글씨 필기</span><span>이 논문에서 · 더 넓게</span></p>
+    <p class="beta-note rise">지금 베타는 각자의 Claude · ChatGPT 계정으로 씁니다. 정식판은 구독 없이도 — <a href="#plans">요금제</a></p>
   </div>
 </section>
 
 <!-- 장면 4 — 쓰는 법 -->
 <section class="scene auto" id="how" data-scene="how" data-dur="9" data-loop="1" aria-label="쓰는 법">
   <div class="stage">
-    <div class="how-h"><h2>PDF 하나 올리면, 끝.</h2><div class="dots" id="dots"><i></i><i></i><i></i></div></div>
+    <div class="how-h"><h2>PDF 하나 올리면, 끝.</h2>
+      <div class="steps" id="steps" role="group" aria-label="단계"><button type="button" data-i="0">① 올리기</button><button type="button" data-i="1">② 배경에서 번역</button><button type="button" data-i="2">③ 책으로 읽기</button><button type="button" class="ctl" id="how-pause" aria-label="멈춤">Ⅱ</button></div></div>
     <div class="device" aria-hidden="true">
       <div class="scr" data-s="0"><div class="drop">PDF를 여기에<div class="pdf" id="pdf">PDF</div></div></div>
       <div class="scr" data-s="1"><div class="prog"><b id="prog-t">번역하는 중 — 0/12쪽</b><div class="track"><i id="prog-i"></i></div><span>그동안에도 원문을 읽을 수 있습니다</span></div></div>
@@ -549,42 +510,124 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
       <div><b>배경에서 통번역</b><span>고른 언어로 한 번 번역해 저장합니다.</span></div>
       <div><b>책으로 읽기</b><span>덮으면 읽던 문장을 기억합니다. 다른 기기에서도.</span></div>
     </div>
+    <p class="extras"><b>그리고</b><span>번역은 논문마다 한 번</span><span>기호를 누르면 뜻</span><span>형광펜 · ★ · 메모</span><span>단어장</span><span>책갈피</span><span>펜 필기</span></p>
   </div>
 </section>
 
+<!-- 내 데이터 — '내 컴퓨터에만'이 아니다: 번역할 때 그 글은 내 AI 구독으로 간다. 그대로 밝힌다 -->
 <section class="statement light" id="local">
-  <h2 class="rise">논문은, <span class="gold">내 컴퓨터에만.</span></h2>
-  <p class="rise">논문 · 번역 · 형광펜 · 단어는 파일 하나에. 번역은 내가 로그인해 둔 Claude Code 또는 Codex 가 합니다. Cresco는 비밀번호도, API 키도 받지 않습니다.</p>
+  <h2 class="rise">서재는, <span class="gold">내 컴퓨터에만.</span></h2>
+  <p class="rise">번역할 때만, 그 글이 내 AI 로 갑니다.</p>
+  <div class="where rise">
+    <div class="box home"><h3>내 컴퓨터</h3><p>PDF · 번역 · 기록 · 사서 대화 — 파일 하나</p><span class="tag">모두 여기에</span></div>
+    <div class="arrow" aria-hidden="true"><b>→</b>번역 · 풀이할<br>글만</div>
+    <div class="box ai"><h3>내 AI 구독</h3><p>Claude 또는 ChatGPT, 내 계정으로</p><span class="tag">내 계정으로</span></div>
+    <div class="box dev"><h3>Cresco 개발자</h3><p>동의하면 익명 사용 횟수만</p><span class="tag">논문은 받지 않음</span></div>
+  </div>
+  <p class="fine rise">정식판의 Cresco AI · 동기화가 서버에 두는 것은 출시 때 개인정보처리방침에 밝힙니다.</p>
 </section>
 
 <!-- 기기 사이: 태블릿·안드로이드 앱은 「PC와 주고받기」(설정) — 받기는 PC 서재 통째로, 보내기는 바뀐 것만. 아이폰은 PC 서버를 연다 -->
 <section class="statement" id="sync">
   <h2 class="rise">PC와 휴대폰, <span class="gold">같은 서재.</span></h2>
-  <p class="rise">PC에서 번역·풀이를 만들어 두면, 태블릿·휴대폰 앱이 버튼 한 번으로 받아 PC 없이 읽습니다. 밖에서 칠한 형광펜·필기·메모는 PC로 보내 합칩니다. 아이폰은 같은 와이파이에서 PC의 서재를 그대로 엽니다.</p>
+  <p class="rise">PC 에서 만든 번역을 휴대폰이 받아 읽고, 밖에서 칠한 기록은 PC 로.</p>
+</section>
+
+<!-- 정식 출시 · 요금제 — 아직 정식 발표 전. 횟수·가격은 적지 않는다(정해지면).
+     경계는 'AI 를 누가 내느냐': 내 구독을 연결하면 무료로도 거의 다, 구독 없이·휴대폰만·여러 기기면 Pro. -->
+<section class="plans" id="plans">
+  <div class="in">
+    <span class="eyebrow rise">정식 출시 준비 중</span>
+    <h2 class="rise">정식판은, <span class="gold">이렇게 나옵니다.</span></h2>
+    <p class="lead rise">지금은 정식 발표 전 무료 베타입니다. 날짜와 가격은 정해지는 대로 여기에.</p>
+    <div class="soon">
+      <div class="rise"><span class="k">스토어</span><h3>앱스토어 ·<br>플레이스토어.</h3><p>아이폰도 PC 없이 혼자.</p></div>
+      <div class="rise"><span class="k">Cresco AI</span><h3>구독이 없어도,<br>휴대폰만으로도.</h3><p>Claude · ChatGPT 구독 없이 번역 · 풀이 · 사서.</p></div>
+      <div class="rise"><span class="k">동기화</span><h3>어디서나,<br>같은 서재.</h3><p>내 계정으로, 같은 와이파이가 아니어도.</p></div>
+    </div>
+
+    <p class="nowbeta rise"><b>지금 베타에서는</b> 아래 기능이 모두 무료로 켜져 있습니다 — AI 는 각자의 Claude · ChatGPT 계정으로, 논문 3편까지.</p>
+    <div class="cmp-wrap rise">
+      <table class="cmp">
+        <caption class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">정식판 요금제별 기능 (계획)</caption>
+        <colgroup><col class="f"><col><col></colgroup>
+        <thead><tr><th scope="col">정식판 요금제</th>
+          <th scope="col"><b>무료</b><small>내 AI 구독을 연결해서</small></th>
+          <th scope="col"><b>Pro</b><small>구독 없이도 · 휴대폰만으로도</small></th></tr></thead>
+        <tbody>
+          <tr class="grp"><th colspan="3" scope="colgroup">읽기 · 기록</th></tr>
+          <tr><th scope="row">서재 · 책으로 읽기 · 문장 아래 번역 보기</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">형광펜 · ★ · 메모 · 책갈피 · 펜 필기</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">단어장 · 낱말 뜻</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">형광펜 PDF · 인용 복사 (APA · BibTeX)</th><td class="y">✓</td><td class="y">✓</td></tr>
+
+          <tr class="grp"><th colspan="3" scope="colgroup">AI — 내 Claude · ChatGPT 구독으로 <small>(PC 에서)</small></th></tr>
+          <tr><th scope="row">통번역 · 쉽게 말하면 · 그림 · 표 · 수식 풀이 · 사서</th><td class="y">✓</td><td class="y">✓</td></tr>
+
+          <tr class="grp"><th colspan="3" scope="colgroup">AI — Cresco AI <small>(구독 없이 · 휴대폰만으로도)</small></th></tr>
+          <tr><th scope="row">통번역 · 쉽게 말하면 · 그림 · 표 · 수식 풀이 · 사서</th><td class="t">출시 후 확정</td><td class="y">✓</td></tr>
+
+          <tr class="grp"><th colspan="3" scope="colgroup">기기 · 동기화</th></tr>
+          <tr><th scope="row">Windows · Mac · 아이폰 · 아이패드 · 안드로이드 앱</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">어디서나 동기화 (내 계정으로 PC ↔ 휴대폰)</th><td class="n">—</td><td class="y">✓</td></tr>
+
+          <tr class="price"><th scope="row">가격</th><td>0원</td><td class="t">미공개</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine rise">정식 출시를 위한 계획입니다. Pro 의 가격과 사용량, 무료에서 Cresco AI 를 얼마나 써 볼 수 있는지, 그 밖의 기능 구분은 출시 후 확정합니다.</p>
+  </div>
+</section>
+
+<!-- 자주 묻는 질문 — 받기 전에 걸리는 것부터. 답은 실제 동작 그대로 (기능 설명은 실제 기능만) -->
+<section class="faq" id="faq">
+  <div class="in">
+    <h2 class="rise">자주 묻는 질문</h2>
+    <details><summary>정식판은 언제, 얼마에 나오나요?</summary>
+      <p>아직 정식 발표 전입니다. 날짜와 가격은 베타 의견을 받아 정하고, 정해지는 대로 이 홈페이지에 알립니다. 정식판은 앱스토어 · 플레이스토어와 이 홈페이지에서 받고, 요금제는 무료와 Pro 로 나눌 계획이고, 가격은 출시 후 확정합니다. 내 AI 구독을 연결하면 무료로도 거의 모든 기능을 쓰도록 할 생각입니다. <a href="#plans">요금제 보기</a></p></details>
+    <details><summary>베타에서 쓰던 서재는 정식판으로 옮겨지나요?</summary>
+      <p>옮겨지도록 만들고 있습니다. 서재는 파일 하나라, 정식판이 그 파일을 그대로 이어 읽게 합니다.</p></details>
+    <details><summary>정말 무료인가요? 제한이 있나요?</summary>
+      <p>베타는 무료입니다. 각 베타 판은 나온 날부터 60일 동안 쓰고, 논문은 3편까지 올릴 수 있습니다(올린 횟수로 세므로 서재에서 빼도 다시 늘지 않습니다). 기한이 지나도 이미 담은 논문은 그대로 읽을 수 있고, 새 판을 받으라고 안내합니다.</p></details>
+    <details><summary>Claude 나 ChatGPT 구독이 꼭 있어야 하나요?</summary>
+      <p>번역 · 풀이 · 사서 질문에는 필요합니다. 이 컴퓨터에 Claude Code(Claude 구독) 또는 Codex(ChatGPT 구독)가 로그인돼 있으면 Cresco 가 그쪽에 맡기고, 처음 켤 때 연결을 안내합니다. 구독이 없어도 견본 논문으로 모든 기능을 미리 볼 수 있고, 내 PDF 를 책으로 읽기 · 형광펜 · 단어장은 됩니다. 정식판에서는 구독 없이도 Cresco AI 로 쓸 수 있게 할 계획입니다.</p></details>
+    <details><summary>내 논문이 다른 곳으로 가나요?</summary>
+      <p>서재는 내 컴퓨터에만 있습니다. 번역하고 풀이할 때 그 부분의 글만 내 AI 구독(Claude · ChatGPT)으로 가고, Cresco 개발자는 논문을 받지 않습니다. <a href="#local">자세히</a></p></details>
+    <details><summary>어떤 PDF 가 되나요?</summary>
+      <p>학술지 · arXiv 에서 받은, 글자를 고를 수 있는 PDF 면 됩니다. 수식 · 그림 · 표가 많은 공학 논문으로 다듬었습니다. 종이를 스캔해 글자가 그림으로 된 PDF 는 번역할 수 없습니다.</p></details>
+    <details id="faq-iphone"><summary>태블릿 · 휴대폰에서도 되나요?</summary>
+      <p>안드로이드 휴대폰 · 태블릿은 앱이 혼자 돕니다. 번역 · 풀이는 PC 에서 만들어 「PC와 주고받기」로 받고, 밖에서 칠한 형광펜 · 필기는 PC 로 보내 합칩니다. 아이폰은 앱 대신, PC 에서 Cresco 를 켜 둔 채 같은 와이파이에서 Safari 로 PC 의 서재를 엽니다(「홈 화면에 추가」하면 앱처럼).</p></details>
+    <details><summary>Mac 에서 «확인되지 않은 개발자»라며 열리지 않아요.</summary>
+      <p>아직 Apple 서명을 받지 않은 베타라서 그렇습니다. 한 번만 시스템 설정 → 개인정보 보호 및 보안 → 「그래도 열기」를 누르면 됩니다. 인텔 Mac 은 <a href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-mac-intel.dmg">인텔용</a>을 받으세요.</p></details>
+    <details><summary>새 판이 나오면 서재는 어떻게 되나요?</summary>
+      <p>새 설치 파일을 그대로 설치하면 됩니다. 서재는 프로그램 밖(문서 폴더)에 있어 논문 · 번역 · 형광펜이 그대로 남습니다.</p></details>
+    <details><summary>문제가 생기거나 바라는 기능이 있어요.</summary>
+      <p>앱 서재의 「✉ 의견 보내기」나 <a href="https://docs.google.com/forms/d/e/1FAIpQLScSkAJMExMRvsqdNgwN7c0etRT8uiJ2nZrkGeYYwZ1YKiH2eQ/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
+  </div>
 </section>
 
 <section class="statement beta" id="beta">
   <img class="rise" src="cresco-ivory.svg" alt="">
   <h2 class="rise">지금 받아 보세요.</h2>
-  <p class="rise">베타판 · 60일 동안 쓸 수 있습니다. 번역은 내 Claude 또는 ChatGPT 구독으로.</p>
+  <p class="rise">무료 베타 · 60일 · 논문 3편까지. 번역은 내 Claude 또는 ChatGPT 구독으로.</p>
   <!-- 늘 최신 릴리스의 같은 이름 파일 — 새 판을 올리면 단추는 그대로 새 판을 받는다 -->
   <div class="dl rise">
-    <a class="dlbtn" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-Setup.exe" target="_blank" rel="noopener">
+    <a class="dlbtn" data-os="win" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-Setup.exe" target="_blank" rel="noopener">
       <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5l7.5-1v7H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg>
       <span><b>Windows용 받기</b><small>설치 파일 · 36MB · Windows 10/11</small></span></a>
-    <a class="dlbtn" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-mac.dmg" target="_blank" rel="noopener">
+    <a class="dlbtn" data-os="mac" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-mac.dmg" target="_blank" rel="noopener">
       <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>
       <span><b>Mac용 받기</b><small>Apple Silicon (M1 이후) · dmg</small></span></a>
-    <a class="dlbtn" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-android.apk" target="_blank" rel="noopener">
+    <a class="dlbtn" data-os="android" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-android.apk" target="_blank" rel="noopener">
       <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M10 18h4"/></svg>
       <span><b>안드로이드 받기</b><small>휴대폰 · 태블릿 · APK · 31MB</small></span></a>
   </div>
-  <p class="dl-note rise">아이폰은 PC에서 Cresco를 켠 채, 같은 와이파이에서 Safari로 엽니다. · <a href="https://github.com/cresco-reader/cresco/releases/latest">바뀐 점 보기</a></p>
+  <p class="dl-note rise">아이폰은 PC에서 Cresco를 켠 채, 같은 와이파이에서 Safari로 엽니다.</p>
   <p class="dl-note rise">Mac: 처음 열 때 «확인되지 않은 개발자»로 막히면 시스템 설정 → 개인정보 보호 및 보안 → 「그래도 열기」. 인텔 Mac은 <a href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-mac-intel.dmg">여기</a>.</p>
 </section>
 </main>
 
-<footer><div class="in"><span>© 2026 Cresco</span><span>예시 논문: Vaswani et al., “Attention Is All You Need”, NeurIPS 2017 (arXiv:1706.03762) — 짧은 인용</span><span>Windows · Mac · Android · iPhone(같은 와이파이) · <button type="button" id="motion" class="motion">움직임 끄기</button></span></div></footer>
+<footer><div class="in"><span>© 2026 Cresco</span><span>예시 논문: Vaswani et al., “Attention Is All You Need”, NeurIPS 2017 (arXiv:1706.03762) — 짧은 인용</span><span>Windows · Mac · Android · iPhone(같은 와이파이) · <a href="https://docs.google.com/forms/d/e/1FAIpQLScSkAJMExMRvsqdNgwN7c0etRT8uiJ2nZrkGeYYwZ1YKiH2eQ/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <button type="button" id="motion" class="motion">움직임 끄기</button></span></div></footer>
 
 <script>
 (() => {
@@ -653,27 +696,8 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     caps.forEach(x => x.classList.toggle('on', +x.dataset.cap === at));
   };
 
-  // 장면 3 — 흩어진 자리가 켜지고(곳 수가 오른다), 목록으로 모인다
-  const hits = $$('#topic .ln.hit'), its = $$('#list .it'), list = $('#list'), minis = $('#minis'), tn = $('#t-n');
-  const scene3 = p => {
-    let n = 0;
-    hits.forEach((h, i) => { const on = p > .08 + i * .07; h.classList.toggle('on', on); n += on; });
-    tn.textContent = `${n}곳`;
-    const g = seg(p, .55, .66);
-    list.style.opacity = g;
-    list.style.transform = phone() ? `translateY(${(1 - g) * 24}px)` : `translateX(${(1 - g) * 40}px)`;
-    minis.style.opacity = 1 - .5 * g;
-    its.forEach((it, i) => {
-      const t = seg(p, .62 + i * .06, .67 + i * .06);
-      it.style.opacity = t;
-      it.style.transform = `translateY(${(1 - t) * 10}px)`;
-    });
-    const cur = Math.min(its.length - 1, Math.floor(seg(p, .88, 1) * its.length));
-    its.forEach((it, i) => it.classList.toggle('cur', p > .88 && i === cur));
-  };
-
   // 장면 4 — 올리기(PDF 가 떨어진다) → 통번역(막대가 찬다) → 책
-  const dots = $$('#dots i'), scrs = $$('.scr'), texts = $$('.how-t div'), pdf = $('#pdf'), pi = $('#prog-i'), pt = $('#prog-t');
+  const dots = $$('#steps [data-i]'), scrs = $$('.scr'), texts = $$('.how-t div'), pdf = $('#pdf'), pi = $('#prog-i'), pt = $('#prog-t');
   const scene4 = p => {
     const at = p < .34 ? 0 : p < .67 ? 1 : 2;
     [dots, scrs, texts].forEach(l => l.forEach((x, i) => x.classList.toggle('on', i === at)));
@@ -684,60 +708,140 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     pt.textContent = t >= 1 ? '번역 끝 — 12/12쪽' : `번역하는 중 — ${Math.floor(t * 12)}/12쪽`;
   };
 
-  const RUN = {book: scene1, topic: scene3, how: scene4};
-  const scenes = $$('.scene:not(.auto)');
-  // 매끄럽게: 마우스 휠은 한 칸에 100px 씩 뛴다 — 진행을 스크롤 자리로 바로 옮기면 장면이 계단처럼 끊긴다.
-  // 그래서 매 프레임 남은 거리의 일부만 따라간다(관성). 다 따라잡으면 그린다를 멈춘다.
-  const target = s => {
-    const total = s.offsetHeight - s.querySelector('.stage').offsetHeight;
-    return still || total <= 0 ? (s.dataset.scene === 'book' ? .9 : 1) : clamp(-s.getBoundingClientRect().top / total);
-  };
-  let running = false;
-  const frame = (snap = false) => {
-    let moving = false;
-    for (const s of scenes) {
-      const t = target(s);
-      let c = s._c ?? t;
-      c = snap ? t : c + (t - c) * .14;
-      if (Math.abs(t - c) < .0004) c = t; else moving = true;
-      s._c = c;
-      if (s._p === c) continue;
-      s._p = c;
-      RUN[s.dataset.scene](c);
-    }
-    running = moving;
-    if (moving) requestAnimationFrame(() => frame());
-  };
-  addEventListener('scroll', () => { if (!running) { running = true; requestAnimationFrame(() => frame()); } }, {passive: true});
-  addEventListener('resize', () => { fitBook(); scenes.forEach(s => s._p = -1); frame(true); });
+  const RUN = {how: scene4};
+  // 첫 장면은 스크롤에 걸지 않는다 — 한참 스크롤해야 넘어가 끝이 어색했다(피드백). 저절로 흐른다:
+  // 로고·제목(받기 단추를 누를 수 있게 4.5초) → 책장으로 다가가 책이 열리고 번역·주제·기호(14초) → 3.5초 멈춤 → 처음으로.
+  // 화면에서 벗어나면 멈추고, 돌아오면 이어서. 움직임을 끈 기기는 제목 화면 그대로.
+  const sb = $('#s-book');
+  addEventListener('resize', fitBook);
   fitBook();
-  frame(true);
+  if (still) scene1(0);
+  else {
+    const HOLD0 = 4.5, PLAY = 14, HOLD1 = 3.5, ALL = HOLD0 + PLAY + HOLD1;
+    let el = 0, prev = 0, vis = true, raf = 0;
+    const step = now => {
+      raf = 0;
+      if (!vis) { prev = 0; return; }
+      el += prev ? Math.min(1, (now - prev) / 1000) : 0;   // 탭을 떠났다 오면 한꺼번에 건너뛰지 않게 (1초까지만)
+      prev = now;
+      if (el >= ALL) {                                   // 처음으로 — 잠깐 어둡게 걷었다가
+        el = 0;
+        st1.classList.add('fade');
+        setTimeout(() => { scene1(0); film.currentTime = 0; film.play().catch(() => {}); st1.classList.remove('fade'); }, 600);
+      }
+      if (el > .7) scene1(el < HOLD0 ? 0 : el < HOLD0 + PLAY ? (el - HOLD0) / PLAY : 1);
+      raf = requestAnimationFrame(step);
+    };
+    scene1(0);
+    new IntersectionObserver(es => es.forEach(e => {
+      vis = e.isIntersecting;
+      if (vis && !raf) raf = requestAnimationFrame(step);
+      if (!vis) film.pause(); else if (el < HOLD0 + 1) film.play().catch(() => {});
+    }), {threshold: .25}).observe(sb);
+  }
 
   // 걸어 두지 않는 장면: 화면에 들어오면 시간으로 0→1 한 번 (쓰는 법은 되풀이)
   $$('.scene.auto').forEach(s => {
     const run = RUN[s.dataset.scene], dur = +s.dataset.dur * 1000;
-    run(still ? 1 : 0);
-    if (still) return;
-    let t0 = 0, on = false;
+    let t0 = 0, on = false, paused = still, at = still ? 1 : 0;
+    run(at);
+    // 단계 단추가 그 자리로 옮기고(_seek), 멈춤 단추가 세운다(_pause). 움직임을 끈 기기는 누른 단계를 그대로 보인다.
+    s._seek = p => { at = p; t0 = performance.now() - p * dur; run(p); };
+    s._pause = v => { paused = v; if (!v && on) { t0 = performance.now() - at * dur; requestAnimationFrame(tick); } };
     const tick = now => {
-      if (!on) return;
+      if (!on || paused) return;
       t0 ||= now;
       let p = (now - t0) / dur;
       if (p >= 1 && s.dataset.loop) { t0 = now; p = 0; }
-      run(Math.min(1, p));
+      at = Math.min(1, p);
+      run(at);
       if (p < 1 || s.dataset.loop) requestAnimationFrame(tick);
     };
+    if (still) return;
     new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting && !on) { on = true; t0 = 0; requestAnimationFrame(tick); }
       else if (!e.isIntersecting) on = false;
     }), {threshold: .35}).observe(s);
   });
-  // Cresco만의 것: 실연은 보일 때만 돈다
-  const demoIo = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in-view', e.isIntersecting)), {threshold: .3});
-  $$('.feat').forEach(f => demoIo.observe(f));
+  // 기능 타일: 쓰임새 녹화의 한 구간(data-seg)을 확대(data-crop)해 되풀이한다 — 보일 때만 받고 돈다.
+  // 누르면 그 상황의 큰 영상으로 (쓰임새 칸).
+  $$('.clip .clipv').forEach(cv => {
+    const [x, y, w] = cv.dataset.crop.split(',').map(Number), [a, b] = cv.dataset.seg.split(',').map(Number);
+    cv.style.setProperty('--x', x); cv.style.setProperty('--y', y); cv.style.setProperty('--w', w);
+    const v = cv.querySelector('video');
+    const at = () => { if (v.currentTime < a - .2 || v.currentTime > b) v.currentTime = a; };
+    v.addEventListener('timeupdate', () => { if (v.currentTime >= b) v.currentTime = a; });
+    v.addEventListener('loadedmetadata', () => { v.currentTime = still ? (a + b) / 2 : a; });
+    const load = () => { if (!v.src) { v.src = cv.dataset.src; v.load(); } };
+    if (still) { new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { load(); o.disconnect(); } }), {rootMargin: '200px'}).observe(cv); }
+    else new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { load(); at(); v.play().catch(() => {}); } else v.pause();
+    }), {threshold: .4}).observe(cv);
+    cv.onclick = () => {
+      const i = tabs.findIndex(t => cv.dataset.src.endsWith(t.dataset.v + '.mp4'));
+      $('#uses').scrollIntoView({behavior: still ? 'auto' : 'smooth'});
+      if (i >= 0) pickUse(i, true);
+    };
+  });
 
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .15});
   $$('.rise').forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; still ? el.classList.add('in') : io.observe(el); });
+
+  // 쓰임새: 상황을 고르면 그 녹화를, 끝나면 다음 상황으로. 화면에 보일 때만 돈다(안 보이면 멈추고 받지도 않는다 — preload none).
+  // 움직임을 끈 기기는 저절로 돌리지 않고 재생 단추(controls)를 준다.
+  const tabs = $$('#uses .tab'), uv = $('#use-video'), ud = $('#use-desc');
+  let ui = 0, useSeen = false;
+  const pickUse = (i, play) => {
+    ui = i;
+    tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.querySelector('.prog').style.width = '0'; });
+    const v = tabs[i].dataset.v;
+    if (!uv.src.endsWith(`media/${v}.mp4`)) { uv.poster = `media/${v}.jpg`; uv.src = `media/${v}.mp4`; }
+    ud.innerHTML = tabs[i].querySelector('.more').innerHTML;
+    if (play) uv.play().catch(() => {});
+  };
+  tabs.forEach((t, i) => t.onclick = () => pickUse(i, !still || useSeen));
+  uv.addEventListener('timeupdate', () => { tabs[ui].querySelector('.prog').style.width = `${uv.currentTime / uv.duration * 100 || 0}%`; });
+  uv.addEventListener('ended', () => pickUse((ui + 1) % tabs.length, true));
+  pickUse(0, false);
+  const aiv = $('#ai-video');
+  // 휴대폰에선 녹화 속 앱 글씨가 작다 — 누르면 전체 화면으로 (아이폰은 webkitEnterFullscreen)
+  [uv, aiv].forEach(v => v.addEventListener('click', () => {
+    if (v.controls) return;
+    (v.requestFullscreen?.() || v.webkitEnterFullscreen?.())?.catch?.(() => {});
+    v.play().catch(() => {});
+  }));
+  if (still) { uv.controls = aiv.controls = true; uv.preload = aiv.preload = 'metadata'; }
+  else {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { useSeen = true; e.target.play().catch(() => {}); } else e.target.pause();
+    }), {threshold: .45});
+    vio.observe(uv);
+    vio.observe(aiv);
+  }
+
+  // 쓰는 법: 단계 단추 → 그 단계로, Ⅱ → 멈춤·다시
+  const how = $('#how'), hp = $('#how-pause');
+  let held = still;
+  const holdBtn = () => { hp.textContent = held ? '▶' : 'Ⅱ'; hp.setAttribute('aria-label', held ? '다시 재생' : '멈춤'); };
+  $$('#steps [data-i]').forEach(b => b.onclick = () => how._seek([.05, .4, .72][+b.dataset.i]));
+  hp.onclick = () => { held = !held; how._pause(held); holdBtn(); };
+  holdBtn();
+
+  // 첫 화면의 받기 단추: 이 기기에 맞는 설치 파일을 바로 (모르는 기기·아이폰은 아래 안내로).
+  // 아래 받기 칸도 이 기기 것을 맨 앞(진한 단추)에 둔다. 맥은 칩을 가릴 수 없어 Apple Silicon 판 — 인텔은 아래 링크.
+  const ua = navigator.userAgent;
+  const os = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? 'ios'
+    : /Android/.test(ua) ? 'android' : /Windows/.test(ua) ? 'win' : /Macintosh|Mac OS X/.test(ua) ? 'mac' : '';
+  const mine = $(`.dlbtn[data-os="${os}"]`), hero = $('#hero-dl');
+  if (mine) {
+    mine.parentNode.prepend(mine);
+    hero.href = mine.href;
+    hero.textContent = mine.querySelector('b').textContent;
+  } else if (os === 'ios') {
+    hero.href = '#faq-iphone';
+    hero.textContent = '아이폰에서 쓰는 법';
+    hero.addEventListener('click', () => { $('#faq-iphone').open = true; });
+  }
 })();
 </script>
 </body>
