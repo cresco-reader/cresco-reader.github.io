@@ -469,13 +469,13 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     <p class="lead rise">실제 Cresco 화면입니다.</p>
     <div class="player rise">
       <div class="tabs" role="tablist" aria-label="쓰임새">
-        <button type="button" class="tab" role="tab" aria-selected="true" data-v="use-first"><span class="when">처음 읽는 영어 논문</span><b>막힐 때만, 눈을 아래로.</b><i class="prog"></i>
+        <button type="button" class="tab" role="tab" aria-selected="true" data-v="use-first" data-t0=".5"><span class="when">처음 읽는 영어 논문</span><b>막힐 때만, 눈을 아래로.</b><i class="prog"></i>
           <span class="more"><span class="path"><span>쉽게 말하면</span><i>→</i><span>문장 아래 번역</span><i>→</i><span>낱말 카드</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-meeting"><span class="when">랩미팅 30분 전</span><b>결과만, 빠르게.</b><i class="prog"></i>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-meeting" data-t0=".5"><span class="when">랩미팅 30분 전</span><b>결과만, 빠르게.</b><i class="prog"></i>
           <span class="more"><span class="path"><span>쉽게 말하면</span><i>→</i><span>그림 · 표 풀이</span><i>→</i><span>사서</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-talk"><span class="when">세미나 · 논문 소개 발표</span><b>설명할 수 있을 만큼.</b><i class="prog"></i>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-talk" data-t0="1.5"><span class="when">세미나 · 논문 소개 발표</span><b>설명할 수 있을 만큼.</b><i class="prog"></i>
           <span class="more"><span class="path"><span>수식 풀이</span><i>→</i><span>끌어 고르기</span><i>→</i><span>★ 핵심 문장</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-review"><span class="when">선행연구 · 학위논문 정리</span><b>흩어진 이야기를, 한 줄로.</b><i class="prog"></i>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-review" data-t0=".9"><span class="when">선행연구 · 학위논문 정리</span><b>흩어진 이야기를, 한 줄로.</b><i class="prog"></i>
           <span class="more"><span class="path"><span>주제로 모아 읽기</span><i>→</i><span>인용 [30]</span><i>→</i><span>☆ 내 참고문헌</span></span></span></button>
       </div>
       <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
@@ -839,11 +839,16 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   // 움직임을 끈 기기는 저절로 돌리지 않고 재생 단추(controls)를 준다.
   const tabs = $$('#uses .tab'), uv = $('#use-video'), ud = $('#use-desc');
   let ui = 0, useSeen = false;
+  // 사람들은 이 칸을 휙 넘긴다 — 보이자마자 움직여야 한다: 녹화의 처음 멈춘 몫(data-t0)을 건너뛰고 조금 빠르게(1.15배)
+  const t0 = () => +tabs[ui].dataset.t0 || 0;
+  uv.addEventListener('loadedmetadata', () => { if (!still && uv.currentTime < t0()) uv.currentTime = t0(); });
+  uv.addEventListener('play', () => { uv.playbackRate = still ? 1 : 1.15; });
   const pickUse = (i, play) => {
     ui = i;
     tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.querySelector('.prog').style.width = '0'; });
     const v = tabs[i].dataset.v;
     if (!uv.src.endsWith(`media/${v}.mp4`)) { uv.poster = `media/${v}.jpg`; uv.src = `media/${v}.mp4`; }
+    else if (!still && uv.readyState) uv.currentTime = t0();
     ud.innerHTML = tabs[i].querySelector('.more').innerHTML;
     if (play) uv.play().catch(() => {});
   };
@@ -860,9 +865,18 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   }));
   if (still) { uv.controls = aiv.controls = true; uv.preload = aiv.preload = 'metadata'; }
   else {
+    // 미리 받아 둔다 — 화면에 들어오고 나서야 받기 시작하면 1~2초 멈춘 그림만 보였다
+    const pre = new IntersectionObserver((es, o) => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.preload = 'auto';
+      if (e.target.readyState < 2) e.target.load();
+      o.unobserve(e.target);
+    }), {rootMargin: '1000px 0px'});
+    pre.observe(uv);
+    pre.observe(aiv);
     const vio = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { useSeen = true; e.target.play().catch(() => {}); } else e.target.pause();
-    }), {threshold: .45});
+    }), {threshold: .2});
     vio.observe(uv);
     vio.observe(aiv);
   }
