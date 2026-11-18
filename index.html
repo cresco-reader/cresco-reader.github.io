@@ -12,7 +12,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://cresco-reader.github.io/">
 <meta property="og:title" content="Cresco — 영어 논문을, 책처럼">
-<meta property="og:description" content="문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서. 내 Claude·ChatGPT 구독으로, 또는 메일 로그인만으로. 무료 베타.">
+<meta property="og:description" content="문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서. 메일 로그인만으로 바로. 무료 베타.">
 <meta property="og:image" content="https://cresco-reader.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -337,7 +337,7 @@ html.still .vbox video{transition:none}
 .sky .pre:hover{text-decoration:none;background:rgba(224,184,96,.1)}
 .sky .pre + h1{margin-top:14px}
 
-/* 정식 출시 · 요금제 — 계획(안). 표의 묶음 줄(.grp)이 기능의 갈래, Pro 칸은 옅게 칠한다 */
+/* 정식 출시 · 요금제 — 계획(안). 표의 묶음 줄(.grp)이 기능의 갈래, 베이직 칸은 옅게 칠한다 */
 .plans{background:var(--white);color:var(--text-dark)}
 .plans > .in{max-width:1024px;margin:0 auto;padding:120px 22px}
 .plans .eyebrow{display:block;text-align:center;font-size:14px;font-weight:700;color:#9a7b3c}
@@ -352,7 +352,7 @@ html.still .vbox video{transition:none}
 .nowbeta b{color:#24385e}
 .cmp-wrap{margin-top:22px}
 table.cmp{width:100%;border-collapse:collapse;font-size:15px;table-layout:fixed}
-.cmp col.f{width:56%}
+.cmp col.f{width:43%}
 .cmp th,.cmp td{padding:12px 10px;text-align:center;border-bottom:1px solid #e9e0d0;vertical-align:middle}
 .cmp td:nth-child(3),.cmp thead th:nth-child(3){background:rgba(201,160,80,.10)}
 .cmp thead th{vertical-align:bottom;padding:18px 10px;border-bottom:2px solid #d6c9b3}
@@ -552,7 +552,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   </div>
 </section>
 
-<!-- AI 사서 — 정식판 기준으로 소개한다. 베타도 Cresco AI(메일 로그인, 맛보기 분량) 또는 각자의 계정으로 — 작게 밝힌다 -->
+<!-- AI 사서 — 정식판 기준으로 소개한다. 베타도 Cresco AI(메일 로그인, 맛보기 분량)로 — 작게 밝힌다 -->
 <section class="ai-sec" id="ai">
   <div class="in">
     <div class="ai-top">
@@ -563,7 +563,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     <div class="win rise"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — 사서</span></div>
       <video id="ai-video" muted playsinline loop preload="none" poster="media/librarian.jpg" src="media/librarian.mp4" aria-label="사서에게 묻는 실제 Cresco 화면 녹화"></video></div>
     <p class="ai-pts rise"><span>[p.6] 근거 쪽 고리</span><span>✍ 손글씨 필기</span><span>이 논문에서 · 더 넓게</span></p>
-    <p class="beta-note rise">지금 베타는 내 Claude · ChatGPT 계정으로, 또는 메일 로그인만으로 Cresco AI(논문 약 2편 · 질문 30개 맛보기)로 씁니다 — <a href="#plans">요금제</a></p>
+    <p class="beta-note rise">지금 베타는 메일 로그인만으로 Cresco AI(논문 약 2편 · 질문 30개 맛보기)를 씁니다 — <a href="#plans">요금제</a></p>
   </div>
 </section>
 
@@ -595,14 +595,14 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   </div>
 </section>
 
-<!-- 내 데이터 — '내 컴퓨터에만'이 아니다: 번역할 때 그 글은 내 AI 구독으로, Cresco AI 면 Cresco 서버를 거쳐 Claude 로 간다. 그대로 밝힌다 -->
+<!-- 내 데이터 — '내 컴퓨터에만'이 아니다: 번역할 때 그 글은 Cresco 서버를 거쳐 Claude 로 간다. 그대로 밝힌다 -->
 <section class="statement light" id="local">
   <h2 class="rise">서재는, <span class="gold">내 컴퓨터에만.</span></h2>
-  <p class="rise">번역할 때만, 그 글이 내 AI 로 갑니다.</p>
+  <p class="rise">번역할 때만, 그 글이 Cresco AI 로 갑니다.</p>
   <div class="where rise">
     <div class="box home"><h3>내 컴퓨터</h3><p>PDF · 번역 · 기록 · 사서 대화 — 파일 하나</p><span class="tag">모두 여기에</span></div>
     <div class="arrow" aria-hidden="true"><b>→</b>번역 · 풀이할<br>글만</div>
-    <div class="box ai"><h3>AI</h3><p>내 Claude · ChatGPT 계정으로, 또는 Cresco AI(Cresco 서버를 거쳐 Claude 로)</p><span class="tag">번역할 글만</span></div>
+    <div class="box ai"><h3>Cresco AI</h3><p>Cresco 서버를 거쳐 Anthropic 의 Claude 로</p><span class="tag">번역할 글만</span></div>
     <div class="box dev"><h3>Cresco 서버</h3><p>Cresco AI 의 메일 주소 · 쓴 양, 동의하면 익명 사용 횟수</p><span class="tag">논문 글은 남기지 않음</span></div>
   </div>
   <p class="fine rise">Cresco AI 로 번역하는 글은 서버를 지나가기만 하고 저장되지 않습니다. 자세한 것은 정식 출시 때 개인정보처리방침에 밝힙니다.</p>
@@ -615,7 +615,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 </section>
 
 <!-- 정식 출시 · 요금제 — 아직 정식 발표 전. 횟수·가격은 적지 않는다(정해지면).
-     경계는 'AI 를 누가 내느냐': 내 구독을 연결하면 무료로도 거의 다, 구독 없이·휴대폰만·여러 기기면 Pro. -->
+     모든 요금제가 Cresco AI — 경계는 '한 달에 얼마나 읽느냐'. 분량은 계획(안)이고 가격은 출시 후 확정. -->
 <section class="plans" id="plans">
   <div class="in">
     <span class="eyebrow rise">정식 출시 준비 중</span>
@@ -623,41 +623,41 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     <p class="lead rise">지금은 정식 발표 전 무료 베타입니다. 날짜와 가격은 정해지는 대로 여기에.</p>
     <div class="soon">
       <div class="rise"><span class="k">스토어</span><h3>앱스토어 ·<br>플레이스토어.</h3><p>아이폰도 PC 없이 혼자.</p></div>
-      <div class="rise"><span class="k">Cresco AI</span><h3>구독이 없어도,<br>휴대폰만으로도.</h3><p>Claude · ChatGPT 구독 없이 번역 · 풀이 · 사서.</p></div>
+      <div class="rise"><span class="k">Cresco AI</span><h3>설치할 것 없이,<br>메일 하나로.</h3><p>로그인하면 번역 · 풀이 · 사서가 바로.</p></div>
       <div class="rise"><span class="k">동기화</span><h3>어디서나,<br>같은 서재.</h3><p>내 계정으로, 같은 와이파이가 아니어도.</p></div>
     </div>
 
-    <p class="nowbeta rise"><b>지금 베타에서는</b> 아래 기능이 모두 무료로 켜져 있습니다 — AI 는 내 Claude · ChatGPT 계정으로, 또는 메일 로그인만으로 Cresco AI(맛보기 분량)로. 논문 2편까지.</p>
+    <p class="nowbeta rise"><b>지금 베타에서는</b> 아래 기능이 모두 무료로 켜져 있습니다 — 메일 로그인만으로 Cresco AI(맛보기 분량)를 씁니다. 논문 2편까지.</p>
     <div class="cmp-wrap rise">
       <table class="cmp">
         <caption class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">정식판 요금제별 기능 (계획)</caption>
-        <colgroup><col class="f"><col><col></colgroup>
-        <thead><tr><th scope="col">정식판 요금제</th>
-          <th scope="col"><b>무료</b><small>내 AI 구독을 연결해서</small></th>
-          <th scope="col"><b>Pro</b><small>구독 없이도 · 휴대폰만으로도</small></th></tr></thead>
+        <colgroup><col class="f"><col><col><col></colgroup>
+        <thead><tr><th scope="col">정식판 요금제 (계획)</th>
+          <th scope="col"><b>무료</b><small>먼저 써 보기</small></th>
+          <th scope="col"><b>베이직</b><small>매달 논문을 읽는 분께</small></th>
+          <th scope="col"><b>프로</b><small>출시 예정</small></th></tr></thead>
         <tbody>
-          <tr class="grp"><th colspan="3" scope="colgroup">읽기 · 기록</th></tr>
-          <tr><th scope="row">서재 · 책으로 읽기 · 문장 아래 번역 보기</th><td class="y">✓</td><td class="y">✓</td></tr>
-          <tr><th scope="row">형광펜 · ★ · 메모 · 책갈피 · 펜 필기</th><td class="y">✓</td><td class="y">✓</td></tr>
-          <tr><th scope="row">단어장 · 낱말 뜻</th><td class="y">✓</td><td class="y">✓</td></tr>
-          <tr><th scope="row">형광펜 PDF · 인용 복사 (APA · BibTeX)</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr class="grp"><th colspan="4" scope="colgroup">Cresco AI 분량</th></tr>
+          <tr><th scope="row">논문 (번역 · 그림 · 표 · 수식 풀이까지)</th><td>1편</td><td>월 10편</td><td class="t">출시 예정</td></tr>
+          <tr><th scope="row">사서 질문</th><td>20회</td><td>월 200회</td><td class="t">출시 예정</td></tr>
+          <tr><th scope="row">AI 품질</th><td>기본</td><td>기본</td><td>최고 품질</td></tr>
 
-          <tr class="grp"><th colspan="3" scope="colgroup">AI — 내 Claude · ChatGPT 구독으로 <small>(PC 에서)</small></th></tr>
-          <tr><th scope="row">통번역 · 쉽게 말하면 · 그림 · 표 · 수식 풀이 · 사서</th><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr class="grp"><th colspan="4" scope="colgroup">읽기 · 기록</th></tr>
+          <tr><th scope="row">서재 · 책으로 읽기 · 문장 아래 번역 보기</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">형광펜 · ★ · 메모 · 책갈피 · 펜 필기</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">단어장 · 낱말 뜻</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">형광펜 PDF · 인용 복사 (APA · BibTeX)</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
 
-          <tr class="grp"><th colspan="3" scope="colgroup">AI — Cresco AI <small>(구독 없이 · 휴대폰만으로도)</small></th></tr>
-          <tr><th scope="row">통번역 · 쉽게 말하면 · 그림 · 표 · 수식 풀이 · 사서</th><td class="t">출시 후 확정</td><td class="y">✓</td></tr>
+          <tr class="grp"><th colspan="4" scope="colgroup">기기 · 동기화</th></tr>
+          <tr><th scope="row">Windows · 안드로이드 앱</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th scope="row">Mac · 아이폰 · 아이패드</th><td class="t">추후 공개 예정</td><td class="t">추후 공개 예정</td><td class="t">추후 공개 예정</td></tr>
+          <tr><th scope="row">어디서나 동기화 (내 계정으로 PC ↔ 휴대폰)</th><td class="n">—</td><td class="y">✓</td><td class="y">✓</td></tr>
 
-          <tr class="grp"><th colspan="3" scope="colgroup">기기 · 동기화</th></tr>
-          <tr><th scope="row">Windows · 안드로이드 앱</th><td class="y">✓</td><td class="y">✓</td></tr>
-          <tr><th scope="row">Mac · 아이폰 · 아이패드</th><td class="t">추후 공개 예정</td><td class="t">추후 공개 예정</td></tr>
-          <tr><th scope="row">어디서나 동기화 (내 계정으로 PC ↔ 휴대폰)</th><td class="n">—</td><td class="y">✓</td></tr>
-
-          <tr class="price"><th scope="row">가격</th><td>0원</td><td class="t">미공개</td></tr>
+          <tr class="price"><th scope="row">가격</th><td>0원</td><td class="t">출시 후 확정</td><td class="t">출시 후 확정</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="fine rise">정식 출시를 위한 계획입니다. Pro 의 가격과 사용량, 무료에서 Cresco AI 를 얼마나 써 볼 수 있는지, 그 밖의 기능 구분은 출시 후 확정합니다.</p>
+    <p class="fine rise">정식 출시를 위한 계획입니다. 요금제별 분량과 가격, 기능 구분은 베타 의견을 받아 출시 때 확정합니다.</p>
   </div>
 </section>
 
@@ -666,23 +666,23 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   <div class="in">
     <h2 class="rise">자주 묻는 질문</h2>
     <details><summary>정식판은 언제, 얼마에 나오나요?</summary>
-      <p>아직 정식 발표 전입니다. 날짜와 가격은 베타 의견을 받아 정하고, 정해지는 대로 이 홈페이지에 알립니다. 정식판은 앱스토어 · 플레이스토어와 이 홈페이지에서 받고, 요금제는 무료와 Pro 로 나눌 계획이고, 가격은 출시 후 확정합니다. 내 AI 구독을 연결하면 무료로도 거의 모든 기능을 쓰도록 할 생각입니다. <a href="#plans">요금제 보기</a></p></details>
+      <p>아직 정식 발표 전입니다. 날짜와 가격은 베타 의견을 받아 정하고, 정해지는 대로 이 홈페이지에 알립니다. 정식판은 앱스토어 · 플레이스토어와 이 홈페이지에서 받고, 요금제는 무료와 베이직으로 시작하고 프로를 이어서 낼 계획이며, 가격은 출시 후 확정합니다. <a href="#plans">요금제 보기</a></p></details>
     <details><summary>베타에서 쓰던 서재는 정식판으로 옮겨지나요?</summary>
       <p>옮겨지도록 만들고 있습니다. 서재는 파일 하나라, 정식판이 그 파일을 그대로 이어 읽게 합니다.</p></details>
     <details><summary>정말 무료인가요? 제한이 있나요?</summary>
       <p>베타는 무료입니다. 각 베타 판은 나온 날부터 60일 동안 쓰고, 논문은 2편까지 올릴 수 있습니다(올린 횟수로 세므로 서재에서 빼도 다시 늘지 않습니다). Cresco AI 는 한 사람당 논문 약 2편 분량 · 사서 질문 30개까지 무료입니다. 기한이 지나도 이미 담은 논문은 그대로 읽을 수 있고, 새 판을 받으라고 안내합니다.</p></details>
     <details><summary>Claude 나 ChatGPT 구독이 꼭 있어야 하나요?</summary>
-      <p>아니요. 처음 켤 때 「AI 연결」에서 Cresco AI 를 고르고 메일 주소만 넣으면 구독 없이 번역 · 풀이 · 사서 질문을 씁니다(베타는 한 사람당 논문 약 2편 · 질문 30개, Windows · 안드로이드). 이 컴퓨터에 Claude Code(Claude 구독)나 Codex(ChatGPT 구독)가 있으면 그쪽에 맡겨 내 구독 한도 안에서 씁니다.</p></details>
+      <p>아니요. Cresco AI 가 들어 있어서 메일 주소로 로그인만 하면 번역 · 풀이 · 사서 질문을 씁니다. 따로 구독하거나 설치할 것이 없습니다(베타는 한 사람당 논문 약 2편 · 질문 30개, Windows · 안드로이드).</p></details>
     <details><summary>내 논문이 다른 곳으로 가나요?</summary>
-      <p>서재는 내 컴퓨터에만 있습니다. 번역하고 풀이할 때 그 부분의 글만 AI 로 갑니다 — 내 구독이면 Claude · ChatGPT 로 바로, Cresco AI 면 Cresco 서버를 거쳐 Anthropic 의 Claude 로. 서버는 그 글을 남기지 않고, 메일 주소와 쓴 양만 남깁니다. <a href="#local">자세히</a></p></details>
+      <p>서재는 내 컴퓨터에만 있습니다. 번역하고 풀이할 때 그 부분의 글만 Cresco 서버를 거쳐 Anthropic 의 Claude 로 갑니다. 서버는 그 글을 남기지 않고, 메일 주소와 쓴 양만 남깁니다. <a href="#local">자세히</a></p></details>
     <details><summary>어떤 PDF 가 되나요?</summary>
       <p>학술지 · arXiv 에서 받은, 글자를 고를 수 있는 PDF 면 됩니다. 수식 · 그림 · 표가 많은 공학 논문으로 다듬었습니다. 종이를 스캔해 글자가 그림으로 된 PDF 는 번역할 수 없습니다.</p></details>
     <details><summary>태블릿 · 휴대폰에서도 되나요?</summary>
-      <p>안드로이드 휴대폰 · 태블릿은 앱이 혼자 돕니다. 번역 · 풀이는 PC 에서 만들어 「PC와 주고받기」로 받고, 밖에서 칠한 형광펜 · 필기는 PC 로 보내 합칩니다.</p></details>
+      <p>안드로이드 휴대폰 · 태블릿은 앱이 혼자 돕니다. 로그인하면 번역 · 풀이 · 사서를 바로 쓰고, 같은 계정이면 PC 와 서재를 함께 씁니다.</p></details>
     <details id="faq-iphone"><summary>Mac · 아이폰에서도 쓸 수 있나요?</summary>
       <p>Mac · 아이폰 · 아이패드 판은 추후 공개 예정입니다. 지금 베타는 Windows 와 안드로이드에서 쓸 수 있습니다.</p></details>
     <details><summary>새 판이 나오면 서재는 어떻게 되나요?</summary>
-      <p>새 설치 파일을 그대로 설치하면 됩니다. 서재는 프로그램 밖(문서 폴더)에 있어 논문 · 번역 · 형광펜이 그대로 남습니다.</p></details>
+      <p>앱을 켤 때 새 버전 알림이 뜨고, 「지금 업데이트」를 누르면 바로 설치됩니다. 서재는 프로그램 밖(문서 폴더)에 있어 논문 · 번역 · 형광펜이 그대로 남습니다.</p></details>
     <details><summary>문제가 생기거나 바라는 기능이 있어요.</summary>
       <p>앱 서재의 「✉ 의견 보내기」나 <a href="https://docs.google.com/forms/d/e/1FAIpQLScSkAJMExMRvsqdNgwN7c0etRT8uiJ2nZrkGeYYwZ1YKiH2eQ/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
   </div>
@@ -691,7 +691,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 <section class="statement beta" id="beta">
   <img class="rise" src="cresco-ivory.svg" alt="">
   <h2 class="rise">지금 받아 보세요.</h2>
-  <p class="rise">무료 베타 · 60일 · 논문 2편까지. 번역은 내 Claude · ChatGPT 구독으로, 또는 메일 로그인만으로.</p>
+  <p class="rise">무료 베타 · 60일 · 논문 2편까지. 메일 로그인만으로 바로 번역합니다.</p>
   <!-- 늘 최신 릴리스의 같은 이름 파일 — 새 판을 올리면 단추는 그대로 새 판을 받는다 -->
   <div class="dl rise">
     <a class="dlbtn" data-os="win" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-Setup.exe" target="_blank" rel="noopener">
