@@ -417,13 +417,39 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
 html.still .scene{height:auto!important}
 html.still .sky *{animation:none!important;opacity:1!important;clip-path:none!important}
 html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow:visible}
+/* 핵심 네 가지 · 접어 둔 자세한 기능 */
+.core{padding:clamp(64px,9vh,110px) 0 clamp(44px,7vh,84px)}
+.core>.in{max-width:1280px;margin:0 auto;padding:0 22px}
+.core h2{font-size:clamp(36px,5vw,62px);line-height:1.08;font-weight:800;text-align:center}
+.core .lead{margin:12px 0 36px;text-align:center;color:var(--sub);font-size:clamp(17px,1.7vw,21px);font-weight:500}
+.core .clips{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.core .clip figcaption{font-size:15px}
+.core .clip figcaption b{font-size:20px}
+.core .go{margin-top:38px;text-align:center}
+@media (max-width:1000px){.core .clips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.core .clips{display:grid;overflow:visible;margin:0;padding:0}.core .clip{flex:none}}   /* 휴대폰도 넷을 한눈에 — 옆으로 밀어야 보이면 놓친다 */
+@media (max-width:520px){.core .clips{gap:14px 12px}.core .clip figcaption{font-size:13.5px}.core .clip figcaption b{font-size:16px}}
+.more{padding:clamp(56px,8vh,100px) 22px}
+.more>.in{max-width:1040px;margin:0 auto}
+.more>.in>h2{margin-bottom:26px;font-size:clamp(30px,4vw,46px);line-height:1.1;font-weight:800;text-align:center}
+.more-item{border-top:1px solid rgba(255,255,255,.14)}
+.more-item:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.more-item>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 4px;cursor:pointer;list-style:none;font-size:clamp(18px,2vw,22px);font-weight:700;letter-spacing:-.02em}
+.more-item>summary::-webkit-details-marker{display:none}
+.more-item>summary small{display:block;margin-top:3px;color:var(--sub);font-size:14px;font-weight:500;letter-spacing:0}
+.more-item>summary::after{content:"+";flex:none;color:#e9b45a;font-size:28px;font-weight:400;line-height:1;transition:transform .2s}
+.more-item[open]>summary::after{transform:rotate(45deg)}
+.more-item>section{margin:0 0 30px;padding:clamp(26px,4vw,44px) clamp(14px,3vw,34px);border-radius:18px}
+.more-item>section>.in{max-width:none;padding:0}
+.more-item>section h2{font-size:clamp(26px,3.4vw,40px)}
+.more-item>section:not(.light):not(.ai-sec){padding-inline:0}
 </style>
 </head>
 <body>
 <header>
   <div class="in">
     <a href="#top" aria-label="Cresco 처음으로"><img src="cresco-ivory.svg" alt="Cresco"></a>
-    <nav aria-label="주 메뉴"><a href="#uses">쓰임새</a><a href="#only">기능</a><a href="#ai">사서</a><a href="#local">내 데이터</a><a href="#plans">요금제</a><a href="#faq">자주 묻는 질문</a></nav>
+    <nav aria-label="주 메뉴"><a href="#core">핵심 기능</a><a href="#uses">쓰임새</a><a href="#more">자세히</a><a href="#plans">요금제</a><a href="#faq">자주 묻는 질문</a></nav>
     <a class="cta" href="#beta">베타 받기</a>
   </div>
 </header>
@@ -438,11 +464,11 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
       <img src="cresco-ivory.svg" alt="Cresco">
       <a class="pre" href="#plans">정식 출시 준비 중 · 지금은 무료 베타</a>
       <h1>영어 논문을, 책처럼.</h1>
-      <p>논문이 책이 되는 서재. 문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림·표는 다시 그려서.</p>
+      <p>올리면 번역부터 그림 · 수식 풀이까지 미리 준비됩니다.</p>
       <!-- 받기 단추는 이 기기에 맞는 설치 파일을 바로 받는다 (아래 스크립트가 고른다; 모르면 #beta 로) -->
       <div class="acts"><a class="pillbtn" id="hero-dl" href="#beta">베타 받기</a><a class="more" href="#how">쓰는 법 보기</a></div>
       <p class="terms">무료 베타 · 60일 · 논문 2편까지 · <a href="#beta">다른 기기</a></p>
-      <a class="skip" href="#uses">아래로 ↓</a>
+      <a class="skip" href="#core">핵심 기능 ↓</a>
     </div>
     <!-- 월넛 책장 -->
     <div class="casebox" id="casebox" aria-hidden="true">
@@ -483,87 +509,22 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   </div>
 </section>
 
-<!-- 쓰임새 — 상황을 고르면 실제 Cresco 화면(녹화)이 그 길을 보여 준다. 영상이 끝나면 다음 상황으로.
-     녹화: 견본 논문만 든 빈 서재 · 실제 앱 · 1280×800 (다시 찍기: build/site_rec/) -->
-<section class="uses" id="uses">
+<!-- 핵심 기능 — 빠르게 내려도 바로 알아보게: 장면 하나에 한 줄 -->
+<section class="core" id="core">
   <div class="in">
-    <h2 class="rise">이럴 때, <span class="gold">이렇게.</span></h2>
-    <p class="lead rise">실제 Cresco 화면입니다.</p>
-    <div class="player rise">
-      <div class="tabs" role="tablist" aria-label="쓰임새">
-        <button type="button" class="tab" role="tab" aria-selected="true" data-v="use-first" data-t0=".5"><span class="when">처음 읽는 영어 논문</span><b>막힐 때만, 눈을 아래로.</b><i class="prog"></i>
-          <span class="more"><span class="path"><span data-d="인포그래픽 한 쪽 — 왜 · 어떻게 · 그래서">쉽게 말하면</span><i>→</i><span data-d="원문만 보다가, 누르면 문장 아래로">문장 아래 번역</span><i>→</i><span data-d="누르면 뜻 · 단어장에">낱말 카드</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-meeting" data-t0=".5"><span class="when">랩미팅 30분 전</span><b>결과만, 빠르게.</b><i class="prog"></i>
-          <span class="more"><span class="path"><span data-d="PDF 표를 칸으로 다시 — 숫자는 원본 그대로">표를 진짜 표로</span><i>→</i><span data-d="한 줄 결론 · 비교 · 다시 그린 막대">그림 · 표 풀이</span><i>→</i><span data-d="이 논문에 묻고 쪽 고리로 확인">사서</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-talk" data-t0="1.5"><span class="when">세미나 · 논문 소개 발표</span><b>설명할 수 있을 만큼.</b><i class="prog"></i>
-          <span class="more"><span class="path"><span data-d="기호마다 색 · 뜻 · 계산 예">수식 풀이</span><i>→</i><span data-d="고른 만큼 ★ · 형광펜 · 메모">끌어 고르기</span><i>→</i><span data-d="발표 때 짚을 문장">★ 핵심 문장</span></span></span></button>
-        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-review" data-t0=".9"><span class="when">선행연구 · 학위논문 정리</span><b>흩어진 이야기를, 한 줄로.</b><i class="prog"></i>
-          <span class="more"><span class="path"><span data-d="흩어진 문단을 뜻으로 모아">주제로 모아 읽기</span><i>→</i><span data-d="그 논문을 한 줄로">인용 [30]</span><i>→</i><span data-d="담아 두고 한 번에 복사">☆ 내 참고문헌</span></span></span></button>
-      </div>
-      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
-        <div class="vbox"><video id="use-video" muted playsinline preload="none" poster="media/use-first.jpg" src="media/use-first.mp4" aria-label="실제 Cresco 화면 녹화"></video>
-          <div class="use-cap" id="use-cap" aria-hidden="true"></div></div></div>
-      <div class="use-desc" id="use-desc" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
-
-<!-- Cresco만의 것 — 기능마다 같은 녹화의 한 구간을 확대해 되풀이한다(data-seg="시작,끝", data-crop="x,y,w" — 원본 비율, 높이 = 1.2w 라 4:3).
-     새 영상을 만들지 않고 쓰임새 녹화를 다시 쓴다. -->
-<section class="only" id="only">
-  <div class="in">
-    <div class="top"><h2 class="rise">다른 번역기에는 <span class="gold">없는 것.</span></h2>
-      <p class="rise">한 쪽 안에서, 누르는 곳마다.</p></div>
-    <!-- 누르는 곳 지도 — 실제 책 화면 한 장(build/site_rec/s6_map.mjs)에 번호를 단다. 번호 위치 = 화면 비율(--x, --y) -->
-    <figure class="map rise" id="map">
-      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
-        <div class="shot"><img src="media/map-0.jpg" width="1280" height="800" loading="lazy" alt="Cresco 의 책 화면: 그림 2 와 수식 (1) 이 있는 펼친 쪽, 낱말 'most' 를 눌러 뜬 뜻 카드">
-          <span class="pin" data-k="1" style="--x:.606;--y:.33;--i:0" aria-hidden="true">1</span>
-          <span class="pin" data-k="2" style="--x:.024;--y:.705;--i:1" aria-hidden="true">2</span>
-          <span class="pin" data-k="3" style="--x:.47;--y:.15;--i:2" aria-hidden="true">3</span>
-          <span class="pin" data-k="4" style="--x:.875;--y:.235;--i:3" aria-hidden="true">4</span>
-          <span class="pin" data-k="5" style="--x:.737;--y:.118;--i:4" aria-hidden="true">5</span>
-          <span class="pin" data-k="6" style="--x:.655;--y:.703;--i:5" aria-hidden="true">6</span>
-          <span class="pin" data-k="7" style="--x:.976;--y:.752;--i:6" aria-hidden="true">7</span></div></div>
-      <ol class="keys">
-        <li data-k="1"><b>낱말</b>누르면 뜻 · 단어장에 · 문장 번역</li>
-        <li data-k="2"><b>끌어 고르기</b>★ 핵심 · 형광펜 · 메모</li>
-        <li data-k="3"><b>그림 · 표</b>크게, 다시 그린 풀이와</li>
-        <li data-k="4"><b>수식</b>기호마다 색 · 계산 예</li>
-        <li data-k="5"><b>점선 기호</b>뜻 · 단위 · 나오는 곳</li>
-        <li data-k="6"><b>인용 [3]</b>그 논문 한 줄 · ☆ 담기</li>
-        <li data-k="7"><b>사서</b>이 논문에 묻기</li>
-      </ol>
-    </figure>
+    <h2 class="rise">핵심은, <span class="gold">네 가지.</span></h2>
+    <p class="lead rise">PDF 하나 올리면 전부 미리 준비됩니다.</p>
     <div class="clips">
-      <figure class="clip rise"><div class="clipv" data-src="media/use-first.mp4" data-segn="eli5" data-crop=".52,.07,.44"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>쉽게 말하면</b>인포그래픽 한 쪽으로 — 왜 · 어떻게 · 그래서, 핵심 숫자는 막대로.</figcaption></figure>
       <figure class="clip rise"><div class="clipv" data-src="media/use-first.mp4" data-segn="trans" data-crop=".01,.3,.5"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>문장 아래 번역</b>원문만 보다가, 누르면 문장 아래로. 낱말은 눌러서.</figcaption></figure>
+        <figcaption><b>문장 바로 아래 번역</b>막힐 때만 눈을 내리면 됩니다.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-first.mp4" data-segn="eli5" data-crop=".52,.07,.44"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>논문을 한눈에</b>왜 · 어떻게 · 그래서를 그림으로.</figcaption></figure>
       <figure class="clip rise"><div class="clipv" data-src="media/use-meeting.mp4" data-segn="fig" data-crop=".54,0,.45"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>그림 · 표 풀이</b>표는 진짜 표로, 무엇이 얼마나 왜.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/use-talk.mp4" data-segn="eq" data-crop=".065,0,.54"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>수식 풀이</b>수식은 글로 다시, 기호마다 색 · 계산 예까지.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-segn="tp" data-crop=".17,.02,.66"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>뜻으로 모아 읽기</b>한 주제만 골라 이어 읽기.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-segn="ref" data-crop=".01,.3,.5"><video muted playsinline preload="none"></video></div>
-        <figcaption><b>인용 한 줄</b>[30] 을 누르면 그 논문이 한 줄로.</figcaption></figure>
+        <figcaption><b>그림 · 표 · 수식 풀이</b>누르면 무엇이 얼마나, 왜.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/librarian.mp4" data-seg="1,9" data-crop=".62,.08,.37"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>AI 사서에게 질문</b>논문 속 근거 쪽까지 바로.</figcaption></figure>
     </div>
-  </div>
-</section>
-
-<!-- AI 사서 — 정식판 기준으로 소개한다. 베타도 Cresco AI(메일 로그인, 맛보기 분량)로 — 작게 밝힌다 -->
-<section class="ai-sec" id="ai">
-  <div class="in">
-    <div class="ai-top">
-      <span class="eyebrow rise">AI 사서</span>
-      <h2 class="rise">막히면, <span class="gold">사서에게.</span></h2>
-      <p class="rise">논문 안에서 답을 찾아 근거 쪽을 달고, 요점은 문장 곁에 손글씨로.</p>
-    </div>
-    <div class="win rise"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — 사서</span></div>
-      <video id="ai-video" muted playsinline loop preload="none" poster="media/librarian.jpg" src="media/librarian.mp4" aria-label="사서에게 묻는 실제 Cresco 화면 녹화"></video></div>
-    <p class="ai-pts rise"><span>[p.6] 근거 쪽 고리</span><span>✍ 손글씨 필기</span><span>이 논문에서 · 더 넓게</span></p>
-    <p class="beta-note rise">지금 베타는 메일 로그인만으로 Cresco AI(논문 약 2편 · 질문 30개 맛보기)를 씁니다 — <a href="#plans">요금제</a></p>
+    <p class="go rise"><a class="pillbtn" href="#beta">무료 베타 받기</a></p>
   </div>
 </section>
 
@@ -595,23 +556,112 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   </div>
 </section>
 
-<!-- 내 데이터 — '내 컴퓨터에만'이 아니다: 번역할 때 그 글은 Cresco 서버를 거쳐 Claude 로 간다. 그대로 밝힌다 -->
-<section class="statement light" id="local">
-  <h2 class="rise">서재는, <span class="gold">내 컴퓨터에만.</span></h2>
-  <p class="rise">번역할 때만, 그 글이 Cresco AI 로 갑니다.</p>
-  <div class="where rise">
-    <div class="box home"><h3>내 컴퓨터</h3><p>PDF · 번역 · 기록 · 사서 대화 — 파일 하나</p><span class="tag">모두 여기에</span></div>
-    <div class="arrow" aria-hidden="true"><b>→</b>번역 · 풀이할<br>글만</div>
-    <div class="box ai"><h3>Cresco AI</h3><p>Cresco 서버를 거쳐 Anthropic 의 Claude 로</p><span class="tag">번역할 글만</span></div>
-    <div class="box dev"><h3>Cresco 서버</h3><p>Cresco AI 의 메일 주소 · 쓴 양, 동의하면 익명 사용 횟수</p><span class="tag">논문 글은 남기지 않음</span></div>
+<!-- 쓰임새 — 상황을 고르면 실제 Cresco 화면(녹화)이 그 길을 보여 준다. 영상이 끝나면 다음 상황으로.
+     녹화: 견본 논문만 든 빈 서재 · 실제 앱 · 1280×800 (다시 찍기: build/site_rec/) -->
+<section class="uses" id="uses">
+  <div class="in">
+    <h2 class="rise">이럴 때, <span class="gold">이렇게.</span></h2>
+    <p class="lead rise">실제 Cresco 화면입니다.</p>
+    <div class="player rise">
+      <div class="tabs" role="tablist" aria-label="쓰임새">
+        <button type="button" class="tab" role="tab" aria-selected="true" data-v="use-first" data-t0=".5"><span class="when">처음 읽는 영어 논문</span><b>막힐 때만, 눈을 아래로.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span data-d="인포그래픽 한 쪽 — 왜 · 어떻게 · 그래서">쉽게 말하면</span><i>→</i><span data-d="원문만 보다가, 누르면 문장 아래로">문장 아래 번역</span><i>→</i><span data-d="누르면 뜻 · 단어장에">낱말 카드</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-meeting" data-t0=".5"><span class="when">랩미팅 30분 전</span><b>결과만, 빠르게.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span data-d="PDF 표를 칸으로 다시 — 숫자는 원본 그대로">표를 진짜 표로</span><i>→</i><span data-d="한 줄 결론 · 비교 · 다시 그린 막대">그림 · 표 풀이</span><i>→</i><span data-d="이 논문에 묻고 쪽 고리로 확인">사서</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-talk" data-t0="1.5"><span class="when">세미나 · 논문 소개 발표</span><b>설명할 수 있을 만큼.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span data-d="기호마다 색 · 뜻 · 계산 예">수식 풀이</span><i>→</i><span data-d="고른 만큼 ★ · 형광펜 · 메모">끌어 고르기</span><i>→</i><span data-d="발표 때 짚을 문장">★ 핵심 문장</span></span></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-v="use-review" data-t0=".9"><span class="when">선행연구 · 학위논문 정리</span><b>흩어진 이야기를, 한 줄로.</b><i class="prog"></i>
+          <span class="more"><span class="path"><span data-d="흩어진 문단을 뜻으로 모아">주제로 모아 읽기</span><i>→</i><span data-d="그 논문을 한 줄로">인용 [30]</span><i>→</i><span data-d="담아 두고 한 번에 복사">☆ 내 참고문헌</span></span></span></button>
+      </div>
+      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
+        <div class="vbox"><video id="use-video" muted playsinline preload="none" poster="media/use-first.jpg" src="media/use-first.mp4" aria-label="실제 Cresco 화면 녹화"></video>
+          <div class="use-cap" id="use-cap" aria-hidden="true"></div></div></div>
+      <div class="use-desc" id="use-desc" aria-live="polite"></div>
+    </div>
   </div>
-  <p class="fine rise">Cresco AI 로 번역하는 글은 서버를 지나가기만 하고 저장되지 않습니다. 자세한 것은 정식 출시 때 개인정보처리방침에 밝힙니다.</p>
 </section>
 
+<!-- 자세한 기능 — 핵심을 본 뒤 궁금한 사람만 펼친다 -->
+<section class="more" id="more">
+  <div class="in">
+    <h2 class="rise">더 자세히 보기</h2>
+    <details class="more-item"><summary><span>누르는 곳마다 달라지는 기능<small>낱말 · 기호 · 인용 · 주제로 모아 읽기</small></span></summary>
+<!-- Cresco만의 것 — 기능마다 같은 녹화의 한 구간을 확대해 되풀이한다(data-seg="시작,끝", data-crop="x,y,w" — 원본 비율, 높이 = 1.2w 라 4:3).
+     새 영상을 만들지 않고 쓰임새 녹화를 다시 쓴다. -->
+<section class="only" id="only">
+  <div class="in">
+    <div class="top"><h2 class="rise">다른 번역기에는 <span class="gold">없는 것.</span></h2>
+      <p class="rise">한 쪽 안에서, 누르는 곳마다.</p></div>
+    <!-- 누르는 곳 지도 — 실제 책 화면 한 장(build/site_rec/s6_map.mjs)에 번호를 단다. 번호 위치 = 화면 비율(--x, --y) -->
+    <figure class="map rise" id="map">
+      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — Attention Is All You Need</span></div>
+        <div class="shot"><img src="media/map-0.jpg" width="1280" height="800" loading="lazy" alt="Cresco 의 책 화면: 그림 2 와 수식 (1) 이 있는 펼친 쪽, 낱말 'most' 를 눌러 뜬 뜻 카드">
+          <span class="pin" data-k="1" style="--x:.606;--y:.33;--i:0" aria-hidden="true">1</span>
+          <span class="pin" data-k="2" style="--x:.024;--y:.705;--i:1" aria-hidden="true">2</span>
+          <span class="pin" data-k="3" style="--x:.47;--y:.15;--i:2" aria-hidden="true">3</span>
+          <span class="pin" data-k="4" style="--x:.875;--y:.235;--i:3" aria-hidden="true">4</span>
+          <span class="pin" data-k="5" style="--x:.737;--y:.118;--i:4" aria-hidden="true">5</span>
+          <span class="pin" data-k="6" style="--x:.655;--y:.703;--i:5" aria-hidden="true">6</span>
+          <span class="pin" data-k="7" style="--x:.976;--y:.752;--i:6" aria-hidden="true">7</span></div></div>
+      <ol class="keys">
+        <li data-k="1"><b>낱말</b>누르면 뜻 · 단어장에 · 문장 번역</li>
+        <li data-k="2"><b>끌어 고르기</b>★ 핵심 · 형광펜 · 메모</li>
+        <li data-k="3"><b>그림 · 표</b>크게, 다시 그린 풀이와</li>
+        <li data-k="4"><b>수식</b>기호마다 색 · 계산 예</li>
+        <li data-k="5"><b>점선 기호</b>뜻 · 단위 · 나오는 곳</li>
+        <li data-k="6"><b>인용 [3]</b>그 논문 한 줄 · ☆ 담기</li>
+        <li data-k="7"><b>사서</b>이 논문에 묻기</li>
+      </ol>
+    </figure>
+    <div class="clips">
+      <figure class="clip rise"><div class="clipv" data-src="media/use-talk.mp4" data-segn="eq" data-crop=".065,0,.54"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>수식 풀이</b>수식은 글로 다시, 기호마다 색 · 계산 예까지.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-segn="tp" data-crop=".17,.02,.66"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>뜻으로 모아 읽기</b>한 주제만 골라 이어 읽기.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/use-review.mp4" data-segn="ref" data-crop=".01,.3,.5"><video muted playsinline preload="none"></video></div>
+        <figcaption><b>인용 한 줄</b>[30] 을 누르면 그 논문이 한 줄로.</figcaption></figure>
+    </div>
+  </div>
+</section>
+    </details>
+    <details class="more-item"><summary><span>AI 사서<small>근거 쪽 · 손글씨 필기</small></span></summary>
+<!-- AI 사서 — 정식판 기준으로 소개한다. 베타도 Cresco AI(메일 로그인, 맛보기 분량)로 — 작게 밝힌다 -->
+<section class="ai-sec" id="ai">
+  <div class="in">
+    <div class="ai-top">
+      <span class="eyebrow rise">AI 사서</span>
+      <h2 class="rise">막히면, <span class="gold">사서에게.</span></h2>
+      <p class="rise">논문 안에서 답을 찾아 근거 쪽을 달고, 요점은 문장 곁에 손글씨로.</p>
+    </div>
+    <div class="win rise"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco — 사서</span></div>
+      <video id="ai-video" muted playsinline loop preload="none" poster="media/librarian.jpg" src="media/librarian.mp4" aria-label="사서에게 묻는 실제 Cresco 화면 녹화"></video></div>
+    <p class="ai-pts rise"><span>[p.6] 근거 쪽 고리</span><span>✍ 손글씨 필기</span><span>이 논문에서 · 더 넓게</span></p>
+    <p class="beta-note rise">지금 베타는 메일 로그인만으로 Cresco AI(논문 약 2편 · 질문 30개 맛보기)를 씁니다 — <a href="#plans">요금제</a></p>
+  </div>
+</section>
+    </details>
+    <details class="more-item"><summary><span>내 데이터는 어디에 있나요<small>서재 · 번역할 글 · 서버</small></span></summary>
+<!-- 내 데이터 — '내 컴퓨터에만'이 아니다: 번역할 때 그 글은 Cresco 서버를 거쳐 Claude 로 간다. 그대로 밝힌다 -->
+<section class="statement light" id="local">
+  <h2 class="rise">서재는, <span class="gold">내 기기와 내 계정에만.</span></h2>
+  <p class="rise">번역할 때만 그 글이 Cresco AI 로 갑니다. 로그인하면 기기끼리 맞추려고 서재 사본을 내 계정에 보관합니다.</p>
+  <div class="where rise">
+    <div class="box home"><h3>내 기기</h3><p>PDF · 번역 · 기록 · 사서 대화 — 파일 하나</p><span class="tag">모두 여기에</span></div>
+    <div class="arrow" aria-hidden="true"><b>→</b>번역 · 풀이할<br>글만</div>
+    <div class="box ai"><h3>Cresco AI</h3><p>Cresco 서버를 거쳐 Anthropic 의 Claude 로</p><span class="tag">번역할 글만</span></div>
+    <div class="box dev"><h3>Cresco 서버</h3><p>메일 주소 · 쓴 양 · 기기끼리 맞출 서재 사본, 동의하면 익명 사용 횟수</p><span class="tag">번역할 글은 남기지 않음</span></div>
+  </div>
+  <p class="fine rise">Cresco AI 로 번역하는 글은 서버를 지나가기만 하고 저장되지 않습니다. 서재 사본은 내 계정으로만 쓰이고, 계정을 지우면 함께 지워집니다.</p>
+</section>
+    </details>
+    <details class="more-item"><summary><span>여러 기기에서 쓰기<small>PC · 휴대폰 · 태블릿</small></span></summary>
 <!-- 기기 사이: 태블릿·안드로이드 앱은 「PC와 주고받기」(설정) — 받기는 PC 서재 통째로, 보내기는 바뀐 것만 -->
 <section class="statement" id="sync">
   <h2 class="rise">PC와 휴대폰, <span class="gold">같은 서재.</span></h2>
-  <p class="rise">PC 에서 만든 번역을 휴대폰이 받아 읽고, 밖에서 칠한 기록은 PC 로.</p>
+  <p class="rise">같은 계정으로 로그인하면 논문 · 번역 · 기록이 저절로 맞춰집니다.</p>
+</section>
+    </details>
+  </div>
 </section>
 
 <!-- 정식 출시 · 요금제 — 아직 정식 발표 전. 횟수·가격은 적지 않는다(정해지면).
@@ -674,7 +724,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     <details><summary>Claude 나 ChatGPT 구독이 꼭 있어야 하나요?</summary>
       <p>아니요. Cresco AI 가 들어 있어서 메일 주소로 로그인만 하면 번역 · 풀이 · 사서 질문을 씁니다. 따로 구독하거나 설치할 것이 없습니다(베타는 한 사람당 논문 약 2편 · 질문 30개, Windows · 안드로이드).</p></details>
     <details><summary>내 논문이 다른 곳으로 가나요?</summary>
-      <p>서재는 내 컴퓨터에만 있습니다. 번역하고 풀이할 때 그 부분의 글만 Cresco 서버를 거쳐 Anthropic 의 Claude 로 갑니다. 서버는 그 글을 남기지 않고, 메일 주소와 쓴 양만 남깁니다. <a href="#local">자세히</a></p></details>
+      <p>서재는 내 기기에 있습니다. 로그인하면 기기끼리 맞추려고 서재 사본을 내 계정 전용으로 서버에 보관하고, 계정을 지우면 함께 지웁니다. 번역하고 풀이할 때 그 부분의 글만 Cresco 서버를 거쳐 Anthropic 의 Claude 로 가며, 서버는 그 글을 남기지 않습니다. <a href="#local">자세히</a></p></details>
     <details><summary>어떤 PDF 가 되나요?</summary>
       <p>학술지 · arXiv 에서 받은, 글자를 고를 수 있는 PDF 면 됩니다. 수식 · 그림 · 표가 많은 공학 논문으로 다듬었습니다. 종이를 스캔해 글자가 그림으로 된 PDF 는 번역할 수 없습니다.</p></details>
     <details><summary>태블릿 · 휴대폰에서도 되나요?</summary>
@@ -684,7 +734,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     <details><summary>새 판이 나오면 서재는 어떻게 되나요?</summary>
       <p>앱을 켤 때 새 버전 알림이 뜨고, 「지금 업데이트」를 누르면 바로 설치됩니다. 서재는 프로그램 밖(문서 폴더)에 있어 논문 · 번역 · 형광펜이 그대로 남습니다.</p></details>
     <details><summary>문제가 생기거나 바라는 기능이 있어요.</summary>
-      <p>앱 서재의 「✉ 의견 보내기」나 <a href="https://docs.google.com/forms/d/e/1FAIpQLScSkAJMExMRvsqdNgwN7c0etRT8uiJ2nZrkGeYYwZ1YKiH2eQ/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
+      <p>앱 서재의 「✉ 의견 보내기」나 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
   </div>
 </section>
 
@@ -692,7 +742,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
   <img class="rise" src="cresco-ivory.svg" alt="">
   <h2 class="rise">지금 받아 보세요.</h2>
   <p class="rise">무료 베타 · 60일 · 논문 2편까지. 메일 로그인만으로 바로 번역합니다.</p>
-  <!-- 늘 최신 릴리스의 같은 이름 파일 — 새 판을 올리면 단추는 그대로 새 판을 받는다 -->
+  <!-- 기본은 늘 최신 릴리스의 같은 이름 파일. 관제실 「판 관리」에서 판을 정해 두면 아래 스크립트가 그 판으로 바꾼다 -->
   <div class="dl rise">
     <a class="dlbtn" data-os="win" href="https://github.com/cresco-reader/cresco/releases/latest/download/Cresco-Setup.exe" target="_blank" rel="noopener">
       <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5l7.5-1v7H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg></span>
@@ -707,7 +757,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
 </section>
 </main>
 
-<footer><div class="in"><span>© 2026 Cresco</span><span>예시 논문: Vaswani et al., “Attention Is All You Need”, NeurIPS 2017 (arXiv:1706.03762) — 짧은 인용</span><span>Windows · Android · <a href="https://docs.google.com/forms/d/e/1FAIpQLScSkAJMExMRvsqdNgwN7c0etRT8uiJ2nZrkGeYYwZ1YKiH2eQ/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <button type="button" id="motion" class="motion">움직임 끄기</button></span></div></footer>
+<footer><div class="in"><span>© 2026 Cresco</span><span>예시 논문: Vaswani et al., “Attention Is All You Need”, NeurIPS 2017 (arXiv:1706.03762) — 짧은 인용</span><span>Windows · Android · <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <button type="button" id="motion" class="motion">움직임 끄기</button></span></div></footer>
 
 <script>
 (() => {
@@ -883,6 +933,7 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     }), {threshold: .4}).observe(cv);
     cv.onclick = () => {
       const i = tabs.findIndex(t => cv.dataset.src.endsWith(t.dataset.v + '.mp4'));
+      if (i < 0) { location.hash = 'ai'; return; }   // 사서 장면은 쓰임새 영상이 아니다 — 사서 소개로
       $('#uses').scrollIntoView({behavior: still ? 'auto' : 'smooth'});
       if (i >= 0) pickUse(i, true);
     };
@@ -986,6 +1037,43 @@ html.still .stage{position:relative;top:0;height:auto;min-height:100svh;overflow
     hero.textContent = 'Mac · 아이폰은 추후 공개 예정';
     hero.addEventListener('click', () => { $('#faq-iphone').open = true; });
   }
+
+  // 내려줄 판: 관제실이 정해 둔 판이 있으면 그 판, 없거나 서버가 답이 없으면 href 그대로(최신 판).
+  // 서버는 안 쓰면 잠드니 받기 칸이 가까워지거나 단추에 손이 갈 때만 묻고, 답이 오기 전에 누르면 잠깐 기다렸다 받는다.
+  const DL_ROOT = 'https://github.com/cresco-reader/cresco/releases/download/';
+  const dlBtns = $$('a.dlbtn[data-os]');
+  let dlReady = false, dlAsk;
+  const askRelease = () => dlAsk ||= Promise.race([
+    fetch('https://cresco-reader-api.fly.dev/v1/site-release').then(r => r.ok ? r.json() : null),
+    new Promise(r => setTimeout(r, 8000)),
+  ]).catch(() => null).then(p => {
+    dlReady = true;
+    if (!p?.tag || ![p.win, p.android].every(u => String(u).startsWith(DL_ROOT))) return;
+    dlBtns.forEach(a => { a.href = a.dataset.os === 'win' ? p.win : p.android; });
+    if (mine) hero.href = mine.href;
+  });
+  (mine ? [...dlBtns, hero] : dlBtns).forEach(a => {
+    a.addEventListener('pointerenter', askRelease);
+    a.addEventListener('focus', askRelease);
+    a.addEventListener('click', e => {
+      if (dlReady) return;
+      e.preventDefault();
+      a.style.opacity = .6;
+      askRelease().then(() => { a.style.opacity = ''; location.href = a.href; });
+    });
+  });
+  new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { askRelease(); o.disconnect(); } }, {rootMargin: '600px'}).observe($('#beta'));
+})();
+</script>
+<script>
+/* 메뉴나 다른 글의 고리가 접힌 칸 안을 가리키면 펼친 뒤 그 자리로 */
+(function () {
+  function openTarget() {
+    var t = location.hash.length > 1 && document.getElementById(location.hash.slice(1)), d = t && t.closest('details.more-item');
+    if (d) { d.open = true; t.scrollIntoView(); }
+  }
+  addEventListener('hashchange', openTarget);
+  openTarget();
 })();
 </script>
 </body>
