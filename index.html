@@ -8,7 +8,7 @@
 (h => { if (h && h !== '#top') location.replace('/reader/' + (h === '#download' ? '#beta' : h)); })(location.hash);
 </script>
 <title>Cresco — 읽고, 적고, 자란다</title>
-<meta name="description" content="Cresco 는 공부하고 연구하는 사람의 도구를 만듭니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트.">
+<meta name="description" content="Cresco 는 공부하고 연구하는 사람이 매일 쓰는 도구를 만듭니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트.">
 <link rel="icon" href="/cresco-ivory.svg">
 <!-- 링크 미리보기 — 그림은 절대 주소여야 한다 -->
 <meta property="og:type" content="website">
@@ -23,38 +23,66 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Gowun+Batang:wght@700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/cresco.css">
 </head>
 <body>
-<!-- Cresco 가 맨 위, 그 안에 프로그램 — 프로그램을 더하면 여기와 카드에 하나씩 -->
+<!-- Cresco 가 맨 위, 그 안에 프로그램 — 프로그램을 더하면 맨 위 띠와 .band 에 한 칸씩 -->
 <header class="top"><div class="in">
-  <a class="home" href="/" aria-label="Cresco 홈"><img src="/cresco-ivory.svg" alt="Cresco"></a>
+  <a class="home" href="/" aria-label="Cresco 홈"><img src="/cresco-navy.svg" alt="Cresco"></a>
   <nav aria-label="Cresco 프로그램"><a href="/reader/">Reader</a><a href="/note/">Note</a></nav>
 </div></header>
 
 <main>
-  <section class="hero in">
-    <img src="/cresco-ivory.svg" alt="Cresco">
+  <section class="stage">
+    <img class="mark" src="/cresco-ortus-navy.svg" alt="Cresco — Ortus MM" width="560" height="347">
     <h1>읽고, 적고, 자란다.</h1>
-    <p>Cresco 는 라틴어로 ‘나는 자란다’. 공부하고 연구하는 사람이 매일 쓰는 도구를 만듭니다. 계정 하나로 모든 프로그램을 씁니다.</p>
+    <p><i>crescō</i> — 라틴어로 ‘나는 자란다’. Cresco 는 공부하고 연구하는 사람이 매일 쓰는 도구를 만듭니다.</p>
   </section>
 
-  <section class="cards in" aria-label="프로그램">
-    <article class="card">
-      <p class="lab">CRESCO <b>READER</b></p>
+  <section class="band" aria-label="Cresco 프로그램"><div class="in">
+    <article class="prog">
+      <img class="logo" src="/cresco-reader-ivory.svg" alt="Cresco Reader">
       <h2>영어 논문을, 책처럼.</h2>
-      <p>문장 바로 아래 번역, 다섯 살도 아는 한 쪽 요약, 그림 · 표는 다시 그려서, 인용 번호는 눌러서. PC 와 휴대폰이 같은 서재를 봅니다.</p>
+      <p>PDF 를 올리면 문장 바로 아래 번역, 한 쪽 요약, 그림 · 수식 풀이가 미리 준비됩니다. 인용 번호는 눌러서 봅니다.</p>
       <p class="meta">Windows · Android · 지금은 무료 베타</p>
       <div class="acts"><a class="btn main" href="/reader/#beta">베타 받기</a><a class="btn" href="/reader/">자세히 보기</a></div>
+      <figure class="shot"><img src="/reader/media/use-first.jpg" alt="Cresco Reader 화면: 왼쪽은 논문 표지, 오른쪽은 공책에 손글씨로 쓴 듯한 「쉽게 말하면」 한 쪽" loading="lazy" width="1280" height="800">
+        <figcaption>실제 화면 — 「쉽게 말하면」 한 쪽</figcaption></figure>
     </article>
-    <article class="card">
-      <p class="lab">CRESCO <b>NOTE</b></p>
+    <article class="prog">
+      <img class="logo" src="/cresco-note-ivory.svg" alt="Cresco Note">
       <h2>펜으로 읽고, 적는다.</h2>
-      <p>태블릿 필기 노트. PDF 위에 손글씨로 적고, 궁금한 곳에 동그라미를 쳐서 AI 에게 묻습니다. 논문의 인용 번호를 누르면 그 자리를 미리 봅니다.</p>
+      <p>안드로이드 태블릿 필기 노트. PDF 위에 손으로 적고, 막히는 곳은 동그라미를 쳐서 그 자리에서 묻습니다.</p>
       <p class="meta">Android 태블릿 · 베타 준비 중</p>
       <div class="acts"><a class="btn" href="/note/">자세히 보기</a></div>
+      <figure class="shot">
+        <!-- 그림(화면 녹화 아님): 논문 쪽 위의 손글씨와, 수식을 둘러싼 올가미 -->
+        <svg viewBox="0 0 640 400" role="img" aria-label="그림: 논문 쪽의 수식을 펜 올가미로 둘러싸고 여백에 손글씨로 적은 모습">
+          <rect width="640" height="400" rx="10" fill="#F3EFE6"/>
+          <g fill="#13213A" opacity=".16">
+            <rect x="56" y="58" width="330" height="9" rx="2"/><rect x="56" y="80" width="300" height="9" rx="2"/><rect x="56" y="102" width="318" height="9" rx="2"/>
+            <rect x="56" y="124" width="250" height="9" rx="2"/>
+            <rect x="56" y="232" width="324" height="9" rx="2"/><rect x="56" y="254" width="296" height="9" rx="2"/><rect x="56" y="276" width="312" height="9" rx="2"/>
+            <rect x="56" y="298" width="210" height="9" rx="2"/>
+          </g>
+          <text x="104" y="190" font-family="Georgia,serif" font-style="italic" font-size="28" fill="#13213A" opacity=".8">q″ = h (T<tspan font-size="18" dy="6">s</tspan><tspan dy="-6"> − T</tspan><tspan font-size="18" dy="6">∞</tspan><tspan dy="-6">)</tspan></text>
+          <g fill="none" stroke="#13213A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M88 176c4-26 76-38 158-34s114 22 104 46-74 32-150 30-122-14-112-42c3-8 14-15 30-19"/>
+            <path d="M362 170c22-10 44-14 66-12"/><path d="M420 150l10 8-12 6"/>
+            <path d="M448 140c6-10 18-10 20 0s-10 14-12 22m-1 12v2"/>
+            <path d="M484 152c8-12 22-14 26-2-6 4-12 10-12 18 8-6 16-4 20 2"/>
+            <path d="M532 150c4 10 4 22-2 30m12-34c-6 14-4 26 4 34"/>
+            <path d="M56 324c40 6 86 4 128-4"/>
+          </g>
+        </svg>
+        <figcaption>그림 — 수식을 동그라미로 둘러싸고 묻기</figcaption></figure>
     </article>
+  </div></section>
+
+  <section class="one">
+    <p>Reader 와 Note 는 같은 Cresco 계정을 씁니다. · <a href="https://cresco-reader-api.fly.dev/account" target="_blank" rel="noopener">계정 관리</a></p>
   </section>
 </main>
 
