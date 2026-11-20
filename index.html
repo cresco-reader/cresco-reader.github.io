@@ -8,7 +8,7 @@
 (h => { if (h && h !== '#top') location.replace('/reader/' + (h === '#download' ? '#beta' : h)); })(location.hash);
 </script>
 <title>Cresco — 읽고, 적고, 자란다</title>
-<meta name="description" content="Cresco 는 공부하고 연구하는 사람의 도구를 만듭니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트(준비 중).">
+<meta name="description" content="Cresco 는 공부하고 연구하는 사람의 도구를 만듭니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트.">
 <link rel="icon" href="/cresco-ivory.svg">
 <!-- 링크 미리보기 — 그림은 절대 주소여야 한다 -->
 <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://cresco-reader.github.io/">
 <meta property="og:title" content="Cresco — 읽고, 적고, 자란다">
-<meta property="og:description" content="Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트(준비 중).">
+<meta property="og:description" content="Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트.">
 <meta property="og:image" content="https://cresco-reader.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,53 +24,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
-<style>
-/* Cresco 브랜드 허브 — 색 · 서체는 CRESCO_brand/README.md (밤하늘 · 아이보리 · Cinzel 라벨). 제품 소개는 /reader/ 가 한다.
-   제품이 늘면 카드를 하나 더. 기능 설명은 실제 기능만. */
-:root{
-  --night:#0E1A2C; --navy:#13213A; --ivory:#ECE6D8; --ivory-bg:#F3EFE6;
-  --sub:rgba(236,230,216,.66); --line:rgba(236,230,216,.16);
-  --sans:'Noto Sans KR',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',system-ui,sans-serif;
-  --label:'Cinzel',Georgia,serif; color-scheme:dark;
-}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--night);color:var(--ivory);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(1200px 600px at 50% -10%,rgba(236,230,216,.07),transparent 70%)}
-a{color:inherit}
-.in{max-width:1040px;margin:0 auto;padding:0 16px}
-.hero{text-align:center;padding:clamp(72px,14vw,140px) 0 clamp(48px,8vw,88px)}
-.hero img{width:min(300px,62vw);height:auto;display:block;margin:0 auto}
-h1{font-size:clamp(30px,5vw,48px);font-weight:700;letter-spacing:-.01em;margin:40px 0 12px}
-.hero p{color:var(--sub);margin:0 auto;max-width:34em;font-size:clamp(15px,1.8vw,17px)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;padding-bottom:clamp(56px,9vw,104px)}
-.card{border:1px solid var(--line);border-radius:20px;padding:clamp(26px,4vw,40px);background:rgba(19,33,58,.55);display:flex;flex-direction:column}
-.card .lab{font-family:var(--label);letter-spacing:.32em;font-size:14px;color:var(--sub);margin:0}
-.card .lab b{font-weight:500;color:var(--ivory)}
-.card h2{font-size:clamp(24px,3vw,30px);margin:18px 0 10px;font-weight:700}
-.card p{margin:0;color:var(--sub)}
-.card .meta{margin-top:16px;font-size:14px}
-.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:28px}
-.btn{display:inline-block;padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:500;font-size:15px;border:1px solid var(--ivory)}
-.btn.main{background:var(--ivory);color:var(--navy)}
-.btn:hover{opacity:.86}
-.btn:focus-visible{outline:2px solid var(--ivory);outline-offset:3px}
-.soon{display:inline-block;padding:11px 20px;border-radius:999px;border:1px dashed var(--line);color:var(--sub);font-size:15px}
-footer{border-top:1px solid var(--line);padding:24px 0 36px;font-size:13px;color:var(--sub)}
-footer .in{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
-footer a{text-decoration:none}
-footer a:hover{text-decoration:underline}
-</style>
+<link rel="stylesheet" href="/cresco.css">
 </head>
 <body>
+<!-- Cresco 가 맨 위, 그 안에 프로그램 — 프로그램을 더하면 여기와 카드에 하나씩 -->
+<header class="top"><div class="in">
+  <a class="home" href="/" aria-label="Cresco 홈"><img src="/cresco-ivory.svg" alt="Cresco"></a>
+  <nav aria-label="Cresco 프로그램"><a href="/reader/">Reader</a><a href="/note/">Note</a></nav>
+</div></header>
+
 <main>
   <section class="hero in">
     <img src="/cresco-ivory.svg" alt="Cresco">
     <h1>읽고, 적고, 자란다.</h1>
-    <p>Cresco 는 라틴어로 ‘나는 자란다’. 공부하고 연구하는 사람이 매일 쓰는 도구를 만듭니다.</p>
+    <p>Cresco 는 라틴어로 ‘나는 자란다’. 공부하고 연구하는 사람이 매일 쓰는 도구를 만듭니다. 계정 하나로 모든 프로그램을 씁니다.</p>
   </section>
 
-  <section class="cards in" aria-label="제품">
+  <section class="cards in" aria-label="프로그램">
     <article class="card">
       <p class="lab">CRESCO <b>READER</b></p>
       <h2>영어 논문을, 책처럼.</h2>
@@ -82,14 +52,14 @@ footer a:hover{text-decoration:underline}
       <p class="lab">CRESCO <b>NOTE</b></p>
       <h2>펜으로 읽고, 적는다.</h2>
       <p>태블릿 필기 노트. PDF 위에 손글씨로 적고, 궁금한 곳에 동그라미를 쳐서 AI 에게 묻습니다. 논문의 인용 번호를 누르면 그 자리를 미리 봅니다.</p>
-      <p class="meta">Android 태블릿</p>
-      <div class="acts"><span class="soon">준비 중</span></div>
+      <p class="meta">Android 태블릿 · 베타 준비 중</p>
+      <div class="acts"><a class="btn" href="/note/">자세히 보기</a></div>
     </article>
   </section>
 </main>
 
 <footer><div class="in">
-  <span>© 2026 Cresco</span>
+  <span>© 2026 Cresco · <a href="/reader/">Reader</a> · <a href="/note/">Note</a></span>
   <span><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <a href="/legal/terms.html">이용약관</a> · <a href="/legal/privacy.html">개인정보처리방침</a></span>
 </div></footer>
 </body>
