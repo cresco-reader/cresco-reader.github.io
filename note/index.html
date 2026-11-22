@@ -4,49 +4,320 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cresco Note — 펜으로 읽고, 적는다</title>
-<meta name="description" content="Cresco Note — 안드로이드 태블릿 필기 노트. PDF 위 손글씨, 동그라미로 AI 에게 묻기, 인용 미리보기, PC 백업.">
+<meta name="description" content="Cresco Note — 안드로이드 태블릿 필기 노트. PDF 위 손글씨, 동그라미로 AI 에게 묻기, 글자에 붙는 형광펜, 인용 미리보기, 나란히 보기.">
 <link rel="icon" href="/cresco-ivory.svg">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cresco">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://cresco-reader.github.io/note/">
 <meta property="og:title" content="Cresco Note — 펜으로 읽고, 적는다">
-<meta property="og:description" content="안드로이드 태블릿 필기 노트. PDF 위 손글씨, 동그라미로 AI 에게 묻기, 인용 미리보기, PC 백업.">
+<meta property="og:description" content="안드로이드 태블릿 필기 노트. PDF 위 손글씨, 동그라미로 AI 에게 묻기, 글자에 붙는 형광펜, 인용 미리보기, 나란히 보기.">
 <meta property="og:image" content="https://cresco-reader.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Gowun+Batang:wght@700&display=swap">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="/cresco.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
+<style>
+/* Cresco Note 소개 — Reader 소개(/reader/)와 같은 문법: 월넛 밤 서재와 종이가 번갈아, 큰 굵은 산세리프,
+   한 번에 한 문장, 실제 화면 녹화. 녹화는 CI 의 안드로이드 에뮬레이터에서 찍었다(media/ · build/site_rec/note_녹화.md). */
+:root{
+  --black:#120d0a; --gray-bg:#f2ece1; --white:#fbf8f2; --text:#f4ede1; --text-dark:#231a14; --sub:#a39584;
+  --card:#1f1712; --blue:#c9a050; --link:#e0b860; --on-brass:#1a120c;
+  --gold:linear-gradient(92deg,#f8dc97 0%,#e9b45a 55%,#d98f3a 100%);
+  --sans:'Inter','Noto Sans KR',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',system-ui,sans-serif;
+  --head:48px; color-scheme:dark;
+}
+/* 바탕은 화면 설정과 상관없이 같다 (Reader 소개와 같은 까닭) */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--black:#120d0a}}
+:root[data-theme="dark"]{--black:#120d0a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--black);color:var(--text);font:17px/1.47 var(--sans);letter-spacing:-.01em;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere;overflow-x:clip}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:6px}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
+.gold{background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pillbtn{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:980px;background:var(--blue);color:var(--on-brass);
+  font-size:17px;font-weight:600;text-decoration:none;transition:background .2s}
+.pillbtn:hover{background:#d8b062;text-decoration:none}
+.more::after{content:" ›"}
+
+header{position:fixed;inset:0 0 auto;z-index:30;height:var(--head);background:rgba(18,13,10,.72);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px)}
+header .in{max-width:1024px;height:100%;margin:0 auto;padding:0 22px;display:flex;align-items:center;gap:30px;font-size:12px}
+header img{height:26px;width:auto;display:block}
+header nav{display:flex;gap:30px;flex:1;justify-content:center}
+header nav a{color:#e9dfcf;opacity:.85}header nav a:hover{opacity:1;text-decoration:none}
+header .prod{margin-left:-22px;font:600 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#e9dfcf;opacity:.8}
+header .prod:hover{opacity:1;text-decoration:none}
+header nav .fam{padding-left:30px;border-left:1px solid rgba(233,223,207,.25)}
+header .cta{padding:4px 12px;border-radius:980px;border:1px solid rgba(224,184,96,.45);color:#e6cd94;font-size:12px;font-weight:600}
+header .cta:hover{text-decoration:none;background:rgba(224,184,96,.1)}
+main{padding-top:var(--head)}
+
+/* 첫 화면 — 글 한 줄 + 실제 화면 한 편 (수식에 동그라미 → 묻기) */
+.hero{background:radial-gradient(ellipse at 50% 30%,#2a1d14 0%,#120d0a 70%)}
+.hero>.in{max-width:1120px;margin:0 auto;padding:clamp(56px,9vh,96px) 22px clamp(56px,8vh,90px);text-align:center}
+.hero .logo{display:block;margin:0 auto;width:min(300px,62vw);height:auto;opacity:.95}
+.hero .pre{display:inline-block;margin-top:clamp(18px,3vh,28px);padding:5px 14px;border-radius:980px;border:1px solid rgba(224,184,96,.45);
+  color:#e6cd94;font-size:13px;font-weight:600}
+.hero .pre:hover{text-decoration:none;background:rgba(224,184,96,.1)}
+.hero h1{margin-top:14px;font-size:clamp(40px,6.6vw,80px);line-height:1.06;font-weight:800;color:#f4ede1}
+.hero p.lead{margin:16px auto 0;max-width:640px;font-size:clamp(17px,1.8vw,22px);line-height:1.45;color:#b7aa95;font-weight:500}
+.hero .acts{margin-top:24px;display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap;font-size:18px}
+/* 앱 창 모양 액자 — 녹화가 '실제 화면'임이 보이게 */
+.win{margin:clamp(36px,6vh,56px) auto 0;border-radius:16px;overflow:hidden;background:#f3e9d7;border:1px solid #3a2d23;box-shadow:0 40px 80px rgba(0,0,0,.45);text-align:left}
+.win .tb{height:30px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#1d1611;font-size:12px;color:#8d7f6c}
+.win .tb i{width:10px;height:10px;border-radius:50%;background:#3d3128}
+.win .tb span{flex:1;text-align:center;margin-right:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win video{display:block;width:100%;height:auto;aspect-ratio:1280/876;background:#f3e9d7}
+.honest{margin:14px auto 0;max-width:760px;font-size:13px;line-height:1.5;color:#8f8170}
+.honest b{color:#b9a98f;font-weight:600}
+
+/* 핵심 네 가지 — 같은 녹화의 한 곳을 확대해 되풀이하는 타일 (높이 = 4:3) */
+.core{padding:clamp(64px,9vh,110px) 0 clamp(44px,7vh,84px)}
+.core>.in{max-width:1280px;margin:0 auto;padding:0 22px}
+.core h2{font-size:clamp(36px,5vw,62px);line-height:1.08;font-weight:800;text-align:center}
+.core .lead{margin:12px 0 36px;text-align:center;color:var(--sub);font-size:clamp(17px,1.7vw,21px);font-weight:500}
+.clips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.clip{margin:0}
+.clip .clipv{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#f3e9d7;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+/* --x --y --w: 원본에서 보일 곳(폭 기준 비율), --r: 원본 높이/폭 */
+.clip video{position:absolute;left:calc(var(--x) / var(--w) * -100%);top:calc(var(--y) * var(--r) / (.75 * var(--w)) * -100%);width:calc(100% / var(--w));height:auto}
+.clip figcaption{margin-top:12px;font-size:15px;color:var(--sub)}
+.clip figcaption b{display:block;margin-bottom:2px;font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
+.extras{margin:40px auto 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:820px}
+.extras b{font-size:13px;font-weight:700;color:#e0b860;margin-right:4px}
+.extras span{padding:5px 12px;border-radius:999px;background:#2a2019;color:#d9ccb6;font-size:13.5px}
+.rise{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rise.in{opacity:1;transform:none}
+
+/* 더 자세히 — 궁금한 사람만 펼친다 */
+.more{padding:clamp(56px,8vh,100px) 22px}
+.more>.in{max-width:1040px;margin:0 auto}
+.more>.in>h2{margin-bottom:26px;font-size:clamp(30px,4vw,46px);line-height:1.1;font-weight:800;text-align:center}
+.more-item{border-top:1px solid rgba(255,255,255,.14)}
+.more-item:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.more-item>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 4px;cursor:pointer;list-style:none;
+  font-size:clamp(18px,2vw,22px);font-weight:700;letter-spacing:-.02em}
+.more-item>summary::-webkit-details-marker{display:none}
+.more-item>summary small{display:block;margin-top:3px;color:var(--sub);font-size:14px;font-weight:500;letter-spacing:0}
+.more-item>summary::after{content:"+";flex:none;color:#e9b45a;font-size:28px;font-weight:400;line-height:1;transition:transform .2s}
+.more-item[open]>summary::after{transform:rotate(45deg)}
+.more-item .body{margin:0 4px 30px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.more-item .body>div{padding:20px 20px 22px;border-radius:18px;background:var(--card)}
+.more-item h3{font-size:17px;font-weight:800;letter-spacing:-.02em}
+.more-item p{margin:8px 0 0;color:var(--sub);font-size:15px}
+
+/* 내 노트는 어디에 — 무엇이 어디까지 가는지 */
+.statement{text-align:center;padding:130px 22px}
+.statement h2{font-size:clamp(40px,6.4vw,80px);line-height:1.05;font-weight:800}
+.statement p{margin:22px auto 0;max-width:660px;color:var(--sub);font-size:21px;font-weight:500}
+.statement.light{background:var(--gray-bg);color:var(--text-dark)}
+.statement.light p{color:#75685a}
+.where{max-width:1000px;margin:56px auto 0;display:grid;grid-template-columns:minmax(0,1.15fr) 56px minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:stretch;text-align:left}
+.where .box{background:var(--white);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 0 rgba(60,40,20,.06)}
+.where .box h3{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.where .box p{margin:0;max-width:none;font-size:14.5px;line-height:1.5;color:#75685a}
+.where .box .tag{align-self:flex-start;margin-top:auto;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.where .home{box-shadow:inset 0 0 0 2px var(--blue)}
+.where .home .tag{background:var(--blue);color:var(--on-brass)}
+.where .ai .tag{background:rgba(47,93,168,.12);color:#2f5da8}
+.where .dev{background:transparent;box-shadow:inset 0 0 0 1.5px #d6c9b3}
+.where .dev .tag{background:#e9e0d0;color:#6e6152}
+.where .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#9a7b3c;font-size:12px;font-weight:600;text-align:center}
+.where .arrow b{font-size:26px;line-height:1}
+
+.faq{background:var(--gray-bg);color:var(--text-dark)}
+.faq > .in{max-width:780px;margin:0 auto;padding:0 22px 120px}
+.faq h2{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:800;text-align:center;margin-bottom:44px}
+.faq details{border-bottom:1px solid #ddd2bf}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:20px 2px;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:24px;line-height:1;font-weight:400;color:#9a7b3c;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 2px 20px;color:#6e6152;font-size:16px}
+.faq details p a{color:#8a6420;text-decoration:underline}
+
+.beta img{height:56px;width:auto;margin-bottom:26px}
+.beta .acts{margin-top:30px;display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap;font-size:19px}
+
+footer a{color:#8a6420}
+footer{background:var(--gray-bg);color:#75685a;font-size:12px}
+footer .motion{border:0;background:none;padding:0;font:inherit;color:#9a7b3c;cursor:pointer}footer .motion:hover{text-decoration:underline}
+footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px solid #ddd2bf}
+
+@media (max-width:1000px){
+  .clips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .more-item .body{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .where{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)}.where .dev{grid-column:1 / -1}}
+@media (max-width:760px){
+  header nav{display:none}
+  header .in{justify-content:space-between}
+  .hero>.in,.core>.in{padding-inline:16px}
+  .win{border-radius:12px}.win .tb{height:24px}
+  .statement{padding:100px 16px}
+  .more{padding-inline:16px}
+  .more-item .body{grid-template-columns:1fr}
+  .faq > .in{padding:0 16px 90px}
+  .where{grid-template-columns:1fr}.where .arrow{flex-direction:row;padding:2px 0}.where .arrow b{transform:rotate(90deg)}
+}
+@media (max-width:520px){.clips{gap:14px 12px}.clip figcaption{font-size:13.5px}.clip figcaption b{font-size:16px}}
+</style>
 </head>
 <body>
-<header class="top"><div class="in">
-  <a class="home" href="/" aria-label="Cresco 홈"><img src="/cresco-navy.svg" alt="Cresco"></a>
-  <nav aria-label="Cresco 프로그램"><a href="/reader/">Reader</a><a href="/note/" aria-current="page">Note</a></nav>
-</div></header>
+<header>
+  <div class="in">
+    <a href="/" aria-label="Cresco 홈"><img src="/cresco-ivory.svg" alt="Cresco"></a><a class="prod" href="#top">Note</a>
+    <nav aria-label="주 메뉴"><a href="#core">핵심 기능</a><a href="#more">자세히</a><a href="#local">내 노트</a><a href="#faq">자주 묻는 질문</a><a class="fam" href="/reader/">Cresco Reader</a></nav>
+    <a class="cta" href="#beta">베타 준비 중</a>
+  </div>
+</header>
 
-<main>
-  <section class="hero in">
-    <p class="lab">CRESCO <b>NOTE</b></p>
+<main id="top">
+<!-- 녹화: CI 의 안드로이드 에뮬레이터(Pixel C, 2560×1800 → 1280×876), 견본 논문만 든 노트.
+     펜 획은 앱의 QA 장면(editor/Demo.kt)이 사람 속도로 넣었다. AI 답은 에뮬레이터가 Cresco 서버에 닿지 못해,
+     같은 질문 · 같은 부분에 Claude 가 쓴 답을 가짜 서버가 돌려준 것이다 — 아래 .honest 에 그대로 적는다.
+     다시 찍기 · 자르기: build/site_rec/note_녹화.md -->
+<section class="hero">
+  <div class="in">
+    <img class="logo" src="/cresco-note-ivory.svg" alt="Cresco Note">
+    <a class="pre" href="#beta">베타 준비 중 · Android 태블릿</a>
     <h1>펜으로 읽고, 적는다.</h1>
-    <p>안드로이드 태블릿 필기 노트. 논문 PDF 를 펼쳐 손으로 적고, 막히는 곳은 동그라미를 쳐서 그 자리에서 묻습니다.</p>
-    <div class="acts"><span class="soon">베타 준비 중 · Android 태블릿</span><a class="btn" href="/reader/">Cresco Reader 보기</a></div>
-  </section>
+    <p class="lead">논문 PDF 를 펼쳐 손으로 적고, 막히는 곳은 동그라미를 쳐서 그 자리에서 묻습니다.</p>
+    <div class="acts"><a class="pillbtn" href="#core">핵심 기능 보기</a><a class="more" href="/reader/">Cresco Reader 보기</a></div>
+    <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco Note — Attention Is All You Need</span></div>
+      <video id="hero-video" muted playsinline loop preload="metadata" poster="media/ask-eq.jpg" src="media/ask-eq.mp4"
+        aria-label="실제 Cresco Note 화면 녹화: 여백에 손글씨를 쓰고 수식에 동그라미를 쳐 AI 에게 묻는 모습"></video></div>
+    <p class="honest"><b>실제 앱 화면입니다.</b> 안드로이드 에뮬레이터에서 녹화했고, 펜 획은 자동으로 넣었습니다.
+      AI 답은 같은 질문에 Claude 가 쓴 답을 미리 받아 둔 것이며, 기다리는 시간은 줄였습니다.</p>
+  </div>
+</section>
 
-  <section class="feats in" aria-label="기능">
-    <div class="feat"><h3>PDF 위에 손글씨</h3><p>펜 · 형광펜 · 도형 보정 · 지우개 · 올가미. PDF 위에 형광펜을 그으면 그 줄의 글자에 딱 맞게 칠해집니다.</p></div>
-    <div class="feat"><h3>동그라미로 묻기</h3><p>식 · 그래프 · 문단을 올가미로 둘러싸고 AI 에게 묻습니다. 답은 텍스트 상자로 페이지에 붙여 둘 수 있습니다.</p></div>
-    <div class="feat"><h3>인용을 눌러서 미리보기</h3><p>본문의 [12] · Fig. 3 · Table 2 를 누르면 참고문헌 · 그림 캡션을 그 자리에서 보여 줍니다. 돌아가기로 여러 단계를 왕복합니다.</p></div>
-    <div class="feat"><h3>목차 · 북마크 · 검색</h3><p>PDF 목차와 북마크로 바로 이동하고, PDF 글자와 손글씨(한국어 · 영어)를 함께 찾습니다.</p></div>
-    <div class="feat"><h3>PC 로 자동 백업</h3><p>노트마다 PDF 와 복원용 파일, 하이라이트 · 메모 · 필기를 쪽별로 모은 Markdown 정리본을 PC 에 남깁니다.</p></div>
-    <div class="feat"><h3>Cresco 계정 하나로</h3><p>Cresco Reader 와 같은 Cresco 계정 · Cresco AI 를 씁니다. 베타가 열리면 이곳에서 받을 수 있습니다.</p></div>
-  </section>
+<section class="core" id="core">
+  <div class="in">
+    <h2 class="rise">핵심은, <span class="gold">네 가지.</span></h2>
+    <p class="lead rise">펜을 내려놓지 않고, 논문 안에서.</p>
+    <div class="clips">
+      <figure class="clip rise"><div class="clipv" data-src="media/ask-fig.mp4" data-seg="0,28.4" data-crop=".36,.06,.64" data-r=".684"><video muted playsinline preload="none" poster="media/ask-fig.jpg"></video></div>
+        <figcaption><b>동그라미로 묻기</b>식 · 그림 · 문단을 둘러싸고, 그 부분만.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/highlight.mp4" data-seg="0,9.7" data-crop=".17,.2,.46" data-r=".684"><video muted playsinline preload="none" poster="media/highlight.jpg"></video></div>
+        <figcaption><b>글자에 붙는 형광펜</b>대충 그어도 그 줄의 글자에 딱.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/cite.mp4" data-seg="0,17.7" data-crop=".19,.26,.62" data-r=".6375"><video muted playsinline preload="none" poster="media/cite.jpg"></video></div>
+        <figcaption><b>인용을 눌러서</b>[12] · Figure 1 을 그 자리에서.</figcaption></figure>
+      <figure class="clip rise"><div class="clipv" data-src="media/split.mp4" data-seg="0,16.1" data-crop=".01,.07,.74" data-r=".684"><video muted playsinline preload="none" poster="media/split.jpg"></video></div>
+        <figcaption><b>나란히 보기</b>그림 쪽을 옆에 두고, 이쪽에 적기.</figcaption></figure>
+    </div>
+    <p class="extras rise"><b>그리고</b><span>만년필 · 볼펜 · 형광펜</span><span>직선 · 도형 보정</span><span>올가미로 옮기기</span><span>텍스트 · 이미지</span><span>목차 · 북마크</span><span>돌아가기 ‹ ›</span><span>손글씨까지 검색</span><span>읽기 모드</span><span>노트 여러 개를 탭으로</span></p>
+  </div>
+</section>
+
+<section class="more" id="more">
+  <div class="in">
+    <h2 class="rise">더 자세히 보기</h2>
+    <details class="more-item"><summary><span>AI 도우미<small>읽는 범위 · 쪽 고리 · 노트에 붙이기</small></span></summary>
+      <div class="body">
+        <div><h3>읽는 범위를 고릅니다</h3><p>[이 페이지] · [주변 쪽] · [노트 전체]. 기본은 주변 쪽 — 보는 쪽과 앞뒤 2쪽만 읽어서 사용량이 적습니다. 동그라미로 물으면 그 쪽만.</p></div>
+        <div><h3>내 필기까지 읽습니다</h3><p>PDF 원문과 함께 손글씨 · 형광펜 · 텍스트 상자 · 그림을 같이 보냅니다. 동그라미 친 곳은 PDF 의 글자도 함께 보내 정확하게 읽습니다.</p></div>
+        <div><h3>답에서 그 쪽으로</h3><p>답 아래의 쪽 고리(p.4)를 누르면 그 쪽으로 갑니다. [노트에 붙이기]로 답을 텍스트 상자로 페이지에 남길 수 있습니다.</p></div>
+      </div></details>
+    <details class="more-item"><summary><span>논문 읽기 기본기<small>인용 · 목차 · 이동 기록 · 나란히 보기</small></span></summary>
+      <div class="body">
+        <div><h3>링크 없는 인용도</h3><p>본문의 [12] · Fig. 3 · Table 2 를 손가락으로 누르면 참고문헌 · 캡션을 찾아 보여 줍니다. [그 위치로 이동] · [옆에 열기].</p></div>
+        <div><h3>목차 · 북마크 · 돌아가기</h3><p>PDF 목차와 북마크로 바로 가고, 링크 · 검색 · 목차로 옮겨 다닌 길을 [돌아가기] / [→] 로 여러 단계 왕복합니다.</p></div>
+        <div><h3>나란히 보기</h3><p>같은 노트의 다른 쪽이나 다른 노트를 옆에 띄웁니다. 왼쪽에 펜으로 쓰는 동안 옆 창에 닿은 손바닥은 무시합니다. 세로 화면에서는 위아래로.</p></div>
+      </div></details>
+    <details class="more-item"><summary><span>찾기 · 백업<small>손글씨 검색 · 백업과 복원</small></span></summary>
+      <div class="body">
+        <div><h3>모든 것 검색</h3><p>첫 화면 검색이 제목뿐 아니라 PDF 본문 · 손글씨(한국어 · 영어) · 텍스트 상자까지 찾고, 누르면 그 쪽으로 갑니다.</p></div>
+        <div><h3>백업과 복원</h3><p>노트 전체를 파일 하나로 백업하고, 그 파일에서 되살립니다. 새 태블릿으로 옮길 때도 이 파일 하나면 됩니다.</p></div>
+        <div><h3>PDF 로 내보내기</h3><p>필기를 얹은 그대로 PDF 로 저장하거나 공유합니다.</p></div>
+      </div></details>
+  </div>
+</section>
+
+<section class="statement light" id="local">
+  <h2 class="rise">노트는, <span class="gold">내 태블릿에.</span></h2>
+  <p class="rise">AI 에게 물을 때만, 그 범위의 쪽과 동그라미 친 부분이 Cresco AI 로 갑니다.</p>
+  <div class="where rise">
+    <div class="box home"><h3>내 태블릿</h3><p>PDF · 필기 · 텍스트 상자 · 검색 색인 — 모두 앱 안에</p><span class="tag">모두 여기에</span></div>
+    <div class="arrow" aria-hidden="true"><b>→</b>물을 때<br>그 범위만</div>
+    <div class="box ai"><h3>Cresco AI</h3><p>Cresco 서버를 거쳐 Anthropic 의 Claude 로</p><span class="tag">물을 때만</span></div>
+    <div class="box dev"><h3>Cresco 서버</h3><p>메일 주소 · 쓴 양 · 앱을 쓰는 중이라는 신호. 질문 · 답 · 노트 내용은 남기지 않습니다</p><span class="tag">노트는 남기지 않음</span></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="in">
+    <h2 class="rise">자주 묻는 질문</h2>
+    <details><summary>언제 받을 수 있나요?</summary>
+      <p>지금 베타를 준비하고 있습니다. 베타가 열리면 이 페이지에서 받을 수 있습니다.</p></details>
+    <details><summary>어떤 기기에서 되나요?</summary>
+      <p>안드로이드 10 이상의 태블릿에서, 스타일러스 펜과 함께 쓰도록 만들었습니다. 손가락으로는 넘기고 확대하고, 펜으로는 적습니다.</p></details>
+    <details><summary>Cresco Reader 와 같은 계정인가요?</summary>
+      <p>네. 같은 Cresco 계정으로 로그인하고, AI 는 Cresco AI 를 함께 씁니다. 따로 구독하거나 API 키를 넣을 필요가 없습니다. <a href="https://cresco-reader-api.fly.dev/account" target="_blank" rel="noopener">계정 관리</a></p></details>
+    <details><summary>영상 속 AI 답은 실제인가요?</summary>
+      <p>앱 화면은 실제이고, 녹화는 안드로이드 에뮬레이터에서 했습니다. 에뮬레이터가 Cresco 서버에 닿지 못해, AI 답은 같은 질문 · 같은 부분에 Claude 가 쓴 답을 미리 받아 두고 보여 줬습니다. 기다리는 시간과 느린 부분은 줄였습니다.</p></details>
+    <details><summary>요금은 얼마인가요?</summary>
+      <p>아직 정하지 않았습니다. 정해지는 대로 이 홈페이지에 알립니다.</p></details>
+    <details><summary>문제가 생기거나 바라는 기능이 있어요.</summary>
+      <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
+  </div>
+</section>
+
+<section class="statement beta" id="beta">
+  <img class="rise" src="/cresco-ivory.svg" alt="">
+  <h2 class="rise">곧, 이곳에서.</h2>
+  <p class="rise">Cresco Note 베타를 준비하고 있습니다. 그동안 같은 계정으로 쓰는 Cresco Reader 를 먼저 써 보세요.</p>
+  <div class="acts rise"><a class="pillbtn" href="/reader/#beta">Cresco Reader 베타 받기</a><a class="more" href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 보내기</a></div>
+</section>
 </main>
 
-<footer><div class="in">
-  <span>© 2026 <a href="/">Cresco</a> · <a href="/reader/">Reader</a> · Note</span>
-  <span><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <a href="/legal/terms.html">이용약관</a> · <a href="/legal/privacy.html">개인정보처리방침</a></span>
-</div></footer>
+<footer><div class="in"><span>© 2026 <a href="/">Cresco</a> · Note</span><span>예시 논문: Vaswani et al., “Attention Is All You Need”, NeurIPS 2017 (arXiv:1706.03762) — 짧은 인용</span><span>Android 태블릿 · <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <a href="/legal/terms.html">이용약관</a> · <a href="/legal/privacy.html">개인정보처리방침</a> · <button type="button" id="motion" class="motion">움직임 끄기</button></span></div></footer>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  // 움직임은 시스템 설정이 아니라 맨 아래 「움직임 끄기」를 따른다 (Reader 소개와 같은 까닭)
+  let still = false;
+  try { still = localStorage.getItem('motion') === 'off'; } catch { /* */ }
+  const mt = $('#motion');
+  mt.textContent = still ? '움직임 켜기' : '움직임 끄기';
+  mt.onclick = () => { try { localStorage.setItem('motion', still ? 'on' : 'off'); } catch { /* */ } location.reload(); };
+
+  // 첫 화면 영상: 보일 때만 돈다. 움직임을 끄면 조절 단추를 달고 멈춰 둔다.
+  const hv = $('#hero-video');
+  if (still) hv.controls = true;
+  else new IntersectionObserver(es => es.forEach(e => { e.isIntersecting ? hv.play().catch(() => {}) : hv.pause(); }), {threshold: .3}).observe(hv);
+
+  // 기능 타일: 녹화의 한 구간(data-seg)을 확대(data-crop)해 되풀이 — 보일 때만 받고 돈다
+  $$('.clip .clipv').forEach(cv => {
+    const [x, y, w] = cv.dataset.crop.split(',').map(Number);
+    cv.style.setProperty('--x', x); cv.style.setProperty('--y', y); cv.style.setProperty('--w', w); cv.style.setProperty('--r', cv.dataset.r);
+    const [a, b] = cv.dataset.seg.split(',').map(Number);
+    const v = cv.querySelector('video');
+    v.loop = true;   // 구간 끝이 영상 끝과 겹치면 timeupdate 가 끝을 놓친다
+    v.addEventListener('timeupdate', () => { if (v.currentTime >= b) v.currentTime = a; });
+    const load = () => { if (!v.src) { v.src = cv.dataset.src; v.load(); } };
+    if (still) return;   // 움직임 끔: 포스터만
+    new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { load(); v.play().catch(() => {}); } else v.pause();
+    }), {threshold: .4}).observe(cv);
+  });
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .15});
+  $$('.rise').forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; still ? el.classList.add('in') : io.observe(el); });
+
+  // 메뉴 고리가 접힌 칸 안을 가리키면 펼친 뒤 그 자리로
+  const openTarget = () => {
+    const t = location.hash.length > 1 && document.getElementById(location.hash.slice(1)), d = t && t.closest('details.more-item');
+    if (d) { d.open = true; t.scrollIntoView(); }
+  };
+  addEventListener('hashchange', openTarget);
+  openTarget();
+})();
+</script>
 </body>
 </html>
