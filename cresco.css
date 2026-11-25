@@ -92,3 +92,7 @@ footer a:hover{text-decoration:underline}
   .prog + .prog{border-left:0;border-top:1px solid var(--line-n)}
 }
 @media (max-width:520px){.top nav a{padding:7px 8px;letter-spacing:.16em}.prog .logo{width:180px;margin-left:-14px}}
+
+h1,h2,h3{text-wrap:balance}
+p,li,figcaption{text-wrap:pretty}
+.stage p,.one p{text-wrap:balance}
