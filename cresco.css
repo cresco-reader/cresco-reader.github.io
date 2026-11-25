@@ -97,5 +97,13 @@ h1,h2,h3{text-wrap:balance}
 p,li,figcaption{text-wrap:pretty}
 .stage p,.one p{text-wrap:balance}
 .stage h1 span{display:inline-block}
-.top .acct{margin-left:14px;font:600 13px var(--body);text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+/* 계정 — 머리 오른쪽(로그인 · 회원가입)과 첫 화면 단추 */
+.top .who{display:flex;gap:8px;margin-left:18px;padding-left:18px;border-left:1px solid var(--line)}
+.top .acct{font:600 13.5px var(--body);text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:7px 16px;white-space:nowrap}
 .top .acct:hover{border-color:var(--ink)}
+.top .acct.join{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.top .acct.join:hover{opacity:.85}
+.stage .acts{justify-content:center;margin-top:30px;animation:rise .7s ease 1.9s both}
+.stage .hint{margin-top:12px;font-size:13.5px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.stage .acts{animation:none}}
+@media (max-width:520px){.top .who{margin-left:6px;padding-left:8px;gap:6px}.top .acct{padding:6px 11px;font-size:13px}.top nav a{padding:7px 6px}}
