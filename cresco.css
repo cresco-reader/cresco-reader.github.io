@@ -96,3 +96,4 @@ footer a:hover{text-decoration:underline}
 h1,h2,h3{text-wrap:balance}
 p,li,figcaption{text-wrap:pretty}
 .stage p,.one p{text-wrap:balance}
+.stage h1 span{display:inline-block}
