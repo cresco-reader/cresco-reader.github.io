@@ -55,6 +55,8 @@ header .prod{margin-left:-22px;font:600 11px/1 var(--sans);letter-spacing:.22em;
 header .prod:hover{opacity:1;text-decoration:none}
 header nav .fam{padding-left:30px;border-left:1px solid rgba(233,223,207,.25)}
 header .acct{margin-left:auto;color:#e9dfcf;opacity:.85;white-space:nowrap}header .acct:hover{opacity:1;text-decoration:none}
+header .acct.me{display:inline-flex;align-items:center;gap:7px;opacity:1}header .acct.me i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e9dfcf;color:#1b1410;font-style:normal;font-weight:700;font-size:11px}
+header .acct.me span{max-width:9em;overflow:hidden;text-overflow:ellipsis}[hidden]{display:none!important}
 header .cta{padding:4px 12px;border-radius:980px;border:1px solid rgba(224,184,96,.45);color:#e6cd94;font-size:12px;font-weight:600}
 header .cta:hover{text-decoration:none;background:rgba(224,184,96,.1)}
 main{padding-top:var(--head)}
@@ -167,7 +169,7 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   <div class="in">
     <a href="/" aria-label="Cresco 홈"><img src="/cresco-ivory.svg" alt="Cresco"></a><a class="prod" href="#top">Listen</a>
     <nav aria-label="주 메뉴"><a href="#core">핵심 기능</a><a href="#more">자세히</a><a href="#local">내 녹음</a><a href="#faq">자주 묻는 질문</a><a class="fam" href="/reader/">Cresco Reader</a></nav>
-    <a class="acct" href="https://cresco-reader-api.fly.dev/account">로그인</a><a class="cta" href="#beta">베타 준비 중</a>
+    <a class="acct" href="https://cresco-reader-api.fly.dev/account" data-out>로그인</a><a class="acct me" href="https://cresco-reader-api.fly.dev/account" data-in hidden><i></i><span></span></a><a class="cta" href="#beta">베타 준비 중</a>
   </div>
 </header>
 
@@ -289,5 +291,6 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   openTarget();
 })();
 </script>
+<script src="/who.js"></script>
 </body>
 </html>

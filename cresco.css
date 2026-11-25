@@ -111,3 +111,8 @@ p,li,figcaption{text-wrap:pretty}
 .stage .hint{margin-top:12px;font-size:13.5px;color:var(--ink-2)}
 @media (prefers-reduced-motion:reduce){.stage .acts{animation:none}}
 @media (max-width:520px){.top .who{margin-left:6px;padding-left:8px;gap:6px}.top .acct{padding:6px 11px;font-size:13px}.top nav a{padding:7px 6px}}
+/* 로그인했으면 머리 오른쪽에 이름(첫 글자 동그라미) — /who.js */
+[hidden]{display:none!important}
+.top .acct.me{display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 4px}
+.top .acct.me i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);font-style:normal;font-weight:700;font-size:12.5px}
+.top .acct.me span{max-width:9em;overflow:hidden;text-overflow:ellipsis}
