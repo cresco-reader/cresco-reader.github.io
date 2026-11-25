@@ -8,7 +8,7 @@
 (h => { if (h && h !== '#top') location.replace('/reader/' + (h === '#download' ? '#beta' : h)); })(location.hash);
 </script>
 <title>Cresco — 오늘의 배움이, 아름다운 내일로</title>
-<meta name="description" content="Cresco 는 배움을 멈추지 않는 사람과 함께 자랍니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트.">
+<meta name="description" content="Cresco 는 배움을 멈추지 않는 사람과 함께 자랍니다. Cresco Reader — 영어 논문을, 책처럼. Cresco Note — 펜으로 읽고 적는 태블릿 노트. Cresco Listen — 강의 · 회의를 받아쓰고 다듬는다.">
 <link rel="icon" href="/cresco-ivory.svg">
 <!-- 링크 미리보기 — 그림은 절대 주소여야 한다 -->
 <meta property="og:type" content="website">
@@ -31,7 +31,7 @@
 <!-- Cresco 가 맨 위, 그 안에 프로그램 — 프로그램을 더하면 맨 위 띠와 .band 에 한 칸씩 -->
 <header class="top"><div class="in">
   <a class="home" href="/" aria-label="Cresco 홈"><img src="/cresco-navy.svg" alt="Cresco"></a>
-  <nav aria-label="Cresco 프로그램"><a href="/reader/">Reader</a><a href="/note/">Note</a></nav>
+  <nav aria-label="Cresco 프로그램"><a href="/reader/">Reader</a><a href="/note/">Note</a><a href="/listen/">Listen</a></nav>
   <div class="who"><a class="acct" href="https://cresco-reader-api.fly.dev/account">로그인</a><a class="acct join" href="https://cresco-reader-api.fly.dev/account#signup">회원가입</a></div>
 </div></header>
 
@@ -41,7 +41,7 @@
     <h1><span>오늘의 배움이,</span> <span>아름다운 내일로.</span></h1>
     <p><i>crescō</i> — 라틴어로 ‘나는 자란다’.<br>Cresco 는 배움을 멈추지 않는 사람과 함께 자랍니다.</p>
     <div class="acts"><a class="btn main" href="https://cresco-reader-api.fly.dev/account#signup">무료로 시작하기</a><a class="btn" href="https://cresco-reader-api.fly.dev/account">로그인</a></div>
-    <p class="hint">하나의 계정으로 Reader 와 Note 를 함께 씁니다.</p>
+    <p class="hint">하나의 계정으로 Reader · Note · Listen 을 함께 씁니다.</p>
   </section>
 
   <section class="band" aria-label="Cresco 프로그램"><div class="in">
@@ -82,15 +82,24 @@
         </svg>
         <figcaption>그림 — 수식을 동그라미로 둘러싸고 묻기</figcaption></figure>
     </article>
+    <article class="prog">
+      <img class="logo" src="/cresco-listen-ivory.svg" alt="Cresco Listen">
+      <h2>듣고, 적고, 다듬는다.</h2>
+      <p>강의 · 세미나 · 회의 소리를 내 PC 안에서 받아쓰고, 잘못 들은 곳은 맥락으로 다듬어 Reader 서재로 보냅니다.</p>
+      <p class="meta">Windows · 베타 준비 중</p>
+      <div class="acts"><a class="btn" href="/listen/">자세히 보기</a></div>
+      <figure class="shot"><img src="/listen/media/refine.jpg" alt="Cresco Listen 화면: 잘못 받아쓴 「압력 강화」에 형광펜, 「압력강하」로 고치자는 제안 카드" loading="lazy" width="960" height="720">
+        <figcaption>실제 화면 — 잘못 들은 곳 다듬기</figcaption></figure>
+    </article>
   </div></section>
 
   <section class="one">
-    <p>Reader 와 Note 는 같은 Cresco 계정을 씁니다. · <a href="https://cresco-reader-api.fly.dev/account">로그인</a> · <a href="https://cresco-reader-api.fly.dev/account#signup">회원가입</a></p>
+    <p>Reader · Note · Listen 은 같은 Cresco 계정을 씁니다. · <a href="https://cresco-reader-api.fly.dev/account">로그인</a> · <a href="https://cresco-reader-api.fly.dev/account#signup">회원가입</a></p>
   </section>
 </main>
 
 <footer><div class="in">
-  <span>© 2026 Cresco · <a href="/reader/">Reader</a> · <a href="/note/">Note</a></span>
+  <span>© 2026 Cresco · <a href="/reader/">Reader</a> · <a href="/note/">Note</a> · <a href="/listen/">Listen</a></span>
   <span><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문의</a> · <a href="/legal/terms.html">이용약관</a> · <a href="/legal/privacy.html">개인정보처리방침</a></span>
 </div></footer>
 </body>

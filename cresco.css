@@ -53,7 +53,7 @@ h1,h2{font-family:var(--title);font-weight:700;letter-spacing:-.01em;line-height
 
 /* 프로그램 띠 — 밤하늘 바탕, 프로그램마다 한 칸 */
 .band{background:var(--night);color:var(--ivory)}
-.band .in{display:grid;grid-template-columns:1fr 1fr}
+.band .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}   /* Reader · Note · Listen */
 .prog{padding:clamp(48px,7vw,88px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:18px;min-width:0}
 .prog + .prog{border-left:1px solid var(--line-n)}
 .prog .logo{width:210px;height:auto;margin-left:-18px}
@@ -87,6 +87,10 @@ footer .in{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-betwee
 footer a{text-decoration:none}
 footer a:hover{text-decoration:underline}
 
+@media (max-width:1100px){   /* 셋이 좁으면 둘 + 아래 하나(가로 전체) */
+  .band .in{grid-template-columns:1fr 1fr}
+  .prog:nth-child(3){grid-column:1 / -1;border-left:0;border-top:1px solid var(--line-n)}
+}
 @media (max-width:820px){
   .band .in{grid-template-columns:1fr}
   .prog + .prog{border-left:0;border-top:1px solid var(--line-n)}
