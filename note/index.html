@@ -423,6 +423,8 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
 
   // 핵심 기능: 큰 화면 하나에 장면 넷 — 보일 때만 돌고, 한 편이 끝나면 다음 탭으로
   const sv = $('#show-video'), tabs = $$('.tab');
+  // 녹화는 사람 속도라 조금 빠르게 (주인 요청 2026-11-26). default 는 src 를 바꿔도 남는다
+  [hv, sv].forEach(v => { v.defaultPlaybackRate = v.playbackRate = 1.35; });
   let cur = 0, seen = false;
   const pick = (i, play) => {
     cur = i;
