@@ -81,23 +81,56 @@ main{padding-top:var(--head)}
 .honest{margin:14px auto 0;max-width:760px;font-size:13px;line-height:1.5;color:#8f8170}
 .honest b{color:#b9a98f;font-weight:600}
 
-/* 핵심 네 가지 — 같은 녹화의 한 곳을 확대해 되풀이하는 타일 (높이 = 4:3) */
+/* 핵심 네 가지 — 큰 화면 하나에 장면 넷: 왼쪽(좁으면 위) 탭을 누르거나, 한 편이 끝나면 다음으로 */
 .core{padding:clamp(64px,9vh,110px) 0 clamp(44px,7vh,84px)}
 .core>.in{max-width:1280px;margin:0 auto;padding:0 22px}
 .core h2{font-size:clamp(36px,5vw,62px);line-height:1.08;font-weight:800;text-align:center}
 .core .lead{margin:12px 0 36px;text-align:center;color:var(--sub);font-size:clamp(17px,1.7vw,21px);font-weight:500}
-.clips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-.clip{margin:0}
-.clip .clipv{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#f3e9d7;box-shadow:0 30px 60px rgba(0,0,0,.45)}
-/* --x --y --w: 원본에서 보일 곳(폭 기준 비율), --r: 원본 높이/폭 */
-.clip video{position:absolute;left:calc(var(--x) / var(--w) * -100%);top:calc(var(--y) * var(--r) / (.75 * var(--w)) * -100%);width:calc(100% / var(--w));height:auto}
-.clip figcaption{margin-top:12px;font-size:15px;color:var(--sub)}
-.clip figcaption b{display:block;margin-bottom:2px;font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--text)}
+.show{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;align-items:center}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tab{position:relative;display:block;width:100%;padding:16px 18px 18px;border:0;border-radius:16px;background:transparent;color:var(--sub);
+  font:inherit;text-align:left;cursor:pointer;transition:background .25s,color .25s;overflow:hidden}
+.tab:hover{background:rgba(255,255,255,.04)}
+.tab b{display:block;font-size:21px;font-weight:800;letter-spacing:-.02em;color:#cbbfa9;transition:color .25s}
+.tab span{display:block;margin-top:4px;font-size:15px;line-height:1.4}
+.tab[aria-selected="true"]{background:var(--card);color:#d9ccb6}
+.tab[aria-selected="true"] b{color:var(--text)}
+.tab i{position:absolute;left:18px;right:18px;bottom:8px;height:2px;border-radius:2px;background:rgba(255,255,255,.08);opacity:0}
+.tab i::after{content:"";position:absolute;inset:0;width:var(--p,0%);border-radius:2px;background:var(--gold)}
+.tab[aria-selected="true"] i{opacity:1}
+.show .win{margin:0}
+.show video{display:block;width:100%;height:auto;aspect-ratio:1280/876;object-fit:contain;background:#fff}
 .extras{margin:40px auto 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:820px}
 .extras b{font-size:13px;font-weight:700;color:#e0b860;margin-right:4px}
 .extras span{padding:5px 12px;border-radius:999px;background:#2a2019;color:#d9ccb6;font-size:13.5px}
 .rise{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
 .rise.in{opacity:1;transform:none}
+
+/* 한눈에 — 기능마다 원리를 그림 한 장으로 (인라인 SVG, 실제 기능 그대로) */
+.how{padding:clamp(56px,8vh,100px) 0 clamp(30px,5vh,60px)}
+.how>.in{max-width:1180px;margin:0 auto;padding:0 22px}
+.how h2{font-size:clamp(34px,4.6vw,56px);line-height:1.08;font-weight:800;text-align:center}
+.how .lead{margin:12px 0 40px;text-align:center;color:var(--sub);font-size:clamp(17px,1.7vw,21px);font-weight:500}
+.ig{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ig .card{margin:0;padding:24px 24px 22px;border-radius:22px;background:var(--card);display:flex;flex-direction:column;gap:14px}
+.ig .card.wide{grid-column:1 / -1}
+.ig h3{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.ig h3 small{display:block;margin-top:4px;font-size:15px;font-weight:500;letter-spacing:0;color:var(--sub)}
+.ig svg{display:block;width:100%;height:auto}
+.ig svg text{font-family:var(--sans);letter-spacing:-.01em}
+.ig figcaption{font-size:14.5px;line-height:1.5;color:var(--sub)}
+.ig figcaption b{color:#e6cd94;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;counter-reset:st}
+.steps li{position:relative;display:flex;flex-direction:column;gap:10px}
+.steps li:not(:last-child)::after{content:"";position:absolute;top:62px;right:-11px;width:10px;height:10px;border-top:2px solid #e9b45a;border-right:2px solid #e9b45a;transform:rotate(45deg)}
+.steps .pic{border-radius:14px;background:#2a2019;padding:10px}
+.steps p{margin:0;font-size:15px;line-height:1.45;color:#d9ccb6}
+.steps p::before{counter-increment:st;content:counter(st);display:inline-grid;place-items:center;width:22px;height:22px;margin-right:7px;border-radius:50%;
+  background:var(--blue);color:var(--on-brass);font-size:12.5px;font-weight:800;vertical-align:1px}
+.steps p small{display:block;margin-top:2px;color:var(--sub);font-size:13.5px}
+@media (max-width:860px){.ig{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:22px}
+  .steps li:nth-child(2)::after{display:none}}
+@media (max-width:760px){.how>.in{padding-inline:16px}.ig .card{padding:20px 16px 18px}}
 
 /* 더 자세히 — 궁금한 사람만 펼친다 */
 .more{padding:clamp(56px,8vh,100px) 22px}
@@ -155,13 +188,16 @@ footer .motion{border:0;background:none;padding:0;font:inherit;color:#9a7b3c;cur
 footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px solid #ddd2bf}
 
 @media (max-width:1000px){
-  .clips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .show{grid-template-columns:1fr;gap:16px}
+  .tabs{flex-direction:row;overflow-x:auto;scrollbar-width:none;margin:0 -22px;padding:0 22px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 min(240px,62vw);padding:12px 14px 16px}.tab b{font-size:17px}.tab span{font-size:13.5px}
   .more-item .body{grid-template-columns:repeat(2,minmax(0,1fr))}
   .where{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)}.where .dev{grid-column:1 / -1}}
 @media (max-width:760px){
   header nav{display:none}
   header .in{justify-content:space-between}
-  .hero>.in,.core>.in{padding-inline:16px}
+  .hero>.in,.core>.in{padding-inline:16px}.tabs{margin:0 -16px;padding:0 16px}
   .win{border-radius:12px}.win .tb{height:24px}
   .statement{padding:100px 16px}
   .more{padding-inline:16px}
@@ -169,14 +205,13 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   .faq > .in{padding:0 16px 90px}
   .where{grid-template-columns:1fr}.where .arrow{flex-direction:row;padding:2px 0}.where .arrow b{transform:rotate(90deg)}
 }
-@media (max-width:520px){.clips{gap:14px 12px}.clip figcaption{font-size:13.5px}.clip figcaption b{font-size:16px}}
 </style>
 </head>
 <body>
 <header>
   <div class="in">
     <a href="/" aria-label="Cresco 홈"><img src="/cresco-ivory.svg" alt="Cresco"></a><a class="prod" href="#top">Note</a>
-    <nav aria-label="주 메뉴"><a href="#core">핵심 기능</a><a href="#more">자세히</a><a href="#local">내 노트</a><a href="#faq">자주 묻는 질문</a><a class="fam" href="/reader/">Cresco Reader</a></nav>
+    <nav aria-label="주 메뉴"><a href="#core">핵심 기능</a><a href="#how">한눈에</a><a href="#more">자세히</a><a href="#local">내 노트</a><a href="#faq">자주 묻는 질문</a><a class="fam" href="/reader/">Cresco Reader</a></nav>
     <a class="acct" href="https://cresco-reader-api.fly.dev/account" data-out>로그인</a><a class="acct me" href="https://cresco-reader-api.fly.dev/account" data-in hidden><i></i><span></span></a><a class="cta" href="#beta">베타 준비 중</a>
   </div>
 </header>
@@ -185,6 +220,7 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
 <!-- 녹화: CI 의 안드로이드 에뮬레이터(Pixel C, 2560×1800 → 1280×876), 견본 논문만 든 노트.
      펜 획은 앱의 QA 장면(editor/Demo.kt)이 사람 속도로 넣었다. AI 답은 에뮬레이터가 Cresco 서버에 닿지 못해,
      같은 질문 · 같은 부분에 Claude 가 쓴 답을 가짜 서버가 돌려준 것이다 — 아래 .honest 에 그대로 적는다.
+     에뮬레이터는 초당 1–2 장이라 build/site_rec/note_smooth.py 가 녹화 장면 사이를 60fps 로 잇는다(획 순서대로 드러냄 · 큰 변화는 겹쳐 바꿈).
      다시 찍기 · 자르기: build/site_rec/note_녹화.md -->
 <section class="hero">
   <div class="in">
@@ -196,8 +232,7 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
     <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco Note — Attention Is All You Need</span></div>
       <video id="hero-video" muted playsinline loop preload="metadata" poster="media/ask-eq.jpg" src="media/ask-eq.mp4"
         aria-label="실제 Cresco Note 화면 녹화: 여백에 손글씨를 쓰고 수식에 동그라미를 쳐 AI 에게 묻는 모습"></video></div>
-    <p class="honest"><b>실제 앱 화면입니다.</b> 안드로이드 에뮬레이터에서 녹화했고, 펜 획은 자동으로 넣었습니다.
-      AI 답은 같은 질문에 Claude 가 쓴 답을 미리 받아 둔 것이며, 기다리는 시간은 줄였습니다.</p>
+    <p class="honest"><b>실제 앱 화면입니다.</b> 에뮬레이터 녹화 · 펜 획 자동 입력 · AI 답은 미리 받은 것 · 기다림 줄임 — <a href="#faq-rec">어떻게 찍었나</a></p>
   </div>
 </section>
 
@@ -205,17 +240,106 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   <div class="in">
     <h2 class="rise">핵심은, <span class="gold">네 가지.</span></h2>
     <p class="lead rise">펜을 내려놓지 않고, 논문 안에서.</p>
-    <div class="clips">
-      <figure class="clip rise"><div class="clipv" data-src="media/ask-fig.mp4" data-seg="0,28.4" data-crop=".36,.06,.64" data-r=".684"><video muted playsinline preload="none" poster="media/ask-fig.jpg"></video></div>
-        <figcaption><b>동그라미로 묻기</b>식 · 그림 · 문단을 둘러싸고, 그 부분만.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/highlight.mp4" data-seg="0,9.7" data-crop=".17,.2,.46" data-r=".684"><video muted playsinline preload="none" poster="media/highlight.jpg"></video></div>
-        <figcaption><b>글자에 붙는 형광펜</b>대충 그어도 그 줄의 글자에 딱.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/cite.mp4" data-seg="0,17.7" data-crop=".19,.26,.62" data-r=".6375"><video muted playsinline preload="none" poster="media/cite.jpg"></video></div>
-        <figcaption><b>인용을 눌러서</b>[12] · Figure 1 을 그 자리에서.</figcaption></figure>
-      <figure class="clip rise"><div class="clipv" data-src="media/split.mp4" data-seg="0,16.1" data-crop=".01,.07,.74" data-r=".684"><video muted playsinline preload="none" poster="media/split.jpg"></video></div>
-        <figcaption><b>나란히 보기</b>그림 쪽을 옆에 두고, 이쪽에 적기.</figcaption></figure>
+    <div class="show rise">
+      <div class="tabs" role="tablist" aria-label="핵심 기능">
+        <button class="tab" role="tab" aria-selected="true" data-src="media/ask-fig.mp4" data-poster="media/ask-fig.jpg" data-title="그림에 동그라미 → AI 에게 묻기">
+          <b>동그라미로 묻기</b><span>막힌 그림 · 식을 둘러싸면, 그 부분만 읽고 답합니다.</span><i></i></button>
+        <button class="tab" role="tab" aria-selected="false" data-src="media/highlight.mp4" data-poster="media/highlight.jpg" data-title="형광펜이 글자에 맞춰 붙는 모습">
+          <b>글자에 붙는 형광펜</b><span>대충 그어도 그 줄의 글자에 딱 맞춰 칠합니다.</span><i></i></button>
+        <button class="tab" role="tab" aria-selected="false" data-src="media/cite.mp4" data-poster="media/cite.jpg" data-title="[12] · Figure 1 을 눌러 그 자리에서 보는 모습">
+          <b>인용을 눌러서</b><span>[12] · Figure 1 — 뒤로 넘기지 않고 그 자리에서.</span><i></i></button>
+        <button class="tab" role="tab" aria-selected="false" data-src="media/split.mp4" data-poster="media/split.jpg" data-title="그림 쪽을 옆에 띄워 두고 이쪽에 적는 모습">
+          <b>나란히 보기</b><span>그림은 옆 창에 두고, 이쪽 본문에 적습니다.</span><i></i></button>
+      </div>
+      <div class="win"><div class="tb" aria-hidden="true"><i></i><i></i><i></i><span>Cresco Note — Attention Is All You Need</span></div>
+        <video id="show-video" muted playsinline preload="none" poster="media/ask-fig.jpg"
+          aria-label="실제 Cresco Note 화면 녹화: 그림에 동그라미 → AI 에게 묻기"></video></div>
     </div>
     <p class="extras rise"><b>그리고</b><span>만년필 · 볼펜 · 형광펜</span><span>직선 · 도형 보정</span><span>올가미로 옮기기</span><span>텍스트 · 이미지</span><span>목차 · 북마크</span><span>돌아가기 ‹ ›</span><span>손글씨까지 검색</span><span>읽기 모드</span><span>노트 여러 개를 탭으로</span></p>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="in">
+    <h2 class="rise">한눈에 보는 <span class="gold">원리.</span></h2>
+    <p class="lead rise">무엇을 읽고, 어디에 붙고, 무엇을 무시하는지.</p>
+    <div class="ig">
+      <figure class="card wide rise"><h3>동그라미 한 번이면<small>막힌 곳에서 손을 떼지 않고 묻고, 답은 노트에 남깁니다.</small></h3>
+        <ol class="steps">
+          <li><div class="pic"><svg viewBox="0 0 200 130" aria-hidden="true"><rect x="8" y="6" width="184" height="118" rx="6" fill="#f3ead9"/>
+<g fill="#c9b99d"><rect x="22" y="20" width="150" height="5" rx="2"/><rect x="22" y="31" width="132" height="5" rx="2"/><rect x="22" y="98" width="150" height="5" rx="2"/><rect x="22" y="109" width="110" height="5" rx="2"/></g>
+<text x="100" y="70" text-anchor="middle" font-size="13" fill="#2a2019" font-style="italic">softmax(QKᵀ/√dₖ)V</text>
+<ellipse cx="100" cy="66" rx="74" ry="20" fill="none" stroke="#5b8cff" stroke-width="2" stroke-dasharray="5 4"/></svg></div><p>둘러싸기<small>식 · 그림 · 문단을 올가미로</small></p></li>
+          <li><div class="pic"><svg viewBox="0 0 200 130" aria-hidden="true">
+<g font-size="12.5" font-weight="600"><rect x="14" y="10" width="172" height="30" rx="15" fill="#3a2d22"/><rect x="26" y="18" width="16" height="14" rx="2" fill="none" stroke="#5b8cff" stroke-width="1.6" stroke-dasharray="3 2"/><text x="52" y="30" fill="#efe4d2">동그라미 친 부분</text>
+<rect x="14" y="50" width="172" height="30" rx="15" fill="#3a2d22"/><text x="27" y="70" fill="#e9b45a" font-size="14" font-weight="800">Aa</text><text x="52" y="70" fill="#efe4d2">그 안의 PDF 글자</text>
+<rect x="14" y="90" width="172" height="30" rx="15" fill="#3a2d22"/><path d="M26 112c4-8 8 2 12-6" stroke="#e9b45a" stroke-width="2.2" fill="none" stroke-linecap="round"/><text x="52" y="110" fill="#efe4d2">그 쪽 · 내 필기</text></g></svg></div><p>그 부분만 읽기<small>그 쪽의 내 필기까지 함께</small></p></li>
+          <li><div class="pic"><svg viewBox="0 0 200 130" aria-hidden="true"><rect x="96" y="8" width="96" height="22" rx="11" fill="#3b4a6e"/><rect x="106" y="16" width="76" height="6" rx="3" fill="#a9bdf0"/>
+<rect x="8" y="38" width="170" height="84" rx="12" fill="#3a2d22"/>
+<g fill="#cdbfa8"><rect x="20" y="50" width="146" height="6" rx="3"/><rect x="20" y="62" width="130" height="6" rx="3"/><rect x="20" y="74" width="140" height="6" rx="3"/><rect x="20" y="86" width="90" height="6" rx="3"/></g>
+<rect x="20" y="99" width="40" height="16" rx="8" fill="none" stroke="#e9b45a" stroke-width="1.6"/><text x="40" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e9b45a">p.4</text>
+<path d="M66 107h22m-6-5 6 5-6 5" stroke="#e9b45a" stroke-width="1.6" fill="none"/><text x="94" y="111" font-size="10.5" fill="#cdbfa8">누르면 그 쪽으로</text></svg></div><p>답 · 쪽 고리<small>p.4 를 누르면 그 쪽으로</small></p></li>
+          <li><div class="pic"><svg viewBox="0 0 200 130" aria-hidden="true"><rect x="8" y="6" width="184" height="118" rx="6" fill="#f3ead9"/>
+<g fill="#c9b99d"><rect x="18" y="20" width="96" height="5" rx="2"/><rect x="18" y="31" width="86" height="5" rx="2"/><rect x="18" y="98" width="96" height="5" rx="2"/><rect x="18" y="109" width="70" height="5" rx="2"/></g>
+<text x="18" y="70" font-size="11" fill="#2a2019" font-style="italic">softmax(QKᵀ/√dₖ)</text>
+<rect x="116" y="44" width="68" height="56" rx="4" fill="#fff3c4" stroke="#e9b45a" stroke-width="1.4"/>
+<g fill="#8a7650"><rect x="123" y="53" width="54" height="4" rx="2"/><rect x="123" y="62" width="48" height="4" rx="2"/><rect x="123" y="71" width="52" height="4" rx="2"/><rect x="123" y="80" width="36" height="4" rx="2"/></g>
+<path d="M104 67h10" stroke="#e9b45a" stroke-width="1.6" stroke-dasharray="2 2"/></svg></div><p>노트에 붙이기<small>답이 표시한 곳 옆 메모로</small></p></li>
+        </ol></figure>
+      <figure class="card rise"><h3>AI 가 읽는 범위<small>질문마다 고릅니다. 적게 읽을수록 사용량도 적습니다.</small></h3>
+        <svg viewBox="0 0 400 168" aria-hidden="true">
+<text x="200" y="12" text-anchor="middle" font-size="11.5" fill="#efe4d2">보는 쪽</text><path d="M200 16v8" stroke="#efe4d2" stroke-width="1.5"/>
+<text x="0" y="49" font-size="13" font-weight="700" fill="#efe4d2">이 페이지</text><rect x="96" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="122" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="148" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="174" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="200" y="30" width="20" height="28" rx="3" fill="#e9b45a" opacity="1" stroke="#fff" stroke-width="1.5"/><rect x="226" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="252" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="278" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="304" y="30" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><text x="340" y="49" font-size="12.5" fill="#cdbfa8">1쪽</text>
+<text x="0" y="95" font-size="13" font-weight="700" fill="#efe4d2">주변 쪽</text><rect x="96" y="76" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="122" y="76" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="148" y="76" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="174" y="76" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="200" y="76" width="20" height="28" rx="3" fill="#e9b45a" opacity="1" stroke="#fff" stroke-width="1.5"/><rect x="226" y="76" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="252" y="76" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="278" y="76" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><rect x="304" y="76" width="20" height="28" rx="3" fill="#3a2d22" opacity="0.9"/><text x="340" y="95" font-size="12.5" fill="#cdbfa8">5쪽</text>
+<rect x="60" y="82" width="30" height="16" rx="8" fill="#e9b45a"/><text x="75" y="94" text-anchor="middle" font-size="10" font-weight="800" fill="#1a120c">기본</text>
+<text x="0" y="141" font-size="13" font-weight="700" fill="#efe4d2">노트 전체</text><rect x="96" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="122" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="148" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="174" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="200" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1" stroke="#fff" stroke-width="1.5"/><rect x="226" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="252" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="278" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><rect x="304" y="122" width="20" height="28" rx="3" fill="#e9b45a" opacity="1"/><text x="340" y="141" font-size="12.5" fill="#cdbfa8">전부</text></svg>
+        <figcaption><b>기본은 주변 쪽</b> — 보는 쪽과 앞뒤 2쪽. 그 안에서 이어 물으면 같은 대화로 이어집니다.</figcaption></figure>
+      <figure class="card rise"><h3>글자에 붙는 형광펜<small>PDF 의 글자 위치를 읽어 줄에 맞춥니다.</small></h3>
+        <svg viewBox="0 0 400 190" aria-hidden="true">
+<text x="0" y="14" font-size="12.5" font-weight="700" fill="#cdbfa8">대충 그어도</text>
+<rect x="0" y="22" width="190" height="80" rx="8" fill="#f3ead9"/>
+<g fill="#7d6d58"><rect x="12" y="34" width="44" height="7" rx="2"/><rect x="62" y="34" width="30" height="7" rx="2"/><rect x="98" y="34" width="56" height="7" rx="2"/><rect x="160" y="34" width="20" height="7" rx="2"/>
+<rect x="12" y="56" width="30" height="7" rx="2"/><rect x="48" y="56" width="52" height="7" rx="2"/><rect x="106" y="56" width="36" height="7" rx="2"/><rect x="148" y="56" width="32" height="7" rx="2"/>
+<rect x="12" y="78" width="60" height="7" rx="2"/><rect x="78" y="78" width="40" height="7" rx="2"/><rect x="124" y="78" width="30" height="7" rx="2"/></g>
+<path d="M16 64c30-9 60 5 92-2s46-6 66 1" stroke="#f6d55c" stroke-width="13" stroke-linecap="round" fill="none" opacity=".6"/>
+<path d="M200 62h22m-7-6 7 6-7 6" stroke="#e9b45a" stroke-width="2" fill="none"/>
+<text x="232" y="14" font-size="12.5" font-weight="700" fill="#e6cd94">그 줄의 글자에 딱</text>
+<rect x="232" y="22" width="168" height="80" rx="8" fill="#f3ead9"/>
+<g fill="#f6d55c"><rect x="241" y="52" width="34" height="15" rx="1.5"/><rect x="279" y="52" width="56" height="15" rx="1.5"/><rect x="339" y="52" width="40" height="15" rx="1.5"/></g>
+<g fill="#7d6d58"><rect x="244" y="34" width="40" height="7" rx="2"/><rect x="290" y="34" width="28" height="7" rx="2"/><rect x="324" y="34" width="52" height="7" rx="2"/>
+<rect x="244" y="56" width="28" height="7" rx="2"/><rect x="282" y="56" width="50" height="7" rx="2"/><rect x="342" y="56" width="34" height="7" rx="2"/>
+<rect x="244" y="78" width="56" height="7" rx="2"/><rect x="306" y="78" width="36" height="7" rx="2"/></g>
+<g font-size="12" font-weight="600"><rect x="232" y="116" width="78" height="28" rx="14" fill="#3a2d22"/><text x="271" y="134" text-anchor="middle" fill="#efe4d2">글자 복사</text>
+<rect x="316" y="116" width="84" height="28" rx="14" fill="#3a2d22"/><text x="358" y="134" text-anchor="middle" fill="#e9b45a">AI에게 묻기</text></g>
+<text x="232" y="168" font-size="11.5" fill="#a39584">칠한 곳을 누르면</text></svg>
+        <figcaption>삐뚤게 그어도 <b>그 줄의 단어 모양대로</b> 칠해지고, 칠한 글은 복사하거나 바로 물어볼 수 있습니다.</figcaption></figure>
+      <figure class="card rise"><h3>나란히 보기<small>그림은 옆 창에, 쓰는 건 이쪽에.</small></h3>
+        <svg viewBox="0 0 400 200" aria-hidden="true">
+<rect x="4" y="8" width="392" height="176" rx="16" fill="#120d0a" stroke="#4a3b2e" stroke-width="2"/>
+<rect x="16" y="20" width="214" height="152" rx="4" fill="#f3ead9"/>
+<g fill="#c9b99d"><rect x="30" y="34" width="180" height="6" rx="2"/><rect x="30" y="47" width="160" height="6" rx="2"/><rect x="30" y="60" width="176" height="6" rx="2"/><rect x="30" y="122" width="170" height="6" rx="2"/><rect x="30" y="135" width="150" height="6" rx="2"/></g>
+<path d="M34 92c10-10 16 8 26-2s14 6 24-3 12 7 22 0" stroke="#2a2019" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M118 108l26-30 7 6-26 30-9 3z" fill="#d98f3a"/><path d="M118 108l-2 5 7-2" fill="#2a2019"/>
+<rect x="236" y="20" width="148" height="152" rx="4" fill="#f3ead9"/>
+<rect x="268" y="40" width="84" height="64" rx="4" fill="none" stroke="#9c8a70" stroke-width="1.6"/><g fill="#e7c98f"><rect x="278" y="50" width="28" height="18" rx="2"/><rect x="314" y="50" width="28" height="18" rx="2"/></g><rect x="290" y="76" width="40" height="18" rx="2" fill="#b8cde8"/>
+<g fill="#c9b99d"><rect x="252" y="118" width="116" height="5" rx="2"/><rect x="252" y="129" width="96" height="5" rx="2"/></g>
+<rect x="231" y="76" width="6" height="40" rx="3" fill="#e9b45a"/>
+<ellipse cx="330" cy="150" rx="34" ry="20" fill="#e9b45a" opacity=".28"/><path d="M314 141l32 18m0-18-32 18" stroke="#ff8a6a" stroke-width="2.4" stroke-linecap="round"/><rect x="284" y="104" width="92" height="22" rx="11" fill="#2a2019"/><text x="330" y="119" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffb59f">손바닥은 무시</text>
+</svg>
+        <figcaption>왼쪽에 펜으로 쓰는 동안 <b>옆 창에 닿은 손바닥은 무시</b>합니다. 경계선을 끌어 폭을 바꾸고, 세로 화면에서는 위아래로 나눕니다.</figcaption></figure>
+      <figure class="card rise"><h3>손글씨까지 검색<small>제목만이 아니라 노트 안의 모든 글자.</small></h3>
+        <svg viewBox="0 0 400 190" aria-hidden="true">
+<rect x="0" y="4" width="400" height="38" rx="19" fill="#3a2d22"/><circle cx="24" cy="22" r="7" fill="none" stroke="#cdbfa8" stroke-width="2"/><path d="M29 27l6 6" stroke="#cdbfa8" stroke-width="2"/>
+<text x="46" y="28" font-size="15" fill="#efe4d2">softmax</text>
+<g font-size="12.5">
+<rect x="0" y="54" width="400" height="38" rx="10" fill="#2a2019"/><rect x="12" y="63" width="62" height="20" rx="10" fill="#e9b45a"/><text x="43" y="77" text-anchor="middle" font-weight="800" fill="#1a120c" font-size="11.5">손글씨</text>
+<text x="90" y="79" transform="rotate(-3 90 79)" style="font-family:'Segoe Print','Bradley Hand','Comic Sans MS',cursive;font-size:16px" fill="#efe4d2">why <tspan fill="#e9b45a">softmax</tspan>?</text><text x="388" y="77" text-anchor="end" fill="#a39584">p.4</text>
+<rect x="0" y="100" width="400" height="38" rx="10" fill="#2a2019"/><rect x="12" y="109" width="62" height="20" rx="10" fill="#3a2d22" stroke="#6b5a48"/><text x="43" y="123" text-anchor="middle" font-weight="700" fill="#efe4d2" font-size="11.5">PDF 본문</text>
+<text x="88" y="123" fill="#cdbfa8">… apply a <tspan fill="#e9b45a" font-weight="700">softmax</tspan> function to …</text><text x="388" y="123" text-anchor="end" fill="#a39584">p.4</text>
+<rect x="0" y="146" width="400" height="38" rx="10" fill="#2a2019"/><rect x="12" y="155" width="62" height="20" rx="10" fill="#3a2d22" stroke="#6b5a48"/><text x="43" y="169" text-anchor="middle" font-weight="700" fill="#efe4d2" font-size="11.5">텍스트 상자</text>
+<text x="88" y="169" fill="#cdbfa8"><tspan fill="#e9b45a" font-weight="700">softmax</tspan> 가 한쪽으로 쏠리는 이유</text><text x="388" y="169" text-anchor="end" fill="#a39584">p.5</text></g></svg>
+        <figcaption>내가 쓴 <b>손글씨(한국어 · 영어)</b> · PDF 본문 · 텍스트 상자를 한 번에 찾고, 누르면 그 쪽으로 갑니다.</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -263,10 +387,10 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
       <p>안드로이드 10 이상의 태블릿에서, 스타일러스 펜과 함께 쓰도록 만들었습니다. 손가락으로는 넘기고 확대하고, 펜으로는 적습니다.</p></details>
     <details><summary>Cresco Reader 와 같은 계정인가요?</summary>
       <p>네. 같은 Cresco 계정으로 로그인하고, AI 는 Cresco AI 를 함께 씁니다. 따로 구독하거나 API 키를 넣을 필요가 없습니다. <a href="https://cresco-reader-api.fly.dev/account" target="_blank" rel="noopener">계정 관리</a></p></details>
-    <details><summary>영상 속 AI 답은 실제인가요?</summary>
-      <p>앱 화면은 실제이고, 녹화는 안드로이드 에뮬레이터에서 했습니다. 에뮬레이터에서는 Cresco 서버에 연결할 수 없어, 같은 질문 · 같은 부분에 Claude 가 쓴 답을 미리 받아 두었다가 보여 줬습니다. 기다리는 시간과 느린 부분은 줄였습니다.</p></details>
+    <details id="faq-rec"><summary>영상은 어떻게 찍었나요? AI 답은 실제인가요?</summary>
+      <p>앱 화면은 실제이고, 녹화는 안드로이드 에뮬레이터에서 했습니다. 에뮬레이터에서는 Cresco 서버에 연결할 수 없어, 같은 질문 · 같은 부분에 Claude 가 쓴 답을 미리 받아 두었다가 보여 줬습니다. 기다리는 시간과 느린 부분은 줄였고, 에뮬레이터가 초당 한두 장밖에 못 그려 녹화된 장면 사이를 획 순서대로 이어 부드럽게 했습니다 — 화면의 모든 픽셀은 녹화 그대로입니다.</p></details>
     <details><summary>요금은 얼마인가요?</summary>
-      <p>Cresco Reader 와 같은 계정 · 같은 요금제입니다 — 무료(노트 질문 30회) · 베이직 월 12,900원(월 300회) · 프로 월 29,900원(월 1,000회), 부가세 포함. 결제는 정식 출시 때부터 받습니다. <a href="/reader/#plans">요금제 보기</a></p></details>
+      <p>Cresco Reader 와 같은 계정 · 같은 요금제입니다 — 무료(노트 질문 30회) · 베이직 월 12,900원(월 300회) · 프로 월 29,900원(월 1,000회), 부가세 포함. 결제는 정식 출시 때부터 받습니다. <a href="/#pricing">요금제 보기</a></p></details>
     <details><summary>문제가 생기거나 바라는 기능이 있어요.</summary>
       <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyJry3FuSc4KwtA3k6S61rgV9SW_JdKSI4_IPLtAvrQBSHAw/viewform" target="_blank" rel="noopener">의견 · 문제 신고</a>로 알려 주세요. 하나하나 읽습니다.</p></details>
   </div>
@@ -297,27 +421,32 @@ footer .in{max-width:1024px;margin:0 auto;padding:18px 22px;display:flex;flex-wr
   if (still) hv.controls = true;
   else new IntersectionObserver(es => es.forEach(e => { e.isIntersecting ? hv.play().catch(() => {}) : hv.pause(); }), {threshold: .3}).observe(hv);
 
-  // 기능 타일: 녹화의 한 구간(data-seg)을 확대(data-crop)해 되풀이 — 보일 때만 받고 돈다
-  $$('.clip .clipv').forEach(cv => {
-    const [x, y, w] = cv.dataset.crop.split(',').map(Number);
-    cv.style.setProperty('--x', x); cv.style.setProperty('--y', y); cv.style.setProperty('--w', w); cv.style.setProperty('--r', cv.dataset.r);
-    const [a, b] = cv.dataset.seg.split(',').map(Number);
-    const v = cv.querySelector('video');
-    v.loop = true;   // 구간 끝이 영상 끝과 겹치면 timeupdate 가 끝을 놓친다
-    v.addEventListener('timeupdate', () => { if (v.currentTime >= b) v.currentTime = a; });
-    const load = () => { if (!v.src) { v.src = cv.dataset.src; v.load(); } };
-    if (still) return;   // 움직임 끔: 포스터만
-    new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) { load(); v.play().catch(() => {}); } else v.pause();
-    }), {threshold: .4}).observe(cv);
-  });
+  // 핵심 기능: 큰 화면 하나에 장면 넷 — 보일 때만 돌고, 한 편이 끝나면 다음 탭으로
+  const sv = $('#show-video'), tabs = $$('.tab');
+  let cur = 0, seen = false;
+  const pick = (i, play) => {
+    cur = i;
+    tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.style.setProperty('--p', '0%'); });
+    const t = tabs[i];
+    sv.poster = t.dataset.poster;
+    sv.setAttribute('aria-label', '실제 Cresco Note 화면 녹화: ' + t.dataset.title);
+    sv.src = t.dataset.src;
+    if (play) sv.play().catch(() => {});
+  };
+  tabs.forEach((t, i) => t.onclick = () => { pick(i, !still); t.scrollIntoView({block: 'nearest', inline: 'nearest', behavior: 'smooth'}); });
+  sv.addEventListener('timeupdate', () => { if (sv.duration) tabs[cur].style.setProperty('--p', (sv.currentTime / sv.duration * 100) + '%'); });
+  sv.addEventListener('ended', () => { if (!still) pick((cur + 1) % tabs.length, true); });
+  if (still) { sv.controls = true; sv.preload = 'metadata'; sv.src = tabs[0].dataset.src; }
+  else new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { if (!seen) { seen = true; pick(cur, true); } else sv.play().catch(() => {}); } else sv.pause();
+  }), {threshold: .35}).observe(sv);
 
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .15});
   $$('.rise').forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; still ? el.classList.add('in') : io.observe(el); });
 
   // 메뉴 고리가 접힌 칸 안을 가리키면 펼친 뒤 그 자리로
   const openTarget = () => {
-    const t = location.hash.length > 1 && document.getElementById(location.hash.slice(1)), d = t && t.closest('details.more-item');
+    const t = location.hash.length > 1 && document.getElementById(location.hash.slice(1)), d = t && t.closest('details');
     if (d) { d.open = true; t.scrollIntoView(); }
   };
   addEventListener('hashchange', openTarget);
